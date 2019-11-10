@@ -1,6 +1,6 @@
 # Set Up
   
-   packageをインストール  
+   package(node_modules)をインストール  
     `npm install`
 
    起動    
