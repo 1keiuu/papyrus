@@ -14,9 +14,9 @@ https://qiita.com/jshindo/items/910db55f93c0c4c00727
 
 # ディレクトリ構成 
 
-├── src 
+├── src  
 │    ├──App.vue  
-│    ├──components 
+ │    ├──components 
 │    │        ├──globals (どこにでも共通して使うもの:header,footer,navigationなど)  
 │    │        ├──pages (ページとして使うもの。ここにpartsを入れていく:loginPageなど)  
 │    │        └──parts (パーツとして使うもの:ボタンやリストなど)  
