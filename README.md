@@ -1,5 +1,10 @@
 # Set Up
+  
+  packageをインストール  
   `npm install`
+  起動  
+  `npm run dev`
+  
 # 環境構築
 Vue-cli@3.4.1
 https://noumenon-th.net/programming/2019/02/15/vue-cli-3/
