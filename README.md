@@ -12,10 +12,10 @@ https://qiita.com/jshindo/items/910db55f93c0c4c00727
 
 
 
-# ディレクトリ構成
+# ディレクトリ構成 
 
-├── src
-│    ├──App.vue
+├── src  
+│    ├──App.vue  
 │    ├──components 
 │    │        ├──globals (どこにでも共通して使うもの:header,footer,navigationなど)
 │    │        ├──pages (ページとして使うもの。ここにpartsを入れていく:loginPageなど)
