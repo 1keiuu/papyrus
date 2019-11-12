@@ -10,12 +10,12 @@
                   <v-form ref="form" v-model="valid" lazy-validation class="form">
                     <v-text-field v-model="name"
                     :rules="nameRules" label="ユーザー名" required></v-text-field>
-                    <v-text-field v-model="email"
-                    :rules="emailRules" label="パスワード" required></v-text-field>
+                    <v-text-field v-model="password"
+                    :rules="passwordRules" label="パスワード" required></v-text-field>
                     <v-checkbox v-model="checkbox" label="ログイン状態を保持する" required></v-checkbox>
                   </v-form>
                   <v-flex xs10 mx-12 px-12 align-self-center="true">
-                    <v-btn class="info" min-width="200">ログイン</v-btn>
+                    <v-btn class="info" min-width="200" @click="emailLogin">ログイン</v-btn>
                   </v-flex>
                 </v-sheet>
               </div>
@@ -34,7 +34,7 @@ import router from '@/router'
 export default {
   data: () => ({
     valid: true,
-    name: '',
+    email: '',
     password: '',
     nameRules: [
       v => !!v || 'Name is required',
@@ -64,6 +64,7 @@ export default {
         console.log(error)
         this.errorMessage = error.message
         this.showError = true
+        alert("aaa")
       })
     },
   },

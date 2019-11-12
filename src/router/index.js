@@ -23,7 +23,7 @@ const router = new VueRouter({
 
 router.beforeResolve((to, from, next) => {
   console.log(to);
-  if (to.path == '/') {
+  if (to.path === '/') {
     next();
   } else {
     firebase.auth().onAuthStateChanged(user => {
