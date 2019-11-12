@@ -28,10 +28,14 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import router from '@/router'
+
 export default {
   data: () => ({
     valid: true,
     name: '',
+    password: '',
     nameRules: [
       v => !!v || 'Name is required',
       v => (v && v.length <= 10) || 'Name must be less than 10 characters',
@@ -51,6 +55,16 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation()
+    },
+    emailLogin() {
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(result => {
+        console.log(result)
+        router.push('/main')
+      }).catch(error => {
+        console.log(error)
+        this.errorMessage = error.message
+        this.showError = true
+      })
     },
   },
 }
