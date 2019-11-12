@@ -8,8 +8,8 @@
               <div class="text-center">
                 <v-sheet color="rgba(176, 182, 182, 0.42)" min-width="420" min-height="600">
                   <v-form ref="form" v-model="valid" lazy-validation class="form">
-                    <v-text-field v-model="name"
-                    :rules="nameRules" label="ユーザー名" required></v-text-field>
+                    <v-text-field v-model="email"
+                    label="ユーザー名" required></v-text-field>
                     <v-text-field v-model="password"
                     :rules="passwordRules" label="パスワード" required></v-text-field>
                     <v-checkbox v-model="checkbox" label="ログイン状態を保持する" required></v-checkbox>
@@ -59,7 +59,7 @@ export default {
     emailLogin() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(result => {
         console.log(result)
-        router.push('/main')
+        router.push('/home')
       }).catch(error => {
         console.log(error)
         this.errorMessage = error.message
