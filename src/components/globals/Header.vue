@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <!-- <v-app> -->
     <v-app-bar app>
       <div class="align-center font-weight-light" style="font-size: 25px">Papyrus</div>
       <v-spacer></v-spacer>
@@ -7,7 +7,7 @@
         <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
       </v-avatar>
     </v-app-bar>
-  </v-app>
+  <!-- </v-app> -->
 </template>
 
 <script>
