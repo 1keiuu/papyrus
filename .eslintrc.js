@@ -20,6 +20,9 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'space-before-function-paren': 0,
     'no-unused-vars': 1,
+    'comma-dangle':0,
+    'key-spacing':0,
+    'max-len':0,
     'global-require': 0,
   },
   parserOptions: {
