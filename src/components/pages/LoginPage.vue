@@ -19,8 +19,8 @@
                     <v-flex px-12>
                     <v-text-field
                       v-model="password"
-                      :type="show1 ? 'text' : 'password'"
                       :rules="passwordRules"
+                      :type="'password'"
                       label="パスワード"
                     ></v-text-field>
                     <v-checkbox
@@ -53,11 +53,11 @@ export default {
     email: "",
     emailRules: [v => !!v || "E-mail is required", v => /.+@.+/.test(v) || "E-mail must be valid"],
     password: "",
-    passwordRules: {
-      required: value => !!value || "Required.",
-      min: v => v.length >= 8 || "Min 8 characters",
-      emailMatch: () => "The email and password you entered don't match"
-    },
+    passwordRules: [
+      value => !!value || "Required.",
+      v => v.length >= 8 || "Min 8 characters",
+      () => "The email and password you entered don't match"
+    ],
     select: null,
     checkbox: false,
     lazy: false
