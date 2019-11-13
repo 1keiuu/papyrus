@@ -7,7 +7,7 @@ import './registerServiceWorker';
 import vuetify from './plugins/vuetify';
 import 'firebase/auth';
 
-const bus = new Vue()
+const modalBus = new Vue()
 
 Vue.config.productionTip = false;
 Vue.use(vuetify);
