@@ -23,6 +23,7 @@ module.exports = {
     'comma-dangle':0,
     'key-spacing':0,
     'max-len':0,
+    'comma-dangle':0,
     'global-require': 0,
   },
   parserOptions: {
