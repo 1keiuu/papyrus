@@ -1,38 +1,40 @@
 <template>
-  <v-app class="b">
-    <v-content class="content">
-      <v-container fluid fill-height>
+  <v-app>
+    <v-content>
+      <v-container fluid fill-height class="container" >
         <v-layout justify-end align-center>
-                <v-sheet color="rgba(256, 256, 256, 0.42)" class="sheet">
-                  <v-layout justify-center fill-height>
-                  <v-form ref="form" v-model="valid" lazy-validation class="form" >
-                    <v-flex px-2>
-                    <v-text-field
-                      v-model="email"
-                      label="メールアドレス"
-                      :rules="emailRules"
-                      required
-                    ></v-text-field>
-                    </v-flex>
-                    <v-flex px-2>
-                    <v-text-field
-                      v-model="password"
-                      :rules="passwordRules"
-                      :type="'password'"
-                      label="パスワード"
-                    ></v-text-field>
-                    <v-checkbox
-                      v-model="checkbox"
-                      label="ログイン状態を保持する"
-                      required
-                    ></v-checkbox>
-                    </v-flex>
-<v-card-actions class="justify-center">
-                        <v-btn class="button__login primary" min-width="324" @click="emailLogin">ログイン</v-btn>
-</v-card-actions>
-                  </v-form>
-                                    </v-layout>
-                </v-sheet>
+          <v-sheet color="rgba(256, 256, 256, 0.42)" class="form__sheet">
+            <v-layout justify-center fill-height>
+              <v-form ref="form" v-model="valid" lazy-validation class="form">
+                <v-flex px-2>
+                  <v-text-field
+                    v-model="email"
+                    label="メールアドレス"
+                    :rules="emailRules"
+                    required
+                  ></v-text-field>
+                </v-flex>
+                <v-flex px-2>
+                  <v-text-field
+                    v-model="password"
+                    :rules="passwordRules"
+                    :type="'password'"
+                    label="パスワード"
+                  ></v-text-field>
+                  <v-checkbox
+                    v-model="checkbox"
+                    label="ログイン状態を保持する"
+                    required
+                  ></v-checkbox>
+                </v-flex>
+                <v-card-actions class="justify-center">
+                  <v-btn class="form__button primary" min-width="324" @click="emailLogin"
+                    >ログイン</v-btn
+                  >
+                </v-card-actions>
+              </v-form>
+            </v-layout>
+          </v-sheet>
         </v-layout>
       </v-container>
     </v-content>
@@ -91,7 +93,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.content {
+.container {
   background-image: url("../../assets/login_back.jpg");
   width: 100%;
   height: 100%;
@@ -99,16 +101,16 @@ export default {
 
 .form {
   width: 60%;
-  margin-top:120px;
+  margin-top: 120px;
 }
 
-.sheet{
-  height:560px;
-  width:550px;
-  margin-right:65px
+.form__sheet {
+  height: 560px;
+  width: 550px;
+  margin-right: 65px;
 }
 
-.button__login{
-  margin-top:50px
+.form__button {
+  margin-top: 50px;
 }
 </style>
