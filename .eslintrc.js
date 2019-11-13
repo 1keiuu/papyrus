@@ -23,8 +23,13 @@ module.exports = {
     'comma-dangle':0,
     'key-spacing':0,
     'max-len':0,
+    'no-console':0,
     'comma-dangle':0,
-    'global-require': 0,
+    'global-require': 1,
+    'import/newline-after-import':0,
+    'object-shorthand':0,
+    'prefer-arrow-callback':0,
+    'func-names':0
   },
   parserOptions: {
     parser: 'babel-eslint',

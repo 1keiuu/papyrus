@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <p-header></p-header>
+    <p-header @logout="handleHeaderMenuLogoutClick" @edit="handleHeaderMenuEditProfileClick" v-if="$route.name.indexOf('no_auth') == -1"></p-header>
     <v-content>
-      <router-view />
+      <router-view ref="rv" />
     </v-content>
   </v-app>
 </template>
@@ -13,11 +13,25 @@ import Header from '@/components/globals/Header'
 export default {
   name: 'App',
   components: {
-    'p-header': Header,
+    'p-header': Header
   },
 
   data: () => ({
     //
   }),
+  methods: {
+    handleHeaderMenuLogoutClick() {
+      this.$refs.rv.logout()
+    },
+    handleHeaderMenuEditProfileClick() {
+      this.$refs.rv.openProfileEditModal()
+    }
+  }
 }
 </script>
+<style scoped>
+
+::-webkit-scrollbar{
+  display:none
+}
+</style>

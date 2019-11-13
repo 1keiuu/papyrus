@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'login',
+    name: 'no_auth/login',
     component: require('@/components/pages/LoginPage').default,
   },
   {

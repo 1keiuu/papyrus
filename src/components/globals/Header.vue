@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import bus from '../../main'
+
 export default {
   name: 'Header',
   components: {},
@@ -36,28 +38,32 @@ export default {
       {
         name: 'edit',
         text: 'プロフィールを編集',
-        icon: 'mdi-account',
+        icon: 'mdi-account'
       },
       {
         name: 'logout',
         text: 'ログアウト',
-        icon: 'mdi-logout',
-      },
-    ],
+        icon: 'mdi-logout'
+      }
+    ]
   }),
   methods: {
-    handleMenuItemClick: target => {
+    handleMenuItemClick: function(target) {
       switch (target) {
         case 'edit':
-          console.log('edit')
+          this.$emit('edit')
           break
         case 'logout':
-          console.log('logout')
+          if (window.confirm('ログアウトしてもよろしいでしょうか？')) {
+            this.$emit('logout')
+          } else {
+            console.log("canceled")
+          }
           break
         default:
       }
-    },
-  },
+    }
+  }
 }
 </script>
 <style scoped>

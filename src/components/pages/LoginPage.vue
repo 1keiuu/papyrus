@@ -1,10 +1,10 @@
 <template>
-  <v-app>
+  <v-app class="b">
     <v-content class="body">
       <v-container fill-height>
         <v-layout row wrap justify-end="true">
           <v-flex xs5 class="py-6">
-            <div id="app">
+            <div>
               <div class="text-center">
                 <v-sheet color="rgba(176, 182, 182, 0.42)" min-width="420" min-height="600">
                   <v-form ref="form" v-model="valid" lazy-validation class="form">
@@ -64,19 +64,20 @@ export default {
         console.log(error)
         this.errorMessage = error.message
         this.showError = true
-        alert("aaa")
+        alert(this.errorMessage)
       })
     },
   },
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .body {
   background-image: url('../../assets/login_back.jpg');
   width: 100%;
   height: 100%;
 }
+
 .form {
   width: 70%;
 }

@@ -7,6 +7,8 @@ import './registerServiceWorker';
 import vuetify from './plugins/vuetify';
 import 'firebase/auth';
 
+const bus = new Vue()
+
 Vue.config.productionTip = false;
 Vue.use(vuetify);
 
