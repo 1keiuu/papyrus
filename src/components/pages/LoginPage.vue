@@ -1,14 +1,12 @@
 <template>
   <v-app class="b">
     <v-content class="content">
-      <v-container fill-height>
-        <v-layout row wrap justify-end="true">
-          <v-flex xs5 class="py-6">
-            <div>
-              <div class="text-center">
-                <v-sheet color="rgba(176, 182, 182, 0.42)" min-width="420" min-height="550">
-                  <v-form ref="form" v-model="valid" lazy-validation class="form">
-                    <v-flex px-12 py-12 my-7>
+      <v-container fluid fill-height>
+        <v-layout justify-end align-center>
+                <v-sheet color="rgba(256, 256, 256, 0.42)" class="sheet">
+                  <v-layout justify-center fill-height>
+                  <v-form ref="form" v-model="valid" lazy-validation class="form" >
+                    <v-flex px-2>
                     <v-text-field
                       v-model="email"
                       label="メールアドレス"
@@ -16,7 +14,7 @@
                       required
                     ></v-text-field>
                     </v-flex>
-                    <v-flex px-12>
+                    <v-flex px-2>
                     <v-text-field
                       v-model="password"
                       :type="show1 ? 'text' : 'password'"
@@ -29,14 +27,12 @@
                       required
                     ></v-checkbox>
                     </v-flex>
+<v-card-actions class="justify-center">
+                        <v-btn class="button__login primary" min-width="324" @click="emailLogin">ログイン</v-btn>
+</v-card-actions>
                   </v-form>
-                  <v-flex  align-self-center="true" py-12 my-10>
-                    <v-btn class="info" min-width="324" @click="emailLogin">ログイン</v-btn>
-                  </v-flex>
+                                    </v-layout>
                 </v-sheet>
-              </div>
-            </div>
-          </v-flex>
         </v-layout>
       </v-container>
     </v-content>
@@ -53,11 +49,11 @@ export default {
     email: "",
     emailRules: [v => !!v || "E-mail is required", v => /.+@.+/.test(v) || "E-mail must be valid"],
     password: "",
-    passwordRules: {
-      required: value => !!value || "Required.",
-      min: v => v.length >= 8 || "Min 8 characters",
-      emailMatch: () => "The email and password you entered don't match"
-    },
+    passwordRules: [
+      value => !!value || "Required.",
+      v => v.length >= 8 || "Min 8 characters",
+      () => "The email and password you entered don't match"
+    ],
     select: null,
     checkbox: false,
     lazy: false
@@ -102,6 +98,17 @@ export default {
 }
 
 .form {
-  width: 100%;
+  width: 60%;
+  margin-top:120px;
+}
+
+.sheet{
+  height:560px;
+  width:550px;
+  margin-right:65px
+}
+
+.button__login{
+  margin-top:50px
 }
 </style>
