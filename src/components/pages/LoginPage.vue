@@ -17,8 +17,8 @@
                     <v-flex px-2>
                     <v-text-field
                       v-model="password"
-                      :type="show1 ? 'text' : 'password'"
                       :rules="passwordRules"
+                      :type="'password'"
                       label="パスワード"
                     ></v-text-field>
                     <v-checkbox
