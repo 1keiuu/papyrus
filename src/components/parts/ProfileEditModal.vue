@@ -8,43 +8,49 @@
         </v-card-title>
         <v-card-text>
           <v-container>
-            <v-row>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field label="ユーザー名"></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6">
-                <v-autocomplete
-                  :items="[
-                    'Skiing',
-                    'Ice hockey',
-                    'Soccer',
-                    'Basketball',
-                    'Hockey',
-                    'Reading',
-                    'Writing',
-                    'Coding',
-                    'Basejump'
-                  ]"
-                  label="興味のある分野"
-                  multiple
-                ></v-autocomplete>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field label="メールアドレス" ></v-text-field>
-              </v-col>
+            <v-tabs>
+              <v-tab v-for="(tab, index) in tabs" :key="`tab-${index}`" :href="`#tab-${index}`">
+                {{ tab }}
+              </v-tab>
+
+              <v-tab-item key="tab-0" :value="'tab-' + 0">
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="inputName" label="ユーザー名"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-select
+                      :items="interestsOptions"
+                      v-model="inputItems"
+                      label="興味のある分野"
+                      multiple
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-file-input
+                      label="写真を選択"
+                      filled
+                      ref="imageFile"
+                      @change="selectFile"
+                      prepend-icon="mdi-camera"
+                    ></v-file-input>
+                  </v-col>
+                </v-row>
+              </v-tab-item>
+              <v-tab-item key="tab-1" :value="'tab-' + 1">
                 <v-col cols="12">
-                  <v-file-input label="写真を選択" filled prepend-icon="mdi-camera"></v-file-input>
+                  <v-card-text>パスワードの再設定</v-card-text>
+                  <v-text-field label="メールアドレス"></v-text-field>
                 </v-col>
-
-
-            </v-row>
+              </v-tab-item>
+            </v-tabs>
           </v-container>
           <small>*反映に時間がかかることがございます</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">キャンセル</v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false">保存</v-btn>
+          <v-btn color="blue darken-1" text @click="handleSubmitButtonClick">保存</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -52,16 +58,27 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
 
 export default {
   name: "ProfileEditModal",
   data: () => ({
-    dialog: false
+    dialog: false,
+    tabs: ["プロフィール", "個人情報"],
+    inputName: "",
+    inputItems:[],
+    interestsOptions: ["語学学習", "プログラミング"],
+    inputImage: ""
   }),
   methods: {
     openDialog() {
       this.dialog = true;
+    },
+    selectFile(event) {
+      this.inputImage = event
+    },
+    handleSubmitButtonClick() {
+      this.dialog = false;
+      this.$emit('submit',this.inputName,this.inputItems,this.inputImage)
     }
   }
 };

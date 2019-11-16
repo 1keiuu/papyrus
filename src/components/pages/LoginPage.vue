@@ -30,6 +30,9 @@
 <script>
 import firebase from 'firebase/app'
 import router from '@/router'
+// import firebaseConfig from "../../main";
+// firebase.initializeApp(firebaseConfig);
+
 
 export default {
   data: () => ({
@@ -58,16 +61,17 @@ export default {
     },
     emailLogin() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(result => {
-        console.log(result)
         router.push('/home')
       }).catch(error => {
-        console.log(error)
+        console.log(error.code)
         this.errorMessage = error.message
         this.showError = true
         alert(this.errorMessage)
       })
     },
   },
+
+
 }
 </script>
 

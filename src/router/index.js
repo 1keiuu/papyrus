@@ -28,7 +28,6 @@ router.beforeResolve((to, from, next) => {
   } else {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log('認証中');
         next();
       } else {
         console.log('未認証');

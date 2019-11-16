@@ -29,7 +29,8 @@ module.exports = {
     'import/newline-after-import':0,
     'object-shorthand':0,
     'prefer-arrow-callback':0,
-    'func-names':0
+    'func-names':0,
+    'import/prefer-default-export':0
   },
   parserOptions: {
     parser: 'babel-eslint',
