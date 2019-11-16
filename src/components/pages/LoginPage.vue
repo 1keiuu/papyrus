@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-content>
-      <v-container fluid fill-height class="container" >
+      <v-container fluid fill-height class="container">
         <v-layout justify-end align-center>
           <v-sheet color="rgba(256, 256, 256, 0.42)" class="form__sheet">
             <v-layout justify-center fill-height>
@@ -49,12 +49,14 @@ export default {
   data: () => ({
     valid: true,
     email: "",
-    emailRules: [v => !!v || "E-mail is required", v => /.+@.+/.test(v) || "E-mail must be valid"],
+    emailRules: [
+      v => !!v || "メールアドレスを入力してください",
+      v => /.+@.+/.test(v) || "メールアドレス形式で入力してください"
+    ],
     password: "",
     passwordRules: [
-      value => !!value || "Required.",
-      v => v.length >= 8 || "Min 8 characters",
-      () => "The email and password you entered don't match"
+      value => !!value || "パスワードを入力してください",
+      v => v.length >= 8 || "パスワードは８文字以上入力してください"
     ],
     select: null,
     checkbox: false,
@@ -83,9 +85,26 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          this.errorMessage = error.message;
-          this.showError = true;
-          alert(this.errorMessage);
+
+          const errorCode = error.code;
+
+          switch (errorCode) {
+            case "auth/invalid-email":
+              alert("無効なメールアドレスです");
+              break;
+
+            case "auth/user-not-found":
+              alert("そのメールアドレスは存在しません");
+              break;
+
+            case "auth/wrong-password":
+              alert("無効なパスワードです");
+              break;
+
+            default:
+              alert("ネットワークエラー");
+              break;
+          }
         });
     }
   }
