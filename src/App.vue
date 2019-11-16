@@ -9,11 +9,13 @@
 
 <script>
 import Header from '@/components/globals/Header'
+import Navigation from '@/components/globals/Navigation'
 
 export default {
   name: 'App',
   components: {
-    'p-header': Header
+    'p-header': Header,
+    'p-navigation': Navigation
   },
 
   data: () => ({
