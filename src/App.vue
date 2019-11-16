@@ -26,7 +26,7 @@ export default {
     handleHeaderMenuEditProfileClick() {
       this.$refs.rv.openProfileEditModal()
     }
-  }
+  },
 }
 </script>
 <style scoped>

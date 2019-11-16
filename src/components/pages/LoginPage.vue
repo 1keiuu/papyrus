@@ -42,8 +42,11 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
-import router from "@/router";
+import firebase from 'firebase/app'
+import router from '@/router'
+// import firebaseConfig from "../../main";
+// firebase.initializeApp(firebaseConfig);
+
 
 export default {
   data: () => ({
