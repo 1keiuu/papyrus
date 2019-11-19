@@ -26,6 +26,17 @@ const firebaseConfig = {
 export default firebaseConfig;
 
 firebase.initializeApp(firebaseConfig);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+firebase.auth().onAuthStateChanged(function (user) {
+  if (user) {
+    store.commit('user', user)
+    store.commit('loginStatus', true)
+  } else {
+    store.commit('user', {})
+    store.commit('loginStatus', false)
+  }
+})
 
 new Vue({
   router,

@@ -28,7 +28,10 @@
                   ></v-checkbox>
                 </v-flex>
                 <v-card-actions class="justify-center">
-                  <v-btn class="form__button primary" min-width="324" @click="emailLogin"
+                  <v-btn
+                    class="form__button primary"
+                    min-width="324"
+                    @click="handleLoginButtonClick"
                     >ログイン</v-btn
                   >
                 </v-card-actions>
@@ -42,11 +45,9 @@
 </template>
 
 <script>
-import firebase from 'firebase/app'
-import router from '@/router'
-// import firebaseConfig from "../../main";
-// firebase.initializeApp(firebaseConfig);
-
+import firebase from "firebase/app";
+import router from "@/router";
+import mapActions from "../../store";
 
 export default {
   data: () => ({
@@ -78,7 +79,26 @@ export default {
     resetValidation() {
       this.$refs.form.resetValidation();
     },
-    emailLogin() {
+    throwLoginError(errorCode) {
+      switch (errorCode) {
+        case "auth/invalid-email":
+          alert("無効なメールアドレスです");
+          break;
+
+        case "auth/user-not-found":
+          alert("そのメールアドレスは存在しません");
+          break;
+
+        case "auth/wrong-password":
+          alert("無効なパスワードです");
+          break;
+
+        default:
+          alert("ネットワークエラー");
+          break;
+      }
+    },
+    handleLoginButtonClick() {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
@@ -88,30 +108,16 @@ export default {
         })
         .catch(error => {
           console.log(error);
-
-          const errorCode = error.code;
-
-          switch (errorCode) {
-            case "auth/invalid-email":
-              alert("無効なメールアドレスです");
-              break;
-
-            case "auth/user-not-found":
-              alert("そのメールアドレスは存在しません");
-              break;
-
-            case "auth/wrong-password":
-              alert("無効なパスワードです");
-              break;
-
-            default:
-              alert("ネットワークエラー");
-              break;
-          }
+          this.throwLoginError(error.code);
         });
     }
+  },
+  mounted() {
+    firebase.auth().onAuthStateChanged(user => {
+      this.setUser(user);
+    });
   }
-};
+}
 </script>
 
 <style scoped lang="scss">

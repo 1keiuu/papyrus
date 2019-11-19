@@ -4,6 +4,7 @@
       <v-flex xs12></v-flex>
       <v-flex mb-4>
         <h1 class="display-2 font-weight-bold mb-3">MainPage</h1>
+        <!-- <p>{{user.displayName}}</p> -->
         <ProfileEditModal ref="profileEdit" @submit="submitProfileData"></ProfileEditModal>
       </v-flex>
     </v-layout>
@@ -52,14 +53,11 @@ export default {
         .collection("user_info")
         .doc(this.userId)
         .update({ interests: selectedItems });
-      // storageRef
-      //   .put(inputImage)
-      //   .then(snapshot => {
-      //     console.log("Uploaded a blob or file!");
-      //   })
-      //   .catch(err => {
-      //     console.log("failed");
-      //   });
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user
     }
   }
 };
