@@ -117,7 +117,7 @@ export default {
       this.setUser(user);
     });
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

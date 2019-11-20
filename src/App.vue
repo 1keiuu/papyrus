@@ -2,7 +2,7 @@
   <v-app>
     <p-header @logout="handleHeaderMenuLogoutClick" @edit="handleHeaderMenuEditProfileClick" @addTask="handleHeaderAddTaskButtonClick" @setTarget="handleHeaderSetTargetButtonClick"
     v-if="$route.name.indexOf('no_auth') !== 0"></p-header>
-    <AddTaskModal ref='addTask'></AddTaskModal>
+    <ProfileEditModal ref='profileEdit' @submit="submitProfileData"></ProfileEditModal>
     <v-content>
       <router-view ref="rv" />
     </v-content>
@@ -10,32 +10,50 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
+import firestore from "firebase/firestore";
 import Header from '@/components/globals/Header'
-import AddTaskModal from './components/parts/AddTaskModal'
+import ProfileEditModal from "./components/parts/ProfileEditModal";
 
 export default {
   name: 'App',
   components: {
     'p-header': Header,
-    AddTaskModal,
+    ProfileEditModal,
   },
-
   data: () => ({
-    //
+    name : ''
   }),
   methods: {
-    handleHeaderMenuLogoutClick() {
-      this.$refs.rv.logout()
-    },
+    // handleHeaderMenuLogoutClick() {
+    //   this.$refs.rv.logout()
+    // },
     handleHeaderMenuEditProfileClick() {
-      this.$refs.rv.openProfileEditModal()
+      this.openProfileEditModal()
     },
-    handleHeaderAddTaskButtonClick() {
-      this.$refs.rv.openDialog();
+    // handleHeaderAddTaskButtonClick() {
+    //   this.$refs.rv.openDialog();
+    // },
+    // handleHeaderSetTargetButtonClick() {
+    //   this.$refs.rv.setTarget()
+    // },
+    openProfileEditModal() {
+      this.$refs.profileEdit.openDialog();
     },
-    handleHeaderSetTargetButtonClick() {
-      this.$refs.rv.setTarget()
-    },
+    submitProfileData(inputName, selectedItems, inputImage) {
+      const user = firebase.auth().currentUser;
+      firebase
+        .firestore()
+        .collection("user_info")
+        .doc(user.uid)
+        .update({ name: inputName });
+      firebase
+        .firestore()
+        .collection("user_info")
+        .doc(user.uid)
+        .update({ interests: selectedItems });
+    }
+
   },
 }
 </script>

@@ -1,6 +1,6 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import createPersistedState from 'vuex-persistedstate'
+import Vue from "vue";
+import Vuex from "vuex";
+// import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
@@ -10,16 +10,22 @@ export default new Vuex.Store({
     loginStatus: false
   },
   mutations: {
-    user (state, user) { state.user = user },
-    loginStatus (state, loginStatus) { state.loginStatus = loginStatus }
-  },
-  actions: {
-  },
-  modules: {
+    user(state, user) {
+      state.user = user;
+    },
+    loginStatus(state, loginStatus) {
+      state.loginStatus = loginStatus;
+    }
   },
   getters: {
+    user(state) {
+      return state.user;
+    },
+    isSignedIn(state) {
+      return state.status;
+    }
   },
-  plugins: [
-    createPersistedState({ storage: window.sessionStorage, key: 'vuex-todo-examples' })
-  ]
-});
+  actions: {},
+  modules: {},
+  // plugins: [createPersistedState({ storage: window.sessionStorage, key: "vuex-todo-examples" })]
+})
