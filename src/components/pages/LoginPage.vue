@@ -1,53 +1,61 @@
 <template>
   <v-app>
-    <v-content>
-      <v-container fluid fill-height class="container">
-        <v-layout justify-end align-center>
-          <v-sheet color="rgba(256, 256, 256, 0.42)" class="form__sheet">
-            <v-layout justify-center fill-height>
-              <v-form ref="form" v-model="valid" lazy-validation class="form">
-                <v-flex px-2>
-                  <v-text-field
-                    v-model="email"
-                    label="メールアドレス"
-                    :rules="emailRules"
-                    required
-                  ></v-text-field>
-                </v-flex>
-                <v-flex px-2>
-                  <v-text-field
-                    v-model="password"
-                    :rules="passwordRules"
-                    :type="'password'"
-                    label="パスワード"
-                  ></v-text-field>
-                  <v-checkbox
-                    v-model="checkbox"
-                    label="ログイン状態を保持する"
-                    required
-                  ></v-checkbox>
-                </v-flex>
-                <v-card-actions class="justify-center">
-                  <v-btn
-                    class="form__button primary"
-                    min-width="324"
-                    @click="handleLoginButtonClick"
-                    >ログイン</v-btn
-                  >
-                </v-card-actions>
-              </v-form>
-            </v-layout>
-          </v-sheet>
-        </v-layout>
-      </v-container>
-    </v-content>
+    <div class='loading__container' v-show="loading">
+      <v-progress-circular :rotate="-90" :value="value" :size="200" :width="25" color="blue-grey">
+        <p class="v-progress-circular__p">{{ value }}</p>
+      </v-progress-circular>
+      <h1>Papyrus</h1>
+    </div>
+    <div v-show="!loading">
+      <v-content>
+        <v-container fluid fill-height class="container">
+          <v-layout justify-end align-center>
+            <v-sheet color="rgba(256, 256, 256, 0.42)" class="form__sheet">
+              <v-layout justify-center fill-height>
+                <v-form ref="form" v-model="valid" lazy-validation class="form">
+                  <v-flex px-2>
+                    <v-text-field
+                      v-model="email"
+                      label="メールアドレス"
+                      :rules="emailRules"
+                      required
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex px-2>
+                    <v-text-field
+                      v-model="password"
+                      :rules="passwordRules"
+                      :type="'password'"
+                      label="パスワード"
+                    ></v-text-field>
+                    <v-checkbox
+                      v-model="checkbox"
+                      label="ログイン状態を保持する"
+                      required
+                    ></v-checkbox>
+                  </v-flex>
+                  <v-card-actions class="justify-center">
+                    <v-btn
+                      class="form__button primary"
+                      min-width="324"
+                      @click="handleLoginButtonClick"
+                      >ログイン</v-btn
+                    >
+                  </v-card-actions>
+                </v-form>
+              </v-layout>
+            </v-sheet>
+          </v-layout>
+        </v-container>
+      </v-content>
+    </div>
   </v-app>
 </template>
 
 <script>
 import firebase from "firebase/app";
 import router from "@/router";
-import mapActions from "../../store";
+import store from "../../store";
 
 export default {
   data: () => ({
@@ -64,7 +72,10 @@ export default {
     ],
     select: null,
     checkbox: false,
-    lazy: false
+    lazy: false,
+    loading: true,
+    value: 0,
+    interval: {}
   }),
 
   methods: {
@@ -104,7 +115,10 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(result => {
           console.log(result);
-          router.push("/home");
+          router.push("/");
+          store.commit("setUser", result);
+          store.commit("setSignIn", true);
+          // console.log(store.state)
         })
         .catch(error => {
           console.log(error);
@@ -112,10 +126,39 @@ export default {
         });
     }
   },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+    userStatus() {
+      // ログインするとtrue
+      return this.$store.getters.isSignIn;
+    }
+  },
   mounted() {
-    firebase.auth().onAuthStateChanged(user => {
-      this.setUser(user);
-    });
+    if (this.userStatus) {
+      router.push("/");
+    } else {
+      console.log("not");
+    }
+
+    const b = () => {
+      this.interval = setInterval(() => {
+        if (this.value === 100) {
+          clearInterval(this.interval);
+          this.value = 100;
+          setTimeout(() => {
+            this.loading = false;
+          }, 1000);
+        } else {
+          this.value += 10;
+        }
+      }, 200);
+    };
+    b();
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
   }
 };
 </script>
@@ -124,7 +167,23 @@ export default {
 .container {
   background-image: url("../../assets/login_back.jpg");
   width: 100%;
-  height: 100%;
+  height: 100vh;
+}
+.loading__container{
+  width:100vw;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+}
+
+.v-application p{
+  margin-bottom:0
+}
+
+.v-progress-circular__p{
+  font-size:40px
 }
 
 .form {

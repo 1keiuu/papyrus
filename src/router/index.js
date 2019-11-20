@@ -6,12 +6,12 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'no_auth/login',
     component: require('@/components/pages/LoginPage').default,
   },
   {
-    path: '/home',
+    path: '/',
     name: 'home',
     component: require('@/components/pages/HomePage').default,
   },
@@ -23,7 +23,7 @@ const router = new VueRouter({
 
 router.beforeResolve((to, from, next) => {
   console.log(to);
-  if (to.path === '/') {
+  if (to.path === '/login') {
     next();
   } else {
     firebase.auth().onAuthStateChanged(user => {
@@ -31,7 +31,7 @@ router.beforeResolve((to, from, next) => {
         next();
       } else {
         console.log('未認証');
-        next({ path: '/' });
+        next({ path: '/login' });
       }
     });
   }

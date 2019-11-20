@@ -1,31 +1,27 @@
 import Vue from "vue";
 import Vuex from "vuex";
-// import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     user: {},
-    loginStatus: false
+    isSignIn: false
   },
   mutations: {
-    user(state, user) {
-      state.user = user;
+    setUser(state, user) {
+      state.user = user; // firebaseが返したユーザー情報
     },
-    loginStatus(state, loginStatus) {
-      state.loginStatus = loginStatus;
+    setSignIn(state, isSignIn) {
+      state.isSignIn = isSignIn; // ログインしてるかどうか true or false
     }
   },
   getters: {
     user(state) {
       return state.user;
     },
-    isSignedIn(state) {
-      return state.status;
+    isSignIn(state) {
+      return state.isSignIn;
     }
-  },
-  actions: {},
-  modules: {},
-  // plugins: [createPersistedState({ storage: window.sessionStorage, key: "vuex-todo-examples" })]
-})
+  }
+});

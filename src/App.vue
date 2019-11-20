@@ -1,35 +1,43 @@
 <template>
   <v-app>
-    <p-header @logout="handleHeaderMenuLogoutClick" @edit="handleHeaderMenuEditProfileClick" @addTask="handleHeaderAddTaskButtonClick" @setTarget="handleHeaderSetTargetButtonClick"
-    v-if="$route.name.indexOf('no_auth') !== 0"></p-header>
-    <ProfileEditModal ref='profileEdit' @submit="submitProfileData"></ProfileEditModal>
-    <v-content>
-      <router-view ref="rv" />
-    </v-content>
+      <p-header
+        @logout="handleHeaderMenuLogoutClick"
+        @edit="handleHeaderMenuEditProfileClick"
+        @addTask="handleHeaderAddTaskButtonClick"
+        @setTarget="handleHeaderSetTargetButtonClick"
+        v-if="$route.name.indexOf('no_auth') !== 0"
+      ></p-header>
+      <ProfileEditModal ref="profileEdit" @submit="submitProfileData"></ProfileEditModal>
+      <v-content>
+        <router-view ref="rv" />
+      </v-content>
   </v-app>
 </template>
 
 <script>
 import firebase from "firebase/app";
-import firestore from "firebase/firestore";
-import Header from '@/components/globals/Header'
+import store from "./store";
+import Header from "@/components/globals/Header";
 import ProfileEditModal from "./components/parts/ProfileEditModal";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    'p-header': Header,
-    ProfileEditModal,
+    "p-header": Header,
+    ProfileEditModal
   },
-  data: () => ({
-    name : ''
-  }),
+  data() {
+    return {
+      name: "",
+    };
+  },
   methods: {
-    // handleHeaderMenuLogoutClick() {
-    //   this.$refs.rv.logout()
-    // },
+    handleHeaderMenuLogoutClick() {
+      this.$refs.rv.logout();
+      store.commit("userStatus", false);
+    },
     handleHeaderMenuEditProfileClick() {
-      this.openProfileEditModal()
+      this.openProfileEditModal();
     },
     // handleHeaderAddTaskButtonClick() {
     //   this.$refs.rv.openDialog();
@@ -53,13 +61,17 @@ export default {
         .doc(user.uid)
         .update({ interests: selectedItems });
     }
-
   },
-}
+  computed: {
+    userStatus() {
+      // ログインするとtrue
+      return this.$store.getters.isSignIn;
+    }
+  },
+};
 </script>
 <style scoped>
-
-::-webkit-scrollbar{
-  display:none
+::-webkit-scrollbar {
+  display: none;
 }
 </style>
