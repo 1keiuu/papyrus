@@ -3,7 +3,7 @@
     <!-- <v-navigation-drawer  class="v-navigation"> -->
     <v-card class="v-card v-navigation" max-width="70" min-height="200" tile>
       <v-list flat>
-        <v-list-item-group v-model="item" class="v-list-item-group" mandatory>
+        <v-list-item-group class="v-list-item-group" mandatory>
           <v-list-item
             v-for="(item, i) in items"
             :key="i"
@@ -17,7 +17,7 @@
                 </v-list-item-icon>
                 <v-list-item-content class="v-list-item-content"> </v-list-item-content>
               </template>
-              <span>{{ item.name }}</span>
+              <span>{{ item.title }}</span>
             </v-tooltip>
           </v-list-item>
         </v-list-item-group>
@@ -38,12 +38,14 @@ export default {
       {
         icon: "mdi-home",
         name: "Home",
-        path: "/"
+        path: "/",
+        title:'ホーム'
       },
       {
         icon: "mdi-clipboard-list-outline",
         name: "sampleTask",
-        path: "/smapleTask"
+        path: "/smapleTask",
+        title:"タスク"
       }
     ]
     // currentPath:
@@ -64,7 +66,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+$primary : #6245ea;
+
 .v-navigation {
   position: fixed;
 }
@@ -76,10 +81,14 @@ export default {
 
 .v-list-item {
   padding-left: 20px;
-  color: #6245ea;
+  color: $primary;
 }
 
 .v-list-item-icon {
   padding-left: 5px;
+}
+
+.v-list-item--active{
+  border-right:2px solid $primary;
 }
 </style>
