@@ -3,12 +3,12 @@
     <!-- <v-navigation-drawer  class="v-navigation"> -->
     <v-card class="v-card v-navigation" max-width="70" min-height="200" tile>
       <v-list flat>
-        <v-list-item-group v-model="item" class="v-list-item-group">
+        <v-list-item-group v-model="item" class="v-list-item-group" mandatory>
           <v-list-item
             v-for="(item, i) in items"
             :key="i"
             class="v-list-item"
-            @click="sampleClick(item.path)"
+            @click="sampleClick(item.name)"
           >
             <v-tooltip right>
               <template v-slot:activator="{ on }">
@@ -17,7 +17,7 @@
                 </v-list-item-icon>
                 <v-list-item-content class="v-list-item-content"> </v-list-item-content>
               </template>
-              <span>{{item.name}}</span>
+              <span>{{ item.name }}</span>
             </v-tooltip>
           </v-list-item>
         </v-list-item-group>
@@ -43,7 +43,7 @@ export default {
       {
         icon: "mdi-clipboard-list-outline",
         name: "sampleTask",
-        path:"/smapleTask"
+        path: "/smapleTask"
       }
     ]
     // currentPath:
@@ -70,7 +70,7 @@ export default {
 }
 
 .v-card {
-  margin-top: 56px;
+  margin-top: 80px;
   height: 100vh;
 }
 
