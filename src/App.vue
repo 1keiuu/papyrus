@@ -7,6 +7,7 @@
       v-if="$route.name.indexOf('no_auth') !== 0"
       v-bind:userName=this.userName
     ></p-header>
+    <p-navigation class="p-navigation" v-if="$route.name.indexOf('no_auth') == -1"></p-navigation>
     <v-content>
       <router-view ref="rv" />
       <ProfileEditModal ref="profileEditModal" @submit="submitProfileData" v-bind:userName=this.userName
@@ -22,13 +23,15 @@ import store from "./store";
 import Header from "@/components/globals/Header";
 import ProfileEditModal from "./components/parts/ProfileEditModal";
 import AddTaskModal from "./components/parts/AddTaskModal";
+import Navigation from '@/components/globals/Navigation'
 
 export default {
   name: "App",
   components: {
     "p-header": Header,
     ProfileEditModal,
-    AddTaskModal
+    AddTaskModal,
+    'p-navigation': Navigation
   },
   data() {
     return {
@@ -89,5 +92,15 @@ export default {
 <style scoped>
 ::-webkit-scrollbar {
   display: none;
+}
+
+
+.p-navigation{
+  position: absolute;
+  z-index: 2
+}
+
+.p-header{
+    z-index: 3
 }
 </style>

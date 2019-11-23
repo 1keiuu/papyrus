@@ -1,0 +1,84 @@
+<template>
+  <v-app>
+    <!-- <v-navigation-drawer  class="v-navigation"> -->
+    <v-card class="v-card v-navigation" max-width="70" min-height="200" tile>
+      <v-list flat>
+        <v-list-item-group v-model="item" class="v-list-item-group">
+          <v-list-item v-for="(item, i) in items" :key="i" class="v-list-item">
+            <v-list-item-icon class="v-list-item-icon">
+              <v-icon v-text="item.icon" class="v-icon" @click="sampleClick(item.name)"></v-icon>
+            </v-list-item-icon>
+            <v-list-item-content class="v-list-item-content"> </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-card>
+    <!-- </v-navigation-drawer> -->
+  </v-app>
+</template>
+
+<script>
+import router from "@/router";
+
+export default {
+  name: "Navigation",
+  components: {},
+
+  data: () => ({
+    item: 1,
+    items: [
+      {
+        icon: "mdi-home",
+        name: "sampleHome"
+      },
+      {
+        icon: "mdi-clipboard-list-outline",
+        name: "sampleTask"
+      }
+    ]
+  }),
+  methods: {
+    sampleClick(target) {
+      switch (target) {
+        case "sampleHome":
+          this.$router.push(
+            "/sampleHome",
+            () => {},
+            () => {}
+          );
+          break;
+        case "sampleTask":
+          this.$router.push(
+            "/sampletask",
+            () => {},
+            () => {}
+          );
+          break;
+
+        default:
+      }
+    }
+  }
+};
+</script>
+
+<style scoped>
+.v-navigation {
+  position: fixed;
+}
+
+.v-card {
+  margin-top: 56px;
+  height: 100vh;
+}
+
+.v-list-item {
+  padding-left: 20px;
+  color: #6245ea;
+}
+
+.v-list-item-icon {
+  padding-left: 5px;
+}
+
+</style>

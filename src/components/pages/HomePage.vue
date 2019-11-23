@@ -15,7 +15,15 @@
 import firebase from "firebase/app";
 import store from "../../store";
 import ProfileEditModal from "../parts/ProfileEditModal";
+import router from '@/router'
+// import firebaseConfig from "../../main";
+// firebase.initializeApp(firebaseConfig);
 
+
+// const storageRef = firebase
+//   .storage()
+//   .ref()
+//   .child("profile");
 
 export default {
   name: "HelloWorld",
