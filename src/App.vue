@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <p-header @logout="handleHeaderMenuLogoutClick" @edit="handleHeaderMenuEditProfileClick" v-if="$route.name.indexOf('no_auth') == -1"></p-header>
+    <p-header class="p-header" @logout="handleHeaderMenuLogoutClick" @edit="handleHeaderMenuEditProfileClick" v-if="$route.name.indexOf('no_auth') == -1"></p-header>
+    <p-navigation class="p-navigation" v-if="$route.name.indexOf('no_auth') == -1"></p-navigation>
     <v-content>
       <router-view ref="rv" />
     </v-content>
@@ -35,5 +36,15 @@ export default {
 
 ::-webkit-scrollbar{
   display:none
+}
+
+
+.p-navigation{
+  position: absolute;
+  z-index: 2
+}
+
+.p-header{
+    z-index: 3
 }
 </style>

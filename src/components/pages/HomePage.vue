@@ -15,7 +15,7 @@ import firebase from "firebase/app";
 import firestore from "firebase/firestore";
 // import storage from 'firebase/storage';
 import ProfileEditModal from "../parts/ProfileEditModal";
-
+import router from '@/router'
 // import firebaseConfig from "../../main";
 // firebase.initializeApp(firebaseConfig);
 

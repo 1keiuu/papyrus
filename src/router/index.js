@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import firebase from 'firebase/app'
+import firebase from 'firebase/app';
 
 Vue.use(VueRouter);
 
@@ -14,6 +14,21 @@ const routes = [
     path: '/home',
     name: 'home',
     component: require('@/components/pages/HomePage').default,
+  },
+  {
+    path: '/sampleHome',
+    name: 'sampleHome',
+    component: require('@/components/pages/sampleHome').default,
+  },
+  {
+    path: '/sampleTask',
+    name: 'sampleTask',
+    component: require('@/components/pages/sampleTask').default,
+  },
+  {
+    path: '/grobals/Navigation',
+    name: 'Navigation',
+    component: require('@/components/globals/Navigation').default,
   },
 ];
 
