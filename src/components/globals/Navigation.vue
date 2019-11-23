@@ -4,11 +4,21 @@
     <v-card class="v-card v-navigation" max-width="70" min-height="200" tile>
       <v-list flat>
         <v-list-item-group v-model="item" class="v-list-item-group">
-          <v-list-item v-for="(item, i) in items" :key="i" class="v-list-item">
-            <v-list-item-icon class="v-list-item-icon">
-              <v-icon v-text="item.icon" class="v-icon" @click="sampleClick(item.name)"></v-icon>
-            </v-list-item-icon>
-            <v-list-item-content class="v-list-item-content"> </v-list-item-content>
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            class="v-list-item"
+            @click="sampleClick(item.path)"
+          >
+            <v-tooltip right>
+              <template v-slot:activator="{ on }">
+                <v-list-item-icon class="v-list-item-icon" v-on="on">
+                  <v-icon v-text="item.icon" class="v-icon"></v-icon>
+                </v-list-item-icon>
+                <v-list-item-content class="v-list-item-content"> </v-list-item-content>
+              </template>
+              <span>{{item.name}}</span>
+            </v-tooltip>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -23,38 +33,30 @@ import router from "@/router";
 export default {
   name: "Navigation",
   components: {},
-
   data: () => ({
-    item: 1,
     items: [
       {
         icon: "mdi-home",
-        name: "sampleHome"
+        name: "Home",
+        path: "/"
       },
       {
         icon: "mdi-clipboard-list-outline",
-        name: "sampleTask"
+        name: "sampleTask",
+        path:"/smapleTask"
       }
     ]
+    // currentPath:
   }),
   methods: {
     sampleClick(target) {
       switch (target) {
-        case "sampleHome":
-          this.$router.push(
-            "/sampleHome",
-            () => {},
-            () => {}
-          );
+        case "Home":
+          this.$router.push("/");
           break;
         case "sampleTask":
-          this.$router.push(
-            "/sampletask",
-            () => {},
-            () => {}
-          );
+          this.$router.push("/sampleTask");
           break;
-
         default:
       }
     }
@@ -80,5 +82,4 @@ export default {
 .v-list-item-icon {
   padding-left: 5px;
 }
-
 </style>

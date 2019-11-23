@@ -16,11 +16,6 @@ const routes = [
     component: require('@/components/pages/HomePage').default,
   },
   {
-    path: '/sampleHome',
-    name: 'sampleHome',
-    component: require('@/components/pages/sampleHome').default,
-  },
-  {
     path: '/sampleTask',
     name: 'sampleTask',
     component: require('@/components/pages/sampleTask').default,
