@@ -13,7 +13,7 @@ Vue.config.productionTip = false;
 Vue.use(vuetify);
 
 firebase.init()
-firebase.onAuth()
+// firebase.onAuth()
 
 new Vue({
   router,

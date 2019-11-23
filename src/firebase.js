@@ -24,8 +24,7 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       /* eslint-disable no-param-reassign */
       user = user || {};
-      store.commit("setUser", user);
-      store.commit("setSignIn", !!user.uid);
+      // store.commit("setSignIn", !!user.uid);
       console.log(store.state)
     });
   }

@@ -1,16 +1,18 @@
 <template>
   <v-app>
-      <p-header
-        @logout="handleHeaderMenuLogoutClick"
-        @edit="handleHeaderMenuEditProfileClick"
-        @addTask="handleHeaderAddTaskButtonClick"
-        @setTarget="handleHeaderSetTargetButtonClick"
-        v-if="$route.name.indexOf('no_auth') !== 0"
-      ></p-header>
-      <ProfileEditModal ref="profileEdit" @submit="submitProfileData"></ProfileEditModal>
-      <v-content>
-        <router-view ref="rv" />
-      </v-content>
+    <p-header
+      @logout="handleHeaderMenuLogoutClick"
+      @edit="handleHeaderMenuEditProfileClick"
+      @addTask="handleHeaderAddTaskButtonClick"
+      v-if="$route.name.indexOf('no_auth') !== 0"
+      v-bind:userName=this.userName
+    ></p-header>
+    <v-content>
+      <router-view ref="rv" />
+      <ProfileEditModal ref="profileEditModal" @submit="submitProfileData" v-bind:userName=this.userName
+></ProfileEditModal>
+      <AddTaskModal ref="addTaskModal" @submit="submitTaskData"></AddTaskModal>
+    </v-content>
   </v-app>
 </template>
 
@@ -19,16 +21,18 @@ import firebase from "firebase/app";
 import store from "./store";
 import Header from "@/components/globals/Header";
 import ProfileEditModal from "./components/parts/ProfileEditModal";
+import AddTaskModal from "./components/parts/AddTaskModal";
 
 export default {
   name: "App",
   components: {
     "p-header": Header,
-    ProfileEditModal
+    ProfileEditModal,
+    AddTaskModal
   },
   data() {
     return {
-      name: "",
+      name: ""
     };
   },
   methods: {
@@ -39,14 +43,17 @@ export default {
     handleHeaderMenuEditProfileClick() {
       this.openProfileEditModal();
     },
-    // handleHeaderAddTaskButtonClick() {
-    //   this.$refs.rv.openDialog();
-    // },
+    handleHeaderAddTaskButtonClick() {
+      this.openAddTaskModal();
+    },
     // handleHeaderSetTargetButtonClick() {
     //   this.$refs.rv.setTarget()
     // },
+    openAddTaskModal() {
+      this.$refs.addTaskModal.openDialog();
+    },
     openProfileEditModal() {
-      this.$refs.profileEdit.openDialog();
+      this.$refs.profileEditModal.openDialog();
     },
     submitProfileData(inputName, selectedItems, inputImage) {
       const user = firebase.auth().currentUser;
@@ -54,20 +61,29 @@ export default {
         .firestore()
         .collection("user_info")
         .doc(user.uid)
-        .update({ name: inputName });
+        .set({ name: inputName, interests: selectedItems, imageUrl: inputImage }, { merge: true });
+      store.commit("setUserName", inputName);
+    },
+    submitTaskData(inputName, inputDate, selectedCategory) {
+      const user = firebase.auth().currentUser;
       firebase
         .firestore()
-        .collection("user_info")
+        .collection("tasks")
         .doc(user.uid)
-        .update({ interests: selectedItems });
+        .collection("task")
+        .doc()
+        .set({ taskName: inputName, taskDate: inputDate, category: selectedCategory });
     }
   },
   computed: {
     userStatus() {
       // ログインするとtrue
       return this.$store.getters.isSignIn;
+    },
+    userName() {
+      return this.$store.getters.userName;
     }
-  },
+  }
 };
 </script>
 <style scoped>

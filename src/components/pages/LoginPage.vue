@@ -1,10 +1,11 @@
 <template>
   <v-app>
     <div class='loading__container' v-show="loading">
-      <v-progress-circular :rotate="-90" :value="value" :size="200" :width="25" color="blue-grey">
-        <p class="v-progress-circular__p">{{ value }}</p>
+      <v-progress-circular :rotate="-90" :value="value" :size="200" :width="15" color="blue-grey">
+        <!-- <p class="v-progress-circular__p">{{ value }}</p> -->
+        <img src='../../assets/loading__icon.png' width=80px/>
       </v-progress-circular>
-      <h1>Papyrus</h1>
+      <h1 class='loading__title'>Papyrus</h1>
     </div>
     <div v-show="!loading">
       <v-content>
@@ -28,11 +29,11 @@
                       :type="'password'"
                       label="パスワード"
                     ></v-text-field>
-                    <v-checkbox
+                    <!-- <v-checkbox
                       v-model="checkbox"
                       label="ログイン状態を保持する"
                       required
-                    ></v-checkbox>
+                    ></v-checkbox> -->
                   </v-flex>
                   <v-card-actions class="justify-center">
                     <v-btn
@@ -71,7 +72,7 @@ export default {
       v => v.length >= 8 || "パスワードは８文字以上入力してください"
     ],
     select: null,
-    checkbox: false,
+    // checkbox: false,
     lazy: false,
     loading: true,
     value: 0,
@@ -116,20 +117,28 @@ export default {
         .then(result => {
           console.log(result);
           router.push("/");
-          store.commit("setUser", result);
-          store.commit("setSignIn", true);
           // console.log(store.state)
         })
         .catch(error => {
           console.log(error);
           this.throwLoginError(error.code);
         });
+    },
+    activateLoading() {
+      this.interval = setInterval(() => {
+        if (this.value === 100) {
+          clearInterval(this.interval);
+          this.value = 100;
+          setTimeout(() => {
+            this.loading = false;
+          }, 1000);
+        } else {
+          this.value += 10;
+        }
+      }, 100);
     }
   },
   computed: {
-    user() {
-      return this.$store.getters.user;
-    },
     userStatus() {
       // ログインするとtrue
       return this.$store.getters.isSignIn;
@@ -142,20 +151,7 @@ export default {
       console.log("not");
     }
 
-    const b = () => {
-      this.interval = setInterval(() => {
-        if (this.value === 100) {
-          clearInterval(this.interval);
-          this.value = 100;
-          setTimeout(() => {
-            this.loading = false;
-          }, 1000);
-        } else {
-          this.value += 10;
-        }
-      }, 200);
-    };
-    b();
+    this.activateLoading();
   },
   beforeDestroy() {
     clearInterval(this.interval);
@@ -176,6 +172,11 @@ export default {
   flex-direction:column;
   justify-content: center;
   align-items: center;
+}
+
+.loading__title{
+  margin-top:0px;
+  font-size:60px
 }
 
 .v-application p{
