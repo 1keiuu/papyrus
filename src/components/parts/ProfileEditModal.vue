@@ -62,7 +62,7 @@ export default {
   data: () => ({
     dialog: false,
     tabs: ["プロフィール", "個人情報"],
-    inputName: 'i',
+    inputName: '',
     inputItems: [],
     interestsOptions: ["語学学習", "プログラミング"],
     inputImage: ""
@@ -81,6 +81,9 @@ export default {
     }
   },
   computed: {
+  },
+  mounted:function() {
+    this.inputName = this.userName
   }
 };
 </script>
