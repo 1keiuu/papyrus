@@ -1,31 +1,25 @@
 <template>
-  <v-container fluid fill-height>
-    <v-layout wrap>
-      <v-flex  class="d">
-        <v-card class="a">
-
-
-        </v-card>
-        <div class="b">
+  <v-content>
+    <v-container fluid fill-height>
+      <v-layout justify-center wrap>
+        <div class="inner-left__wrapper"><MissionState></MissionState></div>
+        <div class="inner-right__wrapper">
+          <div class="matrix__wrapper"></div>
         </div>
-      </v-flex>
-      <v-flex>
-        <div class="c">
-        </div>
-      </v-flex>
-    </v-layout>
-    <ProfileEditModal ref="profileEdit" @submit="submitProfileData"></ProfileEditModal>
-  </v-container>
+      </v-layout>
+      <ProfileEditModal ref="profileEdit" @submit="submitProfileData"></ProfileEditModal>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
 import firebase from "firebase/app";
 import store from "../../store";
 import ProfileEditModal from "../parts/ProfileEditModal";
-import router from '@/router'
+import router from "@/router";
+import MissionState from "../parts/MissionState"
 // import firebaseConfig from "../../main";
 // firebase.initializeApp(firebaseConfig);
-
 
 // const storageRef = firebase
 //   .storage()
@@ -38,7 +32,8 @@ export default {
     userId: firebase.auth().currentUser.uid
   }),
   components: {
-    ProfileEditModal
+    ProfileEditModal,
+    MissionState
   },
   methods: {
     logout() {
@@ -62,30 +57,24 @@ export default {
     }
   },
   mounted() {
-    console.log(store.state)
+    console.log(store.state);
   }
 };
 </script>
-<style scoped>
-  .a{
-    width:650px;
-    height:165px;
-  }
-  .b{
-        margin-top:40px;
-        width:513px;
-    height:228px;
-    background-color:blue
-  }
-  .c{
-    width:667px;
-    height:626px;
-    background-color:green;
-        margin-top:20px;
 
-  }
-  .d{
-    margin-left: 95px;
-    margin-top:20px;
-  }
+<style scoped>
+.v-content {
+  padding: 20px !important;
+}
+.inner-right__wrapper {
+  width: 610px;
+  height: 626px;
+  background-color: green;
+  margin-left: 30px;
+}
+.inner-left__wrapper {
+  width: 600px;
+  height: 200px;
+  margin-left: 60px;
+}
 </style>
