@@ -1,31 +1,55 @@
 <template>
   <!-- <v-app> -->
-  <v-app-bar app height='84px'>
+  <v-app-bar app height="84px">
     <h1 class="align-center font-weight-bold" style="font-size: 30px ; color:#6245EA ">Papyrus</h1>
     <v-spacer></v-spacer>
 
     <div class="Menu-items__container">
       <p v-show="userName">こんにちは、{{ userName }}さん</p>
-    <v-spacer></v-spacer>
-    <div class="button-group__wrapper">
-      <v-btn class="ma-2" fab color="indigo lighten-2" small rounded outlined>
-        <v-icon>mdi-file-document-outline</v-icon>
-      </v-btn>
-      <v-btn class="ma-2 pl-2" color="indigo lighten-2" small outlined>
-        <v-icon small>mdi-check</v-icon>
-        完了済を見る
-      </v-btn>
-      <v-btn class="ma-2 pl-3 mr-8" color="red lighten-2" dark @click="handleAddTaskButtonClick">
-        <v-icon class="pr-1">mdi-plus</v-icon>
-        タスクを追加
-      </v-btn>
-    </div>
+      <v-spacer></v-spacer>
+      <div class="button-group__wrapper">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              class="mb-1 mr-7 button-group__archive"
+              fab
+              color="indigo lighten-2"
+              width="36"
+              height="36"
+              rounded
+              outlined
+              v-on="on"
+            >
+              <v-layout justify-center fill-height>
+                <v-icon class="archive__icon">mdi-history</v-icon>
+              </v-layout>
+            </v-btn>
+          </template>
+          <span>アーカイブを見る</span>
+        </v-tooltip>
+        <v-btn
+          class="ma-2 mr-10 pl-2 button-group__completed"
+          color="indigo lighten-2"
+          small
+          outlined
+        >
+          <v-icon small>mdi-check</v-icon>
+          完了済を見る
+        </v-btn>
+        <v-btn class="ma-2 pl-3 mr-8" color="red lighten-2" dark @click="handleAddTaskButtonClick">
+          <v-icon class="pr-1">mdi-plus</v-icon>
+          タスクを追加
+        </v-btn>
+      </div>
     </div>
     <v-menu open-on-hover close-on-click offset-y bottom>
       <template v-slot:activator="{ on }">
         <div>
-          <v-avatar color="primary" size="45" v-on="on" style="cursor:pointer">
-            <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+          <v-avatar color="primary" size="50" v-show='profileImageUrl' v-on="on" style="cursor:pointer">
+            <img src=profileImageUrl alt="profile" />
+          </v-avatar>
+          <v-avatar color="primary" size="50" v-show='!profileImageUrl' v-on="on" style="cursor:pointer">
+            <v-icon color="white" large>mdi-emoticon-happy-outline</v-icon>
           </v-avatar>
         </div>
       </template>
@@ -69,7 +93,9 @@ export default {
           icon: "mdi-logout"
         }
       ],
-      loading: true
+      loading: true,
+      files: [],
+      profileImageUrl: ""
     };
   },
   props: ["userName"],
@@ -96,24 +122,44 @@ export default {
     //   this.$emit("setTarget");
     // }
   },
-  computed: {}
+  computed: {},
+  created: function() {
+    const user = firebase.auth().currentUser
+    const ref = firebase
+      .storage()
+      .ref()
+      .child("profile").child("2E3C3896-2149-491B-9D4B-A7D229CFDD80.jpeg")
+    ref
+      .getDownloadURL()
+      .then(url => {
+        console.log(ref)
+        // this.profileImageUrl = url;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 };
 </script>
 <style lang="scss" scoped>
 $addButtonColor: #ef9a9a;
 $targetButtonColor: #9fa8da;
-$primary: #6245EA;
+$primary: #6245ea;
 
 .v-application p {
   margin-bottom: 0px;
   margin-top: 10px;
 }
 
-.v-btn--outlined{
-  border:1.5px solid;
+.v-tooltip__content {
+  font-size: 12px;
 }
 
-.v-btn__content{
+.v-btn--outlined {
+  border: 1.5px solid;
+}
+
+.v-btn__content {
   margin-bottom: 2px;
 }
 
@@ -122,16 +168,30 @@ $primary: #6245EA;
   margin-left: 12px;
 }
 
-.Menu-items__container{
-  display:flex;
+.Menu-items__container {
+  display: flex;
   margin-top: 33px;
-  align-items:flex-end;
-  justify-content: space-between
+  margin-bottom: 17px;
+  align-items: flex-end;
+  justify-content: space-between;
 }
 
 .button-group__wrapper {
-  margin-right: 50px;
+  margin-left: 60px;
+  margin-right: 30px;
   display: flex;
   align-items: flex-end;
+}
+
+.button-group__completed {
+  margin-right: 30px;
+}
+
+.button-group__archive {
+  margin-right: 20px;
+}
+
+.archive__icon {
+  padding-right: 2px;
 }
 </style>
