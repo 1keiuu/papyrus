@@ -1,13 +1,20 @@
 <template>
-  <v-container>
-    <v-layout text-center wrap>
-      <v-flex xs12></v-flex>
-      <v-flex mb-4>
-        <h1 class="display-2 font-weight-bold mb-3">MainPage</h1>
-        <!-- <p>{{user.displayName}}</p> -->
-        <ProfileEditModal ref="profileEdit" @submit="submitProfileData"></ProfileEditModal>
+  <v-container fluid fill-height>
+    <v-layout wrap>
+      <v-flex  class="d">
+        <v-card class="a">
+
+
+        </v-card>
+        <div class="b">
+        </div>
+      </v-flex>
+      <v-flex>
+        <div class="c">
+        </div>
       </v-flex>
     </v-layout>
+    <ProfileEditModal ref="profileEdit" @submit="submitProfileData"></ProfileEditModal>
   </v-container>
 </template>
 
@@ -59,3 +66,26 @@ export default {
   }
 };
 </script>
+<style scoped>
+  .a{
+    width:650px;
+    height:165px;
+  }
+  .b{
+        margin-top:40px;
+        width:513px;
+    height:228px;
+    background-color:blue
+  }
+  .c{
+    width:667px;
+    height:626px;
+    background-color:green;
+        margin-top:20px;
+
+  }
+  .d{
+    margin-left: 95px;
+    margin-top:20px;
+  }
+</style>
