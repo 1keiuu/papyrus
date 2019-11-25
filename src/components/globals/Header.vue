@@ -10,7 +10,16 @@
       <div class="button-group__wrapper">
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn class="mb-1 mr-7 button-group__archive" fab color="indigo lighten-2" width=36 height=36  rounded outlined v-on="on">
+            <v-btn
+              class="mb-1 mr-7 button-group__archive"
+              fab
+              color="indigo lighten-2"
+              width="36"
+              height="36"
+              rounded
+              outlined
+              v-on="on"
+            >
               <v-layout justify-center fill-height>
                 <v-icon class="archive__icon">mdi-history</v-icon>
               </v-layout>
@@ -36,8 +45,11 @@
     <v-menu open-on-hover close-on-click offset-y bottom>
       <template v-slot:activator="{ on }">
         <div>
-          <v-avatar color="primary" size="50" v-on="on" style="cursor:pointer">
-            <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+          <v-avatar color="primary" size="50" v-show='profileImageUrl' v-on="on" style="cursor:pointer">
+            <img src=profileImageUrl alt="profile" />
+          </v-avatar>
+          <v-avatar color="primary" size="50" v-show='!profileImageUrl' v-on="on" style="cursor:pointer">
+            <v-icon color="white" large>mdi-emoticon-happy-outline</v-icon>
           </v-avatar>
         </div>
       </template>
@@ -81,7 +93,9 @@ export default {
           icon: "mdi-logout"
         }
       ],
-      loading: true
+      loading: true,
+      files: [],
+      profileImageUrl: ""
     };
   },
   props: ["userName"],
@@ -108,7 +122,21 @@ export default {
     //   this.$emit("setTarget");
     // }
   },
-  computed: {}
+  computed: {},
+  created: function() {
+    const ref = firebase
+      .storage()
+      .ref()
+      .child("profile");
+    ref
+      .getDownloadURL()
+      .then(url => {
+        this.profileImageUrl = url;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -121,8 +149,8 @@ $primary: #6245ea;
   margin-top: 10px;
 }
 
-.v-tooltip__content{
-  font-size: 12px
+.v-tooltip__content {
+  font-size: 12px;
 }
 
 .v-btn--outlined {
