@@ -5,7 +5,8 @@
         <!-- <p class="v-progress-circular__p">{{ value }}</p> -->
         <img src='../../assets/loading__icon.png' width=80px/>
       </v-progress-circular>
-      <h1 class='loading__title'>Papyrus</h1>
+      <!-- <h1 class='loading__title'>Papyrus</h1> -->
+      <lottie :options="defaultOptions" :height="400" :width="400" v-on:animCreated="handleAnimation"/>
     </div>
     <div v-show="!loading">
       <v-content>
@@ -57,8 +58,13 @@
 import firebase from "firebase/app";
 import router from "@/router";
 import store from "../../store";
+import Lottie from "../../plugins/lottie";
+import animationData from "../../assets/data.json";
 
 export default {
+  components: {
+    Lottie
+  },
   data: () => ({
     valid: true,
     email: "",
@@ -76,10 +82,15 @@ export default {
     lazy: false,
     loading: true,
     value: 0,
-    interval: {}
+    interval: {},
+    defaultOptions: { animationData: animationData },
+    animationSpeed: 1
   }),
 
   methods: {
+    handleAnimation: function(anim) {
+      this.anim = anim;
+    },
     validate() {
       if (this.$refs.form.validate()) {
         this.snackbar = true;
@@ -172,6 +183,7 @@ export default {
   flex-direction:column;
   justify-content: center;
   align-items: center;
+  background-color: black
 }
 
 .loading__title{

@@ -9,7 +9,7 @@
     <v-spacer></v-spacer>
     <div class="button-group__wrapper">
       <v-btn class="ma-2" fab color="indigo lighten-2" small rounded outlined>
-        <v-icon>mdi-file-document-outline</v-icon>
+        <v-icon>mdi-history</v-icon>
       </v-btn>
       <v-btn class="ma-2 pl-2" color="indigo lighten-2" small outlined>
         <v-icon small>mdi-check</v-icon>
