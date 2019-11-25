@@ -29,11 +29,11 @@ import MissionState from "../parts/MissionState"
 export default {
   name: "HelloWorld",
   data: () => ({
-    userId: firebase.auth().currentUser.uid
+    userId: firebase.auth().currentUser.uid,
   }),
   components: {
     ProfileEditModal,
-    MissionState
+    MissionState,
   },
   methods: {
     logout() {

@@ -44,11 +44,13 @@
     </div>
     <v-menu open-on-hover close-on-click offset-y bottom>
       <template v-slot:activator="{ on }">
-        <div>
-          <v-avatar color="primary" size="50" v-show='profileImageUrl' v-on="on" style="cursor:pointer">
-            <img src=profileImageUrl alt="profile" />
+        <div class="avator__wrapper" v-show="profileImageUrl">
+          <v-avatar color="primary" size="50" v-on="on" style="cursor:pointer">
+            <img :src="profileImageUrl" alt="profile" />
           </v-avatar>
-          <v-avatar color="primary" size="50" v-show='!profileImageUrl' v-on="on" style="cursor:pointer">
+        </div>
+        <div class="avator__wrapper" v-show="!profileImageUrl">
+          <v-avatar size="50" v-on="on" style="cursor:pointer">
             <v-icon color="white" large>mdi-emoticon-happy-outline</v-icon>
           </v-avatar>
         </div>
@@ -73,6 +75,7 @@
 
 <script>
 import firebase from "firebase";
+import axios from "axios";
 
 export default {
   name: "Header",
@@ -95,7 +98,7 @@ export default {
       ],
       loading: true,
       files: [],
-      profileImageUrl: ""
+      profileImageUrl: this.profileImageUrlState
     };
   },
   props: ["userName"],
@@ -122,22 +125,32 @@ export default {
     //   this.$emit("setTarget");
     // }
   },
-  computed: {},
+  computed: {
+    profileImageUrlState() {
+      return this.$store.getters.profileImageUrl;
+    }
+  },
   created: function() {
-    const user = firebase.auth().currentUser
+    const user = firebase.auth().currentUser;
     const ref = firebase
       .storage()
       .ref()
-      .child("profile").child("2E3C3896-2149-491B-9D4B-A7D229CFDD80.jpeg")
+      .child("profile")
+      .child(user.uid);
     ref
       .getDownloadURL()
       .then(url => {
-        console.log(ref)
-        // this.profileImageUrl = url;
+        this.profileImageUrl = url;
       })
       .catch(error => {
         console.log(error);
       });
+    // axios
+    //   .get(this.profileImageUrl)
+    //   .then(response =>)
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   }
 };
 </script>
@@ -163,6 +176,11 @@ $primary: #6245ea;
   margin-bottom: 2px;
 }
 
+.avator__wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
 .v-menu__content {
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
   margin-left: 12px;

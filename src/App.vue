@@ -5,13 +5,16 @@
       @edit="handleHeaderMenuEditProfileClick"
       @addTask="handleHeaderAddTaskButtonClick"
       v-if="$route.name.indexOf('no_auth') !== 0"
-      v-bind:userName=this.userName
+      v-bind:userName="this.userName"
     ></p-header>
     <p-navigation class="p-navigation" v-if="$route.name.indexOf('no_auth') == -1"></p-navigation>
     <v-content>
       <router-view ref="rv" />
-      <ProfileEditModal ref="profileEditModal" @submit="submitProfileData" v-bind:userName=this.userName
-></ProfileEditModal>
+      <ProfileEditModal
+        ref="profileEditModal"
+        @submit="submitProfileData"
+        v-bind:userName="this.userName"
+      ></ProfileEditModal>
       <AddTaskModal ref="addTaskModal" @submit="submitTaskData"></AddTaskModal>
     </v-content>
   </v-app>
@@ -23,7 +26,7 @@ import store from "./store";
 import Header from "@/components/globals/Header";
 import ProfileEditModal from "./components/parts/ProfileEditModal";
 import AddTaskModal from "./components/parts/AddTaskModal";
-import Navigation from '@/components/globals/Navigation'
+import Navigation from "@/components/globals/Navigation";
 
 export default {
   name: "App",
@@ -31,11 +34,12 @@ export default {
     "p-header": Header,
     ProfileEditModal,
     AddTaskModal,
-    'p-navigation': Navigation
+    "p-navigation": Navigation
   },
   data() {
     return {
-      name: ""
+      name: "",
+      profileImage: ""
     };
   },
   methods: {
@@ -60,11 +64,28 @@ export default {
     },
     submitProfileData(inputName, selectedItems, inputImage) {
       const user = firebase.auth().currentUser;
+      const metadata = {
+        contentType: "image/jpeg"
+      }
       firebase
         .firestore()
         .collection("user_info")
         .doc(user.uid)
-        .set({ name: inputName, interests: selectedItems, imageUrl: inputImage }, { merge: true });
+        .set({ name: inputName, interests: selectedItems }, { merge: true });
+      firebase
+        .storage()
+        .ref()
+        .child("profile")
+        .child(user.uid)
+        .put(inputImage, metadata)
+        .then(snapshot => {
+          snapshot.ref.getDownloadURL().then(downloadURL => {
+            store.commit("setProfileImageUrl", downloadURL);
+          })
+        })
+        .catch(error => {
+          console.log(error);
+        });
       store.commit("setUserName", inputName);
     },
     submitTaskData(inputName, inputDate, selectedCategory) {
@@ -94,13 +115,12 @@ export default {
   display: none;
 }
 
-
-.p-navigation{
+.p-navigation {
   position: absolute;
-  z-index: 2
+  z-index: 2;
 }
 
-.p-header{
-    z-index: 3
+.p-header {
+  z-index: 3;
 }
 </style>

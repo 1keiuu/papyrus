@@ -7,7 +7,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     userName: '',
-    isSignIn: false
+    profileImageUrl: '',
+    isSignIn: false,
   },
   mutations: {
     setSignIn(state, isSignIn) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     setUserName(state, userName) {
       state.userName = userName;
+    },
+    setProfileImageUrl(state, profileImageUrl) {
+      state.profileImageUrl = profileImageUrl
     }
   },
   getters: {
@@ -23,6 +27,9 @@ export default new Vuex.Store({
     },
     isSignIn(state) {
       return state.isSignIn;
+    },
+    profileImageUrl(state) {
+      return state.profileImageUrl
     }
   },
   plugins: [createPersistedState()],
