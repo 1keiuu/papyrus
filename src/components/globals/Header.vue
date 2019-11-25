@@ -124,14 +124,16 @@ export default {
   },
   computed: {},
   created: function() {
+    const user = firebase.auth().currentUser
     const ref = firebase
       .storage()
       .ref()
-      .child("profile");
+      .child("profile").child("2E3C3896-2149-491B-9D4B-A7D229CFDD80.jpeg")
     ref
       .getDownloadURL()
       .then(url => {
-        this.profileImageUrl = url;
+        console.log(ref)
+        // this.profileImageUrl = url;
       })
       .catch(error => {
         console.log(error);
