@@ -57,7 +57,6 @@ export default {
     }
   },
   mounted() {
-    console.log(store.state);
   }
 };
 </script>

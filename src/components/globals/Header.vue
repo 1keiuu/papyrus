@@ -50,8 +50,8 @@
           </v-avatar>
         </div>
         <div class="avator__wrapper" v-show="!profileImageUrl">
-          <v-avatar size="50" v-on="on" style="cursor:pointer">
-            <v-icon color="white" large>mdi-emoticon-happy-outline</v-icon>
+          <v-avatar size="50" v-on="on" class="avator" style="cursor:pointer">
+            <v-icon color="#6245ea">mdi-account</v-icon>
           </v-avatar>
         </div>
       </template>
@@ -180,6 +180,10 @@ $primary: #6245ea;
   height: 100%;
   display: flex;
   align-items: center;
+}
+
+.avator{
+  border:0.1px solid $primary
 }
 .v-menu__content {
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);

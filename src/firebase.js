@@ -20,12 +20,4 @@ export default {
   logout() {
     firebase.auth().signOut();
   },
-  onAuth() {
-    firebase.auth().onAuthStateChanged(user => {
-      /* eslint-disable no-param-reassign */
-      user = user || {};
-      // store.commit("setSignIn", !!user.uid);
-      console.log(store.state)
-    });
-  }
 };

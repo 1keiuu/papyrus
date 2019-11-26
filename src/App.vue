@@ -101,7 +101,6 @@ export default {
   },
   computed: {
     userStatus() {
-      // ログインするとtrue
       return this.$store.getters.isSignIn;
     },
     userName() {
