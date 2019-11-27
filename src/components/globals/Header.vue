@@ -1,12 +1,11 @@
 <template>
   <!-- <v-app> -->
   <v-app-bar app height="84px">
-    <h1 class="align-center font-weight-bold" style="font-size: 30px ; color:#6245EA ">Papyrus</h1>
+    <h1 class="align-center font-weight-bold" style="font-size: 30px ; color:#8471E2 ">Papyrus</h1>
     <v-spacer></v-spacer>
 
     <div class="Menu-items__container">
-      <p v-show="userName">こんにちは、{{ userName }}さん</p>
-      <v-spacer></v-spacer>
+      <p v-show="userName" class="mr-8">こんにちは、{{ userName }}さん</p>
       <div class="button-group__wrapper">
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
@@ -28,7 +27,7 @@
           <span>アーカイブを見る</span>
         </v-tooltip>
         <v-btn
-          class="ma-2 mr-10 pl-2 button-group__completed"
+          class="ma-2 mr-6 pl-2 button-group__completed"
           color="indigo lighten-2"
           small
           outlined
@@ -36,7 +35,7 @@
           <v-icon small>mdi-check</v-icon>
           完了済を見る
         </v-btn>
-        <v-btn class="ma-2 pl-3 mr-8" color="red lighten-2" dark @click="handleAddTaskButtonClick">
+        <v-btn class="ma-2 pl-3 mr-8 button-group__add-task" color="red lighten-2" dark @click="handleAddTaskButtonClick">
           <v-icon class="pr-1">mdi-plus</v-icon>
           タスクを追加
         </v-btn>
@@ -158,6 +157,7 @@ export default {
 $addButtonColor: #ef9a9a;
 $targetButtonColor: #9fa8da;
 $primary: #6245ea;
+$secondary:#8471E2;
 
 .v-application p {
   margin-bottom: 0px;
@@ -185,10 +185,6 @@ $primary: #6245ea;
 .avator{
   border:0.1px solid $primary
 }
-.v-menu__content {
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
-  margin-left: 12px;
-}
 
 .Menu-items__container {
   display: flex;
@@ -198,22 +194,36 @@ $primary: #6245ea;
   justify-content: space-between;
 }
 
+.v-menu__content {
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+  margin-left: 12px;
+  border-radius:1px
+}
+
+.v-list{
+  width:200px;
+  padding:0px;
+  border-radius:1px
+}
+.v-list-item{
+  padding:3px 16px;
+}
+
+.v-list-item__icon{
+  margin-right:15px
+}
+
 .button-group__wrapper {
-  margin-left: 60px;
-  margin-right: 30px;
   display: flex;
   align-items: flex-end;
 }
 
-.button-group__completed {
-  margin-right: 30px;
-}
-
-.button-group__archive {
-  margin-right: 20px;
-}
 
 .archive__icon {
   padding-right: 2px;
+}
+
+.button-group__add-task{
+  height:34px !important
 }
 </style>

@@ -45,7 +45,7 @@ export default {
   methods: {
     handleHeaderMenuLogoutClick() {
       this.$refs.rv.logout();
-      store.commit("userStatus", false);
+      store.commit("setSignIn", false);
     },
     handleHeaderMenuEditProfileClick() {
       this.openProfileEditModal();
