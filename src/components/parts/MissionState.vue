@@ -7,30 +7,27 @@
             <v-layout wrap>
               <p class="pTitle">ミッションステート / なりたい理想像</p>
               <v-row justify="end" align="center" no-gutters>
-                <v-btn
-                  class="mdiHelp"
-                  fab
-                  depressed
-                  outlined
-                  width="15px"
-                  height="15px"
-                >
+                <v-btn class="mdiHelp" fab depressed outlined width="15px" height="15px">
                   <v-icon class="mdiHelpIcon" size="7px">mdi-help</v-icon>
                 </v-btn>
-                <template>
-                <v-btn
-                  class="mdiFileDocumentEditOutline"
-                  v-show="!editActive"
-                  fab
-                  depressed
-                  @click="handleEditButtonClick"
-                  outlined
-                  width="28px"
-                  height="28px"
-                >
-                  <v-icon size="17"> mdi-file-document-edit-outline</v-icon>
-                </v-btn>
-                </template>
+                <v-tooltip bottom
+                  ><template v-slot:activator="{ on }">
+                    <v-btn
+                      class="mdiFileDocumentEditOutline"
+                      v-show="!editActive"
+                      fab
+                      depressed
+                      @click="handleEditButtonClick"
+                      outlined
+                      width="28px"
+                      height="28px"
+                      v-on="on"
+                    >
+                      <v-icon size="17"> mdi-file-document-edit-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>編集</span>
+                </v-tooltip>
                 <v-btn
                   class="mdiCancel"
                   v-show="editActive"
@@ -114,7 +111,7 @@ export default {
 $primary: #8471e2;
 $secondary: #707070;
 
-.v-app{
+.v-app {
   height: 220px;
 }
 
@@ -152,7 +149,7 @@ $secondary: #707070;
   padding-top: 0px;
 }
 
-.layoutTextarea{
+.layoutTextarea {
   height: 120px;
 }
 
