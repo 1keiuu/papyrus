@@ -68,7 +68,7 @@ export default {
 
 <style lang="scss" scoped>
 
-$primary : #6245ea;
+$secondary : #8471E2;
 
 .v-navigation {
   position: fixed;
@@ -81,7 +81,7 @@ $primary : #6245ea;
 
 .v-list-item {
   padding-left: 20px;
-  color: $primary;
+  color: $secondary;
 }
 
 .v-list-item-icon {
@@ -89,6 +89,6 @@ $primary : #6245ea;
 }
 
 .v-list-item--active{
-  border-right:2px solid $primary;
+  border-right:2px solid $secondary;
 }
 </style>

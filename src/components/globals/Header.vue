@@ -1,12 +1,11 @@
 <template>
   <!-- <v-app> -->
   <v-app-bar app height="84px">
-    <h1 class="align-center font-weight-bold" style="font-size: 30px ; color:#6245EA ">Papyrus</h1>
+    <h1 class="align-center font-weight-bold" style="font-size: 30px ; color:#8471E2 ">Papyrus</h1>
     <v-spacer></v-spacer>
 
     <div class="Menu-items__container">
-      <p v-show="userName">こんにちは、{{ userName }}さん</p>
-      <v-spacer></v-spacer>
+      <p v-show="userName" class="mr-8">こんにちは、{{ userName }}さん</p>
       <div class="button-group__wrapper">
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
@@ -28,7 +27,7 @@
           <span>アーカイブを見る</span>
         </v-tooltip>
         <v-btn
-          class="ma-2 mr-10 pl-2 button-group__completed"
+          class="ma-2 mr-6 pl-2 button-group__completed"
           color="indigo lighten-2"
           small
           outlined
@@ -36,7 +35,7 @@
           <v-icon small>mdi-check</v-icon>
           完了済を見る
         </v-btn>
-        <v-btn class="ma-2 pl-3 mr-8" color="red lighten-2" dark @click="handleAddTaskButtonClick">
+        <v-btn class="ma-2 pl-3 mr-8 button-group__add-task" color="red lighten-2" dark @click="handleAddTaskButtonClick">
           <v-icon class="pr-1">mdi-plus</v-icon>
           タスクを追加
         </v-btn>
@@ -44,12 +43,14 @@
     </div>
     <v-menu open-on-hover close-on-click offset-y bottom>
       <template v-slot:activator="{ on }">
-        <div>
-          <v-avatar color="primary" size="50" v-show='profileImageUrl' v-on="on" style="cursor:pointer">
-            <img src=profileImageUrl alt="profile" />
+        <div class="avator__wrapper" v-show="profileImageUrl">
+          <v-avatar color="primary" size="50" v-on="on" style="cursor:pointer">
+            <img :src="profileImageUrl" alt="profile" />
           </v-avatar>
-          <v-avatar color="primary" size="50" v-show='!profileImageUrl' v-on="on" style="cursor:pointer">
-            <v-icon color="white" large>mdi-emoticon-happy-outline</v-icon>
+        </div>
+        <div class="avator__wrapper" v-show="!profileImageUrl">
+          <v-avatar size="50" v-on="on" class="avator" style="cursor:pointer">
+            <v-icon color="#6245ea">mdi-account</v-icon>
           </v-avatar>
         </div>
       </template>
@@ -73,6 +74,7 @@
 
 <script>
 import firebase from "firebase";
+import axios from "axios";
 
 export default {
   name: "Header",
@@ -95,7 +97,7 @@ export default {
       ],
       loading: true,
       files: [],
-      profileImageUrl: ""
+      profileImageUrl: this.profileImageUrlState
     };
   },
   props: ["userName"],
@@ -122,29 +124,36 @@ export default {
     //   this.$emit("setTarget");
     // }
   },
-  computed: {},
   created: function() {
-    const user = firebase.auth().currentUser
     const ref = firebase
       .storage()
       .ref()
-      .child("profile").child("2E3C3896-2149-491B-9D4B-A7D229CFDD80.jpeg")
+      .child("profile")
+      .child(this.userId);
     ref
       .getDownloadURL()
       .then(url => {
-        console.log(ref)
-        // this.profileImageUrl = url;
+        this.profileImageUrl = url;
       })
       .catch(error => {
         console.log(error);
       });
-  }
-};
+  },
+  computed: {
+    profileImageUrlState() {
+      return this.$store.getters.profileImageUrl;
+    },
+    userId() {
+      return this.$store.getters.userId;
+    },
+  },
+}
 </script>
 <style lang="scss" scoped>
 $addButtonColor: #ef9a9a;
 $targetButtonColor: #9fa8da;
 $primary: #6245ea;
+$secondary:#8471E2;
 
 .v-application p {
   margin-bottom: 0px;
@@ -163,9 +172,14 @@ $primary: #6245ea;
   margin-bottom: 2px;
 }
 
-.v-menu__content {
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
-  margin-left: 12px;
+.avator__wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.avator{
+  border:0.1px solid $primary
 }
 
 .Menu-items__container {
@@ -176,22 +190,34 @@ $primary: #6245ea;
   justify-content: space-between;
 }
 
+.v-menu__content {
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+  margin-left: 12px;
+  border-radius:1px
+}
+
+.v-list{
+  width:200px;
+  padding:0px;
+  border-radius:1px
+}
+
+
+.v-list-item__icon{
+  margin-right:15px
+}
+
 .button-group__wrapper {
-  margin-left: 60px;
-  margin-right: 30px;
   display: flex;
   align-items: flex-end;
 }
 
-.button-group__completed {
-  margin-right: 30px;
-}
-
-.button-group__archive {
-  margin-right: 20px;
-}
 
 .archive__icon {
   padding-right: 2px;
+}
+
+.button-group__add-task{
+  height:34px !important
 }
 </style>

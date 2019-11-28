@@ -31,9 +31,8 @@ import Matrix from "../parts/Matrix"
 //   .child("profile");
 
 export default {
-  name: "HelloWorld",
+  name: "HomePage",
   data: () => ({
-    userId: firebase.auth().currentUser.uid
   }),
   components: {
     ProfileEditModal,
@@ -63,18 +62,27 @@ export default {
     }
   },
   mounted() {
-    console.log(store.state);
+  },
+  computed: {
+    userId() {
+      return this.$store.getters.userId;
+    }
   }
 };
 </script>
 
 <style scoped>
 .v-content {
-  padding: 20px !important;
+  padding: 0px !important;
+}
+.container {
+  padding:0px;
 }
 .inner-right__wrapper {
-  width: 597px;
-  height: 626px;
+  width: 510px;
+  height: 576px;
+  background-color:white;
+  border:0.5px solid grey;
   margin-left: 30px;
 }
 .inner-left__wrapper {

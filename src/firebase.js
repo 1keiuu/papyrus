@@ -15,17 +15,9 @@ const config = {
 export default {
   init() {
     firebase.initializeApp(config);
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
   },
   logout() {
     firebase.auth().signOut();
   },
-  onAuth() {
-    firebase.auth().onAuthStateChanged(user => {
-      /* eslint-disable no-param-reassign */
-      user = user || {};
-      // store.commit("setSignIn", !!user.uid);
-      console.log(store.state)
-    });
-  }
+
 };

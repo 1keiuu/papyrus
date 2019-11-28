@@ -76,8 +76,8 @@ export default {
       this.inputImage = event;
     },
     handleSubmitButtonClick() {
-      this.dialog = false;
       this.$emit("submit", this.inputName, this.inputItems, this.inputImage);
+      this.dialog = false;
     }
   },
   computed: {
