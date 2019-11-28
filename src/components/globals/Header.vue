@@ -124,18 +124,12 @@ export default {
     //   this.$emit("setTarget");
     // }
   },
-  computed: {
-    profileImageUrlState() {
-      return this.$store.getters.profileImageUrl;
-    }
-  },
   created: function() {
-    const user = firebase.auth().currentUser;
     const ref = firebase
       .storage()
       .ref()
       .child("profile")
-      .child(user.uid);
+      .child(this.userId);
     ref
       .getDownloadURL()
       .then(url => {
@@ -144,14 +138,16 @@ export default {
       .catch(error => {
         console.log(error);
       });
-    // axios
-    //   .get(this.profileImageUrl)
-    //   .then(response =>)
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
-  }
-};
+  },
+  computed: {
+    profileImageUrlState() {
+      return this.$store.getters.profileImageUrl;
+    },
+    userId() {
+      return this.$store.getters.userId;
+    },
+  },
+}
 </script>
 <style lang="scss" scoped>
 $addButtonColor: #ef9a9a;
@@ -205,9 +201,7 @@ $secondary:#8471E2;
   padding:0px;
   border-radius:1px
 }
-.v-list-item{
-  padding:3px 16px;
-}
+
 
 .v-list-item__icon{
   margin-right:15px

@@ -19,7 +19,7 @@ export default {
 
 <style scoped>
 .display-3 {
-  color: chartreuse;
+  color: black;
 }
 
 .v-card{

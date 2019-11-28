@@ -1,11 +1,10 @@
 <template>
   <v-app>
-    <div class='loading__container' v-show="loading">
+    <div class="loading__container" v-show="loading">
       <v-progress-circular :rotate="-90" :value="value" :size="200" :width="15" color="blue-grey">
-        <!-- <p class="v-progress-circular__p">{{ value }}</p> -->
-        <img src='../../assets/loading__icon.png' width=80px/>
+        <img src="../../assets/loading__icon.png" width="80px" />
       </v-progress-circular>
-      <h1 class='loading__title'>Papyrus</h1>
+      <h1 class="loading__title">Papyrus</h1>
     </div>
     <div v-show="!loading">
       <v-content>
@@ -115,8 +114,12 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(result => {
-          console.log(result);
-          router.push("/");
+          store.commit("setUserId", result.user.uid);
+          router.push(
+            "/",
+            () => {},
+            () => {}
+          );
           // console.log(store.state)
         })
         .catch(error => {
@@ -165,26 +168,26 @@ export default {
   width: 100%;
   height: 100vh;
 }
-.loading__container{
-  width:100vw;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
+.loading__container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.loading__title{
-  margin-top:0px;
-  font-size:60px
+.loading__title {
+  margin-top: 0px;
+  font-size: 60px;
 }
 
-.v-application p{
-  margin-bottom:0
+.v-application p {
+  margin-bottom: 0;
 }
 
-.v-progress-circular__p{
-  font-size:40px
+.v-progress-circular__p {
+  font-size: 40px;
 }
 
 .form {

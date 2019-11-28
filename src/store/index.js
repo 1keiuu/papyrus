@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     userName: '',
+    userId: '',
     profileImageUrl: '',
     isSignIn: false,
   },
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     setUserName(state, userName) {
       state.userName = userName;
     },
+    setUserId(state, userId) {
+      state.userId = userId;
+    },
     setProfileImageUrl(state, profileImageUrl) {
       state.profileImageUrl = profileImageUrl
     }
@@ -24,6 +28,9 @@ export default new Vuex.Store({
   getters: {
     userName(state) {
       return state.userName;
+    },
+    userId(state) {
+      return state.userId;
     },
     isSignIn(state) {
       return state.isSignIn;

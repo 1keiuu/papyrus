@@ -15,9 +15,9 @@ const config = {
 export default {
   init() {
     firebase.initializeApp(config);
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
   },
   logout() {
     firebase.auth().signOut();
   },
+
 };

@@ -4,10 +4,10 @@
       @logout="handleHeaderMenuLogoutClick"
       @edit="handleHeaderMenuEditProfileClick"
       @addTask="handleHeaderAddTaskButtonClick"
-      v-if="$route.name.indexOf('no_auth') !== 0"
+      v-if="$route.name !== 'no_auth/login'"
       v-bind:userName="this.userName"
     ></p-header>
-    <p-navigation class="p-navigation" v-if="$route.name.indexOf('no_auth') == -1"></p-navigation>
+    <p-navigation class="p-navigation" v-if="$route.name !== 'no_auth/login'"></p-navigation>
     <v-content>
       <router-view ref="rv" />
       <ProfileEditModal
@@ -46,6 +46,7 @@ export default {
     handleHeaderMenuLogoutClick() {
       this.$refs.rv.logout();
       store.commit("setSignIn", false);
+      store.commit("setUserId", "");
     },
     handleHeaderMenuEditProfileClick() {
       this.openProfileEditModal();
@@ -63,37 +64,39 @@ export default {
       this.$refs.profileEditModal.openDialog();
     },
     submitProfileData(inputName, selectedItems, inputImage) {
-      const user = firebase.auth().currentUser;
       const metadata = {
         contentType: "image/jpeg"
-      }
+      };
       firebase
         .firestore()
         .collection("user_info")
-        .doc(user.uid)
+        .doc(this.userId)
         .set({ name: inputName, interests: selectedItems }, { merge: true });
-      firebase
-        .storage()
-        .ref()
-        .child("profile")
-        .child(user.uid)
-        .put(inputImage, metadata)
-        .then(snapshot => {
-          snapshot.ref.getDownloadURL().then(downloadURL => {
-            store.commit("setProfileImageUrl", downloadURL);
+      if (inputImage !== "") {
+        firebase
+          .storage()
+          .ref()
+          .child("profile")
+          .child(this.userId)
+          .put(inputImage, metadata)
+          .then(snapshot => {
+            snapshot.ref.getDownloadURL().then(downloadURL => {
+              store.commit("setProfileImageUrl", downloadURL);
+            });
           })
-        })
-        .catch(error => {
-          console.log(error);
-        });
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        console.log()
+      }
       store.commit("setUserName", inputName);
     },
     submitTaskData(inputName, inputDate, selectedCategory) {
-      const user = firebase.auth().currentUser;
       firebase
         .firestore()
         .collection("tasks")
-        .doc(user.uid)
+        .doc(this.userId)
         .collection("task")
         .doc()
         .set({ taskName: inputName, taskDate: inputDate, category: selectedCategory });
@@ -105,6 +108,9 @@ export default {
     },
     userName() {
       return this.$store.getters.userName;
+    },
+    userId() {
+      return this.$store.getters.userId;
     }
   }
 };
