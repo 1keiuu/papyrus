@@ -31,7 +31,6 @@ const router = new VueRouter({
 });
 
 router.beforeResolve((to, from, next) => {
-  console.log(to);
   if (to.path === '/login') {
     next();
   } else {

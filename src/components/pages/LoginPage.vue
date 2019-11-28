@@ -151,7 +151,7 @@ export default {
     if (this.userStatus) {
       router.push("/");
     } else {
-      console.log("not");
+      console.log("loginStatus is not set");
     }
 
     this.activateLoading();
