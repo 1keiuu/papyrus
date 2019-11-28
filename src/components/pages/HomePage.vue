@@ -2,8 +2,10 @@
   <v-content>
     <v-container fluid fill-height>
       <v-layout justify-center wrap>
-        <div class="inner-left__wrapper"><MissionState></MissionState></div>
+        <div class="inner-left__wrapper"><MissionState></MissionState>
+        <Goals></Goals></div>
         <div class="inner-right__wrapper">
+          <Matrix></Matrix>
           <div class="matrix__wrapper"></div>
         </div>
       </v-layout>
@@ -18,6 +20,8 @@ import store from "../../store";
 import ProfileEditModal from "../parts/ProfileEditModal";
 import router from "@/router";
 import MissionState from "../parts/MissionState"
+import Goals from "../parts/Goals"
+import Matrix from "../parts/Matrix"
 // import firebaseConfig from "../../main";
 // firebase.initializeApp(firebaseConfig);
 
@@ -33,7 +37,9 @@ export default {
   }),
   components: {
     ProfileEditModal,
-    MissionState
+    MissionState,
+    Goals,
+    Matrix
   },
   methods: {
     logout() {
@@ -67,9 +73,8 @@ export default {
   padding: 20px !important;
 }
 .inner-right__wrapper {
-  width: 610px;
+  width: 597px;
   height: 626px;
-  background-color: green;
   margin-left: 30px;
 }
 .inner-left__wrapper {
