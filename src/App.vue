@@ -9,7 +9,7 @@
     ></p-header>
     <p-navigation class="p-navigation" v-if="$route.name !== 'no_auth/login'"></p-navigation>
     <v-content>
-      <router-view ref="rv" />
+      <router-view ref="rv" class='router-view' />
       <ProfileEditModal
         ref="profileEditModal"
         @submit="submitProfileData"
@@ -127,5 +127,9 @@ export default {
 
 .p-header {
   z-index: 3;
+}
+
+.router-view{
+  overflow: hidden;
 }
 </style>

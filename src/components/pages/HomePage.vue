@@ -74,7 +74,7 @@ export default {
 }
 .inner-right__wrapper {
   width: 510px;
-  height: 626px;
+  height: 576px;
   background-color:white;
   border:0.5px solid grey;
   margin-left: 30px;
