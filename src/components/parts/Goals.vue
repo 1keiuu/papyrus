@@ -35,6 +35,6 @@ export default {
   width: 520px;
   height: 230px;
   margin-left: 42px;
-  margin-top: 0px;
+  margin-top: 30px;
 }
 </style>

@@ -1,83 +1,83 @@
 <template>
-  <v-hover v-slot:default="{ hover }">
-    <v-app class="v-app">
-      <v-container>
-        <v-layout>
-          <v-card class="v-card">
-            <v-flex>
-              <v-layout wrap>
-                <p class="pTitle">ミッションステート / なりたい理想像</p>
-                <div v-if="hover" class="divHover">
-                  <v-btn
-                    tile
-                    class="saveButton"
-                    v-show="editActive"
-                    @click="handlesubmitButtonClick(inputText)"
-                    width="100px"
-                    height="20px"
-                    color="#8471e2"
-                    >保存</v-btn
-                  >
-                  <v-btn v-show="!editActive" width="100px" height="20px" class="saveButton"
-                  ></v-btn>
-                  <v-btn class="mdiHelp" fab depressed outlined width="20px" height="20px">
-                    <v-icon class="mdiHelpIcon" size="12px">mdi-help</v-icon>
-                  </v-btn>
-                  <v-tooltip bottom
-                    ><template v-slot:activator="{ on }">
-                      <v-btn
-                        class="mdiFileDocumentEditOutline"
-                        v-show="!editActive"
-                        fab
-                        depressed
-                        @click="handleEditButtonClick"
-                        outlined
-                        width="28px"
-                        height="28px"
-                        v-on="on"
-                      >
-                        <v-icon size="17"> mdi-file-document-edit-outline</v-icon>
-                      </v-btn>
-                    </template>
-                    <span>編集</span>
-                  </v-tooltip>
-                  <v-btn
-                    class="mdiCancel"
-                    v-show="editActive"
-                    fab
-                    depressed
-                    @click="handleEditButtonClick"
-                    outlined
-                    width="28px"
-                    height="28px"
-                  >
-                    <v-icon size="17">mdi-cancel</v-icon>
-                  </v-btn>
-                </div>
-              </v-layout>
-              <div class="divCenterLine"></div>
-              <div class="divTextArea">
-                <p v-show="!editActive">
-                  {{ inputText }}
-                </p>
-                <v-layout class="layoutTextarea">
-                  <v-textarea
-                    v-show="editActive"
-                    class="v-textarea"
-                    v-model="inputText"
-                    counter="150"
-                    no-resize
-                    height="80px"
-                  >
-                  </v-textarea>
-                </v-layout>
+  <v-app class="v-app">
+    <v-container class="container">
+      <v-layout>
+        <v-card
+          class="v-card"
+          @mouseenter="isCardHover = true"
+          @mouseleave="isEditActive === true ? isCardHover = true: isCardHover = false"
+        >
+          <v-flex>
+            <v-layout wrap>
+              <p class="pTitle">ミッションステート / なりたい理想像</p>
+              <div :class="{ '--hover': isCardHover }" class="divHover">
+                <v-btn
+                  tile
+                  class="saveButton"
+                  :class="{ '--active': isEditActive }"
+                  @click="handlesubmitButtonClick(inputText)"
+                  width="90px"
+                  height="30px"
+                  color="#8471e2"
+                  >保存</v-btn
+                >
+                <v-btn class="mdiHelp" fab depressed outlined width="25px" height="25px">
+                  <v-icon class="mdiHelpIcon" size="12px">mdi-help</v-icon>
+                </v-btn>
+                <v-tooltip bottom
+                  ><template v-slot:activator="{ on }">
+                    <v-btn
+                      class="mdiFileDocumentEditOutline"
+                      v-show="!isEditActive"
+                      fab
+                      depressed
+                      @click="handleEditButtonClick"
+                      outlined
+                      width="32px"
+                      height="32px"
+                      v-on="on"
+                    >
+                      <v-icon size="20"> mdi-file-document-edit-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>編集</span>
+                </v-tooltip>
+                <v-btn
+                  class="mdiCancel"
+                  v-show="isEditActive"
+                  fab
+                  depressed
+                  @click="handleEditButtonClick"
+                  outlined
+                  width="32px"
+                  height="32px"
+                >
+                  <v-icon size="20">mdi-cancel</v-icon>
+                </v-btn>
               </div>
-            </v-flex>
-          </v-card>
-        </v-layout>
-      </v-container>
-    </v-app>
-  </v-hover>
+            </v-layout>
+            <div class="divCenterLine"></div>
+            <div class="divTextArea">
+              <p v-show="!isEditActive">
+                {{ inputText }}
+              </p>
+              <v-layout class="layoutTextarea">
+                <v-textarea
+                  v-show="isEditActive"
+                  class="v-textarea"
+                  v-model="inputText"
+                  counter="150"
+                  no-resize
+                  height="80px"
+                >
+                </v-textarea>
+              </v-layout>
+            </div>
+          </v-flex>
+        </v-card>
+      </v-layout>
+    </v-container>
+  </v-app>
 </template>
 <script>
 import firebase, { firestore } from "firebase/app";
@@ -85,16 +85,17 @@ import firebase, { firestore } from "firebase/app";
 export default {
   name: "MissionState",
   data: () => ({
-    editActive: false,
+    isEditActive: false,
     inputText: "",
-    user: ""
+    user: "",
+    isCardHover: false
   }),
   methods: {
     handleEditButtonClick(inputText) {
-      if (this.editActive) {
-        this.editActive = false;
+      if (this.isEditActive) {
+        this.isEditActive = false;
       } else {
-        this.editActive = true;
+        this.isEditActive = true;
       }
     },
     handlesubmitButtonClick(inputText) {
@@ -104,7 +105,7 @@ export default {
         .collection("targets")
         .doc(user.uid)
         .set({ missionState: inputText }, { merge: true });
-      this.editActive = false;
+      this.isEditActive = false;
     },
     getMissionStateData() {
       const user = firebase.auth().currentUser;
@@ -135,6 +136,11 @@ $secondary: #707070;
   height: 200px;
 }
 
+.container {
+  margin-left: 30px;
+  box-sizing: content-box;
+}
+
 .pTitle {
   color: #434343;
   font-size: 20px;
@@ -146,8 +152,7 @@ $secondary: #707070;
 
 .v-card {
   width: 600px;
-  height: 170px;
-  margin-left: 30px;
+  height: 200px;
 }
 
 .divCenterLine {
@@ -167,7 +172,7 @@ $secondary: #707070;
 
 .v-textarea {
   font-size: 14px;
-  margin-top: 0px;
+  margin-top: 7px;
   padding-top: 0px;
   margin-bottom: 0px;
   padding-bottom: 0px;
@@ -187,8 +192,13 @@ $secondary: #707070;
 }
 
 .saveButton {
-  margin-right: 30px;
+  margin:0px 18px;
   color: white;
+  opacity: 0;
+  touch-action: none;
+  &.--active {
+    opacity: 1;
+  }
 }
 
 .mdiCancel {
@@ -200,14 +210,19 @@ $secondary: #707070;
 .mdiHelp {
   color: $secondary;
   margin-right: 13px;
+    margin-bottom: 3px
 }
 
 .mdiHelpIcon {
-  padding-bottom: 6px;
 }
 
 .divHover {
   align-self: center;
-  padding-left: 10px;
+  opacity: 0;
+  transition: all 100ms;
+  &.--hover {
+    transition: all 300ms;
+    opacity: 1;
+  }
 }
 </style>
