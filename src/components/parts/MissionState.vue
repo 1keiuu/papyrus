@@ -3,12 +3,12 @@
     <v-container>
       <v-layout>
         <v-card class="v-card">
-          <v-flex mb-4>
+          <v-flex>
             <v-layout wrap>
               <p class="pTitle">ミッションステート / なりたい理想像</p>
               <v-row justify="end" align="center" no-gutters>
-                <v-btn class="mdiHelp" fab depressed outlined width="15px" height="15px">
-                  <v-icon class="mdiHelpIcon" size="7px">mdi-help</v-icon>
+                <v-btn class="mdiHelp" fab depressed outlined width="20px" height="20px">
+                  <v-icon class="mdiHelpIcon" size="12px">mdi-help</v-icon>
                 </v-btn>
                 <v-tooltip bottom
                   ><template v-slot:activator="{ on }">
@@ -48,7 +48,13 @@
                 {{ inputText }}
               </p>
               <v-layout class="layoutTextarea">
-                <v-textarea v-show="editActive" class="v-textarea" v-model="inputText">
+                <v-textarea
+                  v-show="editActive"
+                  class="v-textarea"
+                  v-model="inputText"
+                  counter="150"
+                  no-resize
+                >
                 </v-textarea>
                 <v-btn v-show="editActive" @click="handlesubmitButtonClick(inputText)">保存</v-btn>
               </v-layout>
@@ -112,7 +118,7 @@ $primary: #8471e2;
 $secondary: #707070;
 
 .v-app {
-  height: 220px;
+  height: 200px;
 }
 
 .pTitle {
@@ -125,9 +131,9 @@ $secondary: #707070;
 }
 
 .v-card {
-  color: black;
   width: 600px;
-  height: 200px;
+  height: 160px;
+  margin-left: 30px;
 }
 
 .divCenterLine {
@@ -140,17 +146,28 @@ $secondary: #707070;
   margin-top: 10px;
   margin-right: 100px;
   margin-left: 10px;
-  height: 150px;
+  height: 110px;
+  width: 540px;
+  font-size: 14px;
 }
 
 .v-textarea {
-  font-size: 12px;
-  letter-spacing: 1px;
+  height: 110px;
+  width: 550px;
+  font-size: 14px;
+  margin-top: 0px;
   padding-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
 }
 
 .layoutTextarea {
-  height: 120px;
+  height: 190px;
+  width: 550px;
+  margin-top: 0px;
+  padding-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
 }
 
 .mdiFileDocumentEditOutline {
@@ -171,6 +188,7 @@ $secondary: #707070;
 }
 
 .mdiHelpIcon {
-  padding-bottom: 10px;
+  padding-bottom: 6px;
 }
+
 </style>

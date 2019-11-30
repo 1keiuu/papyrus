@@ -28,11 +28,13 @@ export default {
 .divCenterLine {
   border: solid #8471e2;
   border-width: 1.2px;
-  width: 500px;
+  width: 490px;
 }
 
 .v-card {
   width: 520px;
   height: 230px;
+  margin-left: 42px;
+  margin-top: 0px;
 }
 </style>
