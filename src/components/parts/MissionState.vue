@@ -7,6 +7,16 @@
             <v-layout wrap>
               <p class="pTitle">ミッションステート / なりたい理想像</p>
               <v-row justify="end" align="center" no-gutters>
+                <v-btn
+                  tile
+                  class="saveButton"
+                  v-show="editActive"
+                  @click="handlesubmitButtonClick(inputText)"
+                  width="100px"
+                  height="20px"
+                  color="#8471e2"
+                  >保存</v-btn
+                >
                 <v-btn class="mdiHelp" fab depressed outlined width="20px" height="20px">
                   <v-icon class="mdiHelpIcon" size="12px">mdi-help</v-icon>
                 </v-btn>
@@ -54,9 +64,9 @@
                   v-model="inputText"
                   counter="150"
                   no-resize
+                  height="80px"
                 >
                 </v-textarea>
-                <v-btn v-show="editActive" @click="handlesubmitButtonClick(inputText)">保存</v-btn>
               </v-layout>
             </div>
           </v-flex>
@@ -132,7 +142,7 @@ $secondary: #707070;
 
 .v-card {
   width: 600px;
-  height: 160px;
+  height: 170px;
   margin-left: 30px;
 }
 
@@ -152,8 +162,6 @@ $secondary: #707070;
 }
 
 .v-textarea {
-  height: 110px;
-  width: 550px;
   font-size: 14px;
   margin-top: 0px;
   padding-top: 0px;
@@ -162,8 +170,6 @@ $secondary: #707070;
 }
 
 .layoutTextarea {
-  height: 190px;
-  width: 550px;
   margin-top: 0px;
   padding-top: 0px;
   margin-bottom: 0px;
@@ -174,6 +180,11 @@ $secondary: #707070;
   color: $secondary;
   margin-bottom: 10px;
   margin-right: 7px;
+}
+
+.saveButton {
+  margin-right: 30px;
+  color: white;
 }
 
 .mdiCancel {
@@ -190,5 +201,4 @@ $secondary: #707070;
 .mdiHelpIcon {
   padding-bottom: 6px;
 }
-
 </style>

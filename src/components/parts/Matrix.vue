@@ -1,5 +1,5 @@
 <template>
-  <v-tooltip color="white" offset-overflow position-x="1000" position-y="500">
+  <v-tooltip color="white" offset-overflow>
     <template v-slot:activator="{ on }">
       <v-container class="v-container" v-on="on">
         <v-layout wrap>
