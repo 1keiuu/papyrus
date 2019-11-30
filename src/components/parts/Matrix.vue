@@ -47,7 +47,6 @@ export default {
 .v-card {
   width: 597px;
   height: 626px;
-  margin-top: 10px;
   margin-left: 30px;
 }
 .mdiHelp {
