@@ -1,24 +1,21 @@
 <template>
-  <v-tooltip color="white" offset-overflow>
-    <template v-slot:activator="{ on }">
-      <v-container class="v-container" v-on="on">
+<v-hover v-slot:default="{hover}">
+  <v-container class="v-container">
+    <v-layout wrap>
+      <v-card class="v-card">
         <v-layout wrap>
-          <v-card class="v-card">
-            <v-layout wrap>
-              <p class="pTitle">時間管理のマトリックス</p>
-              <div class="divCenterLine"></div>
-            </v-layout>
-          </v-card>
-        </v-layout>
-      </v-container>
-    </template>
-    <span
-      >
-        <v-btn fab depressed outlined width="20px" height="20px">
+        <p class="pTitle">時間管理のマトリックス</p>
+        <div v-if="hover" class="divHover">
+        <v-btn class="mdiHelp" fab depressed outlined width="20px" height="20px">
           <v-icon class="mdiHelpIcon" size="12px">mdi-help</v-icon>
-        </v-btn></span
-    >
-  </v-tooltip>
+        </v-btn>
+        </div>
+        <div class="divCenterLine"></div>
+        </v-layout>
+      </v-card>
+    </v-layout>
+  </v-container>
+</v-hover>
 </template>
 
 <script>
@@ -28,7 +25,6 @@ export default {
 </script>
 
 <style scoped>
-
 .pTitle {
   color: #434343;
   font-size: 20px;
@@ -47,6 +43,7 @@ export default {
 .v-card {
   width: 597px;
   height: 626px;
+  margin-top: 10px;
   margin-left: 30px;
 }
 .mdiHelp {
@@ -57,5 +54,10 @@ export default {
 .mdiHelpIcon {
   padding-bottom: 6px;
   padding-left: 1px;
+}
+
+.divHover{
+  align-self: center;
+  padding-left: 200px
 }
 </style>

@@ -1,79 +1,83 @@
 <template>
-  <v-app class="v-app">
-    <v-container>
-      <v-layout>
-        <v-card class="v-card">
-          <v-flex>
-            <v-layout wrap>
-              <p class="pTitle">ミッションステート / なりたい理想像</p>
-              <v-row justify="end" align="center" no-gutters>
-                <v-btn
-                  tile
-                  class="saveButton"
-                  v-show="editActive"
-                  @click="handlesubmitButtonClick(inputText)"
-                  width="100px"
-                  height="20px"
-                  color="#8471e2"
-                  >保存</v-btn
-                >
-                <v-btn class="mdiHelp" fab depressed outlined width="20px" height="20px">
-                  <v-icon class="mdiHelpIcon" size="12px">mdi-help</v-icon>
-                </v-btn>
-                <v-tooltip bottom
-                  ><template v-slot:activator="{ on }">
-                    <v-btn
-                      class="mdiFileDocumentEditOutline"
-                      v-show="!editActive"
-                      fab
-                      depressed
-                      @click="handleEditButtonClick"
-                      outlined
-                      width="28px"
-                      height="28px"
-                      v-on="on"
-                    >
-                      <v-icon size="17"> mdi-file-document-edit-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>編集</span>
-                </v-tooltip>
-                <v-btn
-                  class="mdiCancel"
-                  v-show="editActive"
-                  fab
-                  depressed
-                  @click="handleEditButtonClick"
-                  outlined
-                  width="28px"
-                  height="28px"
-                >
-                  <v-icon size="17">mdi-cancel</v-icon>
-                </v-btn>
-              </v-row>
-            </v-layout>
-            <div class="divCenterLine"></div>
-            <div class="divTextArea">
-              <p v-show="!editActive">
-                {{ inputText }}
-              </p>
-              <v-layout class="layoutTextarea">
-                <v-textarea
-                  v-show="editActive"
-                  class="v-textarea"
-                  v-model="inputText"
-                  counter="150"
-                  no-resize
-                  height="80px"
-                >
-                </v-textarea>
+  <v-hover v-slot:default="{ hover }">
+    <v-app class="v-app">
+      <v-container>
+        <v-layout>
+          <v-card class="v-card">
+            <v-flex>
+              <v-layout wrap>
+                <p class="pTitle">ミッションステート / なりたい理想像</p>
+                <div v-if="hover" class="divHover">
+                  <v-btn
+                    tile
+                    class="saveButton"
+                    v-show="editActive"
+                    @click="handlesubmitButtonClick(inputText)"
+                    width="100px"
+                    height="20px"
+                    color="#8471e2"
+                    >保存</v-btn
+                  >
+                  <v-btn v-show="!editActive" width="100px" height="20px" class="saveButton"
+                  ></v-btn>
+                  <v-btn class="mdiHelp" fab depressed outlined width="20px" height="20px">
+                    <v-icon class="mdiHelpIcon" size="12px">mdi-help</v-icon>
+                  </v-btn>
+                  <v-tooltip bottom
+                    ><template v-slot:activator="{ on }">
+                      <v-btn
+                        class="mdiFileDocumentEditOutline"
+                        v-show="!editActive"
+                        fab
+                        depressed
+                        @click="handleEditButtonClick"
+                        outlined
+                        width="28px"
+                        height="28px"
+                        v-on="on"
+                      >
+                        <v-icon size="17"> mdi-file-document-edit-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>編集</span>
+                  </v-tooltip>
+                  <v-btn
+                    class="mdiCancel"
+                    v-show="editActive"
+                    fab
+                    depressed
+                    @click="handleEditButtonClick"
+                    outlined
+                    width="28px"
+                    height="28px"
+                  >
+                    <v-icon size="17">mdi-cancel</v-icon>
+                  </v-btn>
+                </div>
               </v-layout>
-            </div>
-          </v-flex>
-        </v-card>
-      </v-layout>
-    </v-container>
-  </v-app>
+              <div class="divCenterLine"></div>
+              <div class="divTextArea">
+                <p v-show="!editActive">
+                  {{ inputText }}
+                </p>
+                <v-layout class="layoutTextarea">
+                  <v-textarea
+                    v-show="editActive"
+                    class="v-textarea"
+                    v-model="inputText"
+                    counter="150"
+                    no-resize
+                    height="80px"
+                  >
+                  </v-textarea>
+                </v-layout>
+              </div>
+            </v-flex>
+          </v-card>
+        </v-layout>
+      </v-container>
+    </v-app>
+  </v-hover>
 </template>
 <script>
 import firebase, { firestore } from "firebase/app";
@@ -200,5 +204,10 @@ $secondary: #707070;
 
 .mdiHelpIcon {
   padding-bottom: 6px;
+}
+
+.divHover {
+  align-self: center;
+  padding-left: 10px;
 }
 </style>
