@@ -32,7 +32,7 @@
                     class="categoryOptions__input"
                   ></v-select>
                   <v-text-field
-                    v-model="input.date"
+                    v-model="input.deadline"
                     label="期日"
                     type="date"
                     class="expirationDate__input"
@@ -65,7 +65,11 @@
                       <v-text-field v-model="input.name" label="タスク名"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="input.date" label="期日" type="date"></v-text-field>
+                      <v-text-field
+                        v-model="input.deadline"
+                        label="期日"
+                        type="deadline"
+                      ></v-text-field>
                     </v-col>
                   </v-row>
                   <v-col cols="12" sm="6">
@@ -105,7 +109,7 @@ export default {
     // tabs: ["プロフィール", "個人情報"],
     input: {
       name: "",
-      date: "",
+      deadline: "",
       category: "",
       memo: ""
     },
@@ -118,17 +122,26 @@ export default {
       this.dialog = true;
     },
     handleNextButtonClick() {
-      console.log(this.input.name,this.input.category)
-      if (this.input.name === '' || this.input.category === '') {
-        alert('insufficient form ')
+      if (this.input.name === "" || this.input.category === "") {
+        alert("insufficient form ");
       } else {
         this.currentStep = 2;
       }
     },
     handleSubmitButtonClick() {
       this.dialog = false;
-      this.$emit("submit", this.input.name, this.input.date, this.input.category, this.input.memo);
+      this.$emit(
+        "submit",
+        this.input.name,
+        this.input.deadline,
+        this.input.category,
+        this.input.memo,
+      );
+      const obj = this.input;
       this.currentStep = 1;
+      Object.keys(obj).forEach(function(key) {
+        obj[key] = "";
+      });
     }
   }
 };

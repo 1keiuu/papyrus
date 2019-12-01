@@ -9,7 +9,7 @@
     ></p-header>
     <p-navigation class="p-navigation" v-if="$route.name !== 'no_auth/login'"></p-navigation>
     <v-content>
-      <router-view ref="rv" class='router-view' />
+      <router-view ref="rv" class="router-view" />
       <ProfileEditModal
         ref="profileEditModal"
         @submit="submitProfileData"
@@ -88,18 +88,28 @@ export default {
             console.log(error);
           });
       } else {
-        console.log()
+        console.log();
       }
       store.commit("setUserName", inputName);
     },
-    submitTaskData(inputName, inputDate, selectedCategory) {
+    submitTaskData(inputName, inputDate, selectedCategory, inputMemo) {
       firebase
         .firestore()
         .collection("tasks")
         .doc(this.userId)
-        .collection("task")
-        .doc()
-        .set({ taskName: inputName, taskDate: inputDate, category: selectedCategory });
+        .set(
+          {
+            [this.taskId]: {
+              taskName: inputName,
+              taskDate: inputDate,
+              category: selectedCategory,
+              taskMemo: inputMemo,
+              status: 'Doing'
+            }
+          },
+          { merge: true }
+        );
+      store.commit("setTaskId", 1);
     }
   },
   computed: {
@@ -111,6 +121,9 @@ export default {
     },
     userId() {
       return this.$store.getters.userId;
+    },
+    taskId() {
+      return this.$store.getters.taskId;
     }
   }
 };
@@ -129,7 +142,7 @@ export default {
   z-index: 3;
 }
 
-.router-view{
+.router-view {
   overflow: hidden;
 }
 </style>

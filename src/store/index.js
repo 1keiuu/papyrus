@@ -1,15 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import createPersistedState from 'vuex-persistedstate'
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userName: '',
-    userId: '',
-    profileImageUrl: '',
+    userName: "",
+    userId: "",
+    profileImageUrl: "",
     isSignIn: false,
+    taskId: 1
   },
   mutations: {
     setSignIn(state, isSignIn) {
@@ -22,7 +23,10 @@ export default new Vuex.Store({
       state.userId = userId;
     },
     setProfileImageUrl(state, profileImageUrl) {
-      state.profileImageUrl = profileImageUrl
+      state.profileImageUrl = profileImageUrl;
+    },
+    setTaskId(state, taskId) {
+      state.taskId += taskId;
     }
   },
   getters: {
@@ -36,8 +40,11 @@ export default new Vuex.Store({
       return state.isSignIn;
     },
     profileImageUrl(state) {
-      return state.profileImageUrl
+      return state.profileImageUrl;
+    },
+    taskId(state) {
+      return state.taskId;
     }
   },
-  plugins: [createPersistedState()],
+  plugins: [createPersistedState()]
 });
