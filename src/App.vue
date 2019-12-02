@@ -22,7 +22,7 @@
 
 <script>
 import firebase from "firebase/app";
-import store from "./store";
+import { mapActions, mapState } from "vuex";
 import Header from "@/components/globals/Header";
 import ProfileEditModal from "./components/parts/ProfileEditModal";
 import AddTaskModal from "./components/parts/AddTaskModal";
@@ -43,10 +43,12 @@ export default {
     };
   },
   methods: {
+    ...mapActions("User", ["setSignIn", "setprofileImg", "setUserName"]),
+    ...mapActions("Task", ["setTaskId"]),
     handleHeaderMenuLogoutClick() {
       this.$refs.rv.logout();
-      store.commit("setSignIn", false);
-      store.commit("setUserId", "");
+      this.setSignIn(false);
+      this.setUserId("");
     },
     handleHeaderMenuEditProfileClick() {
       this.openProfileEditModal();
@@ -78,7 +80,7 @@ export default {
           .put(inputImage, metadata)
           .then(snapshot => {
             snapshot.ref.getDownloadURL().then(downloadURL => {
-              store.commit("setProfileImageUrl", downloadURL);
+              this.setprofileImg(downloadURL);
             });
           })
           .catch(error => {
@@ -87,7 +89,7 @@ export default {
       } else {
         console.log();
       }
-      store.commit("setUserName", inputName);
+      this.setUserName(inputName);
     },
     submitTaskData(inputName, inputDate, selectedCategory, inputMemo) {
       firebase
@@ -101,27 +103,27 @@ export default {
               taskDate: inputDate,
               category: selectedCategory,
               taskMemo: inputMemo,
-              status: 'Doing'
+              status: "Doing"
             }
           },
           { merge: true }
         );
-      store.commit("setTaskId", 1);
+      this.setTaskId(1);
     }
   },
   computed: {
-    userStatus() {
-      return this.$store.getters.isSignIn;
-    },
-    userName() {
-      return this.$store.getters.userName;
-    },
-    userId() {
-      return this.$store.getters.userId;
-    },
-    taskId() {
-      return this.$store.getters.taskId;
-    }
+    ...mapState("User", {
+      userStatus: state => state.isSignIn
+    }),
+    ...mapState("User", {
+      userName: state => state.userName
+    }),
+    ...mapState("User", {
+      userId: state => state.userId
+    }),
+    ...mapState("Task", {
+      taskId: state => state.taskIdLatest
+    })
   }
 };
 </script>
@@ -138,5 +140,4 @@ export default {
 .p-header {
   z-index: 3;
 }
-
 </style>

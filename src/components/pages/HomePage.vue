@@ -15,7 +15,7 @@
 
 <script>
 import firebase from "firebase/app";
-import store from "../../store";
+import { mapState } from 'vuex';
 import ProfileEditModal from "../parts/ProfileEditModal";
 import router from "@/router";
 import MissionState from "../parts/MissionState";
@@ -61,9 +61,9 @@ export default {
   },
   mounted() {},
   computed: {
-    userId() {
-      return this.$store.getters.userId;
-    }
+    ...mapState('User',{
+      userId: state => state.userId
+    })
   }
 };
 </script>

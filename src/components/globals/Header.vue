@@ -73,8 +73,10 @@
 </template>
 
 <script>
+import mapState from 'vuex'
 import firebase from "firebase";
 import axios from "axios";
+
 
 export default {
   name: "Header",
@@ -97,7 +99,7 @@ export default {
       ],
       loading: true,
       files: [],
-      profileImageUrl: this.profileImageUrlState
+      profileImageUrl: this.profileImage
     };
   },
   props: ["userName"],
@@ -140,12 +142,12 @@ export default {
       });
   },
   computed: {
-    profileImageUrlState() {
-      return this.$store.getters.profileImageUrl;
-    },
-    userId() {
-      return this.$store.getters.userId;
-    },
+    ...mapState('User', {
+      profileImage: state => state.profileImg
+    }),
+    ...mapState('User',{
+      userId: state => state.userId
+    })
   },
 }
 </script>

@@ -43,7 +43,8 @@ export default {
       }
     };
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     onStart() {
       this.status.moving = true;

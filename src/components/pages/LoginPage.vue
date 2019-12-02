@@ -53,9 +53,9 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import firebase from "firebase/app";
 import router from "@/router";
-import store from "../../store";
 
 export default {
   data: () => ({
@@ -79,6 +79,7 @@ export default {
   }),
 
   methods: {
+    ...mapActions('User',['setUserId']),
     validate() {
       if (this.$refs.form.validate()) {
         this.snackbar = true;
@@ -114,7 +115,7 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(result => {
-          store.commit("setUserId", result.user.uid);
+          this.setUserId(result.user.uid)
           router.push(
             "/",
             () => {},
@@ -142,10 +143,9 @@ export default {
     }
   },
   computed: {
-    userStatus() {
-      // ログインするとtrue
-      return this.$store.getters.isSignIn;
-    }
+    ...mapState('User',{
+      userStatus: state => state.isSignIn
+    })
   },
   mounted() {
     if (this.userStatus) {
