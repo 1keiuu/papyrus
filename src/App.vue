@@ -101,7 +101,7 @@ export default {
               taskDate: inputDate,
               category: selectedCategory,
               taskMemo: inputMemo,
-              status: 'Doing'
+              status: "Doing"
             }
           },
           { merge: true }
@@ -122,6 +122,9 @@ export default {
     taskId() {
       return this.$store.getters.taskId;
     }
+  },
+  created() {
+    console.log(window.location.pathname);
   }
 };
 </script>
@@ -138,5 +141,4 @@ export default {
 .p-header {
   z-index: 3;
 }
-
 </style>

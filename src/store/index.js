@@ -10,23 +10,28 @@ export default new Vuex.Store({
     userId: "",
     profileImageUrl: "",
     isSignIn: false,
-    taskId: 1
+    taskId: 1,
+    taskData: []
   },
   mutations: {
-    setSignIn(state, isSignIn) {
-      state.isSignIn = isSignIn; // ログインしてるかどうか true or false
+    setSignIn(state, payload) {
+      state.isSignIn = payload; // ログインしてるかどうか true or false
     },
-    setUserName(state, userName) {
-      state.userName = userName;
+    setUserName(state, payload) {
+      state.userName = payload;
     },
-    setUserId(state, userId) {
-      state.userId = userId;
+    setUserId(state, payload) {
+      state.userId = payload;
     },
-    setProfileImageUrl(state, profileImageUrl) {
-      state.profileImageUrl = profileImageUrl;
+    setProfileImageUrl(state, payload) {
+      state.profileImageUrl = payload;
     },
-    setTaskId(state, taskId) {
-      state.taskId += taskId;
+    setTaskId(state, payload) {
+      state.taskId += payload;
+    },
+    setTaskData(state, taskData) {
+      // state.taskData.push(payload)
+      Vue.set(state, 'taskData', taskData);
     }
   },
   getters: {
@@ -44,6 +49,9 @@ export default new Vuex.Store({
     },
     taskId(state) {
       return state.taskId;
+    },
+    taskData(state) {
+      return state.taskData;
     }
   },
   plugins: [createPersistedState()]

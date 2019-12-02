@@ -39,13 +39,13 @@ export default {
         icon: "mdi-home",
         name: "Home",
         path: "/",
-        title:'ホーム'
+        title: "ホーム"
       },
       {
         icon: "mdi-clipboard-list-outline",
-        name: "SampleTask",
-        path: "/sampleTask",
-        title:"タスク"
+        name: "ManageTask",
+        path: "/manageTask",
+        title: "タスク"
       }
     ]
     // currentPath:
@@ -54,10 +54,10 @@ export default {
     sampleClick(target) {
       switch (target) {
         case "Home":
-          this.$router.push("/");
+          this.$router.push("/", () => {});
           break;
-        case "SampleTask":
-          this.$router.push("/sampleTask");
+        case "ManageTask":
+          this.$router.push("/manageTask", () => {});
           break;
         default:
       }
@@ -67,8 +67,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-$secondary : #8471E2;
+$secondary: #8471e2;
 
 .v-navigation {
   position: fixed;
@@ -88,7 +87,7 @@ $secondary : #8471E2;
   padding-left: 5px;
 }
 
-.v-list-item--active{
-  border-right:2px solid $secondary;
+.v-list-item--active {
+  border-right: 2px solid $secondary;
 }
 </style>

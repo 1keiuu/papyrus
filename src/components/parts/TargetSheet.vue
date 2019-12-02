@@ -4,7 +4,7 @@
       <v-card>
         <v-img src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="200px"></v-img>
         <v-card-title>
-          {{ sheetData.name }}
+          {{ targetData.name }}
         </v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -25,7 +25,9 @@
           </div>
         </v-expand-transition>
       </v-card>
-      <TaskCard v-for="(card, index) in cardData" :key="index"> </TaskCard>
+      <div v-for="(card, index) in taskData" :key="index">
+      <TaskCard :taskData="taskData[index]"> </TaskCard>
+      </div>
     </v-sheet>
   </v-app>
 </template>
@@ -39,14 +41,15 @@ export default {
   },
   data() {
     return {
-      cardData: [{ name: 1 }, { name: 2 }, { name: 3 }],
       show:false
     };
   },
-  props: ["sheetData"],
+  props: ["targetData","taskData"],
   mounted() {
-    console.log(this.$props);
+    // console.log(this.taskData);
   }
 };
 </script>
-<style scoped></style>
+<style scoped>
+
+</style>
