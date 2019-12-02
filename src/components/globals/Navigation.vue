@@ -43,8 +43,8 @@ export default {
       },
       {
         icon: "mdi-clipboard-list-outline",
-        name: "sampleTask",
-        path: "/smapleTask",
+        name: "SampleTask",
+        path: "/sampleTask",
         title:"タスク"
       }
     ]
@@ -56,7 +56,7 @@ export default {
         case "Home":
           this.$router.push("/");
           break;
-        case "sampleTask":
+        case "SampleTask":
           this.$router.push("/sampleTask");
           break;
         default:

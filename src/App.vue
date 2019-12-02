@@ -54,9 +54,6 @@ export default {
     handleHeaderAddTaskButtonClick() {
       this.openAddTaskModal();
     },
-    // handleHeaderSetTargetButtonClick() {
-    //   this.$refs.rv.setTarget()
-    // },
     openAddTaskModal() {
       this.$refs.addTaskModal.openDialog();
     },
@@ -142,7 +139,4 @@ export default {
   z-index: 3;
 }
 
-.router-view {
-  overflow: hidden;
-}
 </style>

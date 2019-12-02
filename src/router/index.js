@@ -16,8 +16,8 @@ const routes = [
   },
   {
     path: '/sampleTask',
-    name: 'sampleTask',
-    component: require('@/components/pages/sampleTask').default,
+    name: 'SampleTask',
+    component: require('@/components/pages/SampleTask').default,
   },
   {
     path: '/grobals/Navigation',

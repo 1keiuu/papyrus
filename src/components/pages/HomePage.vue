@@ -71,6 +71,7 @@ export default {
 <style scoped>
 .v-content {
   padding: 0px !important;
+  overflow: hidden;
 }
 .container {
   padding: 0px;
