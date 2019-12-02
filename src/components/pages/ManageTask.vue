@@ -2,7 +2,7 @@
   <v-app class="container">
     <v-container>
       <v-layout class="targetSheet__layout">
-        <draggable
+        <!-- <draggable
           group="myGroup"
           :options="options"
           @start="onStart"
@@ -10,13 +10,16 @@
           v-for="(sheet, index) in targetData"
           :key="index"
           class="targetSheet__wrapper"
-        >
+        > -->
+        <div class="targetSheet__wrapper"  v-for="(sheet, index) in targetData"
+          :key="index">
           <TargetSheet
             :class="{ moving: status.moving }"
             :targetData="targetData[index]"
             :taskData="tasksData[index]"
           ></TargetSheet>
-        </draggable>
+        </div>
+        <!-- </draggable> -->
       </v-layout>
     </v-container>
   </v-app>
@@ -32,7 +35,6 @@ export default {
   name: "Task",
   components: {
     TargetSheet,
-    draggable
   },
   data() {
     return {
@@ -64,14 +66,14 @@ export default {
         Object.keys(obj).forEach(key => {
           this.taskData.push(obj[key]);
         });
-        const o = this.taskData.filter((item, index) => item.category === "target1");
-        o.map(data => this.task1Data.push(data));
-        const c = this.taskData.filter((item, index) => item.category === "target2");
-        c.map(data => this.task2Data.push(data));
-        const d = this.taskData.filter((item, index) => item.category === "target3");
-        d.map(data => this.task3Data.push(data));
-        const e = this.taskData.filter((item, index) => item.category === "keep");
-        e.map(data => this.keep.push(data));
+        const target1 = this.taskData.filter((item, index) => item.category === "target1");
+        target1.map(data => this.task1Data.push(data));
+        const target2 = this.taskData.filter((item, index) => item.category === "target2");
+        target2.map(data => this.task2Data.push(data));
+        const target3 = this.taskData.filter((item, index) => item.category === "target3");
+        target3.map(data => this.task3Data.push(data));
+        const keep = this.taskData.filter((item, index) => item.category === "keep");
+        keep.map(data => this.keep.push(data));
 
         this.tasksData.push(this.task1Data,this.task2Data,this.task3Data,this.keep)
         console.log(JSON.parse(JSON.stringify(this.tasksData)))

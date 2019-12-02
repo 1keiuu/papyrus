@@ -111,9 +111,9 @@ export default {
       name: "",
       deadline: "",
       category: "",
-      memo: ""
+      memo: "",
     },
-    categoryOptions: ["目標が入ります", "目標が入りま~す", "目標が入ります?"],
+    categoryOptions: ["target1", "target2", "target3","keep"],
     currentStep: 0,
     memoRules: [v => v.length <= 150 || ""]
   }),

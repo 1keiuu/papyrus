@@ -97,6 +97,7 @@ export default {
         .set(
           {
             [this.taskId]: {
+              taskId: this.taskId,
               taskName: inputName,
               taskDate: inputDate,
               category: selectedCategory,
