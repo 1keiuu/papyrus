@@ -11,6 +11,7 @@
 
 <script>
 import store from "../../store";
+
 export default {
   name: "TaskCard",
   data() {
@@ -18,12 +19,13 @@ export default {
       show: false
     };
   },
+  components:{
+  },
   props: ["taskData"],
   computed: {
   },
   mounted() {
-    // console.log(this.taskData)
-  }
+  },
 };
 </script>
 <style scoped>

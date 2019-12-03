@@ -16,7 +16,7 @@
 <script>
 import firebase from "firebase/app";
 import store from "../../store";
-import ProfileEditModal from "../parts/ProfileEditModal";
+import ProfileEditModal from "../parts/modal/ProfileEditModal";
 import router from "@/router";
 import MissionState from "../parts/MissionState";
 import Goals from "../parts/Goals";

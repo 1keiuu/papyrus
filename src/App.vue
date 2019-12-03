@@ -24,8 +24,8 @@
 import firebase from "firebase/app";
 import store from "./store";
 import Header from "@/components/globals/Header";
-import ProfileEditModal from "./components/parts/ProfileEditModal";
-import AddTaskModal from "./components/parts/AddTaskModal";
+import ProfileEditModal from "./components/parts/modal/ProfileEditModal";
+import AddTaskModal from "./components/parts/modal/AddTaskModal";
 import Navigation from "@/components/globals/Navigation";
 
 export default {

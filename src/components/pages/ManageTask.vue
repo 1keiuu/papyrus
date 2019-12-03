@@ -125,9 +125,6 @@ export default {
 
 .targetSheet__layout {
   margin-left: 70px;
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 .targetSheet__wrapper {
