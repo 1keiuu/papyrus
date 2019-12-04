@@ -11,11 +11,10 @@
           :key="index"
           class="targetSheet__wrapper"
         > -->
-        <div class="targetSheet__wrapper"  v-for="(sheet, index) in targetData"
-          :key="index">
+        <div class="targetSheet__wrapper" v-for="(sheet, index) in targetData" :key="index">
           <TargetSheet
             :class="{ moving: status.moving }"
-            :targetData="targetData[index]"
+            :targetDataProps="targetData[index]"
             :taskData="tasksData[index]"
           ></TargetSheet>
         </div>
@@ -34,7 +33,7 @@ import TargetSheet from "../parts/TargetSheet";
 export default {
   name: "Task",
   components: {
-    TargetSheet,
+    TargetSheet
   },
   data() {
     return {
@@ -42,12 +41,13 @@ export default {
         group: "myGroup",
         animation: 200
       },
+      userId:firebase.auth().currentUser.uid,
       targetData: [],
       tasksData: [],
-      task1Data:[],
-      task2Data:[],
-      task3Data:[],
-      keep:[],
+      task1Data: [],
+      task2Data: [],
+      task3Data: [],
+      keep: [],
       taskData: [],
       status: {
         moving: false
@@ -55,11 +55,10 @@ export default {
     };
   },
   created() {
-    const user = firebase.auth().currentUser;
     firebase
       .firestore()
       .collection("tasks")
-      .doc(user.uid)
+      .doc(this.userId)
       .get()
       .then(doc => {
         const obj = doc.data();
@@ -75,34 +74,60 @@ export default {
         const keep = this.taskData.filter((item, index) => item.category === "keep");
         keep.map(data => this.keep.push(data));
 
-        this.tasksData.push(this.task1Data,this.task2Data,this.task3Data,this.keep)
-        console.log(JSON.parse(JSON.stringify(this.tasksData)))
+        this.tasksData.push(this.task1Data, this.task2Data, this.task3Data, this.keep);
+        console.log(JSON.parse(JSON.stringify(this.tasksData)));
       })
       .catch(err => {
         console.log(err);
       });
+    // firebase
+    //   .firestore()
+    //   .collection("tasks")
+    //   .doc(this.userId)
+    //   .onSnapshot(doc => {
+    //     const obj = doc.data();
+    //     Object.keys(obj).forEach(key => {
+    //       this.taskData.push(obj[key]);
+    //     });
+    //     const target1 = this.taskData.filter((item, index) => item.category === "target1");
+    //     target1.map(data => this.task1Data.push(data));
+    //     const target2 = this.taskData.filter((item, index) => item.category === "target2");
+    //     target2.map(data => this.task2Data.push(data));
+    //     const target3 = this.taskData.filter((item, index) => item.category === "target3");
+    //     target3.map(data => this.task3Data.push(data));
+    //     const keep = this.taskData.filter((item, index) => item.category === "keep");
+    //     keep.map(data => this.keep.push(data));
+    //     this.tasksData.push(this.task1Data, this.task2Data, this.task3Data, this.keep);
+    //     console.log(JSON.parse(JSON.stringify(this.tasksData)));
+    //   });
     firebase
       .firestore()
       .collection("targetss")
-      .doc(user.uid)
-      .get()
-      .then(doc => {
+      .doc(this.userId)
+      .onSnapshot(doc => {
         const obj = doc.data();
         Object.keys(obj).forEach(key => {
           this.targetData.push(obj[key]);
         });
-      })
-      .catch(err => {
-        console.log(err);
       });
   },
   methods: {
-    onStart() {
-      this.status.moving = true;
+    submitEditTargetData(inputName,inputDescription,inputDeadline,targetId) {
+      firebase
+        .firestore()
+        .collection("targetss")
+        .doc(this.userId)
+        .set(
+          {
+            [targetId]: {
+              name: inputName,
+              descrition: inputDescription,
+              deadline: inputDeadline
+            }
+          },
+          { merge: true }
+        )
     },
-    onEnd() {
-      this.status.moving = false;
-    }
   },
   computed: {}
 };

@@ -71,6 +71,7 @@ $secondary: #8471e2;
 
 .v-navigation {
   position: fixed;
+  z-index:20
 }
 
 .v-card {

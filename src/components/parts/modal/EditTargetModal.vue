@@ -4,32 +4,25 @@
       <template v-slot:activator="{ on }"> </template>
       <v-card>
         <v-card-title class="title__wrapper">
-          <p class="title">タスクを編集</p>
+          <p class="title">目標を編集</p>
           <span class="title__line"></span>
         </v-card-title>
         <v-card-text>
           <v-container fluid>
-            <v-text-field v-model="input.name" label="タスク名" class="name__input"> </v-text-field>
-            <v-select
-              :items="categoryOptions"
-              v-model="input.category"
-              label="目標名"
-              class="categoryOptions__input"
-            ></v-select>
+            <v-text-field v-model="input.name" label="目標名" class="name__input"> </v-text-field>
             <v-text-field
               v-model="input.deadline"
               label="期日"
               type="date"
-              class="expirationDate__input"
+              class="deadline__input"
             ></v-text-field>
             <v-textarea
-              v-model="input.memo"
-              label="メモ"
+              v-model="input.description"
+              label="説明"
               counter
               auto-grow=""
-              :rules="memoRules"
               no-resize
-              class="memo__input"
+              class="description__input"
             ></v-textarea>
           </v-container>
         </v-card-text>
@@ -46,51 +39,34 @@
 
 <script>
 export default {
-  name: "EditTaskModal",
+  name: "EditTargetModal",
   data: () => ({
     dialog: false,
     input: {
       name: "",
       deadline: "",
-      category: "",
-      memo: "",
-      taskId: ""
-    },
-    categoryOptions: ["target1", "target2", "target3", "keep"],
-    currentStep: 0,
-    memoRules: [v => v.length <= 150 || ""]
+      description: ""
+    }
+    // descriptionRules: [v => v.length <= 150 || ""]
   }),
-  props: ["taskData"],
+  props: ["targetData"],
   methods: {
     openDialog() {
       this.dialog = true;
     },
     handleSubmitButtonClick() {
       this.dialog = false;
-      this.$emit(
-        "submit",
-        this.input.name,
-        this.input.deadline,
-        this.input.category,
-        this.input.memo,
-        this.input.taskId
-      );
-      // const obj = this.input;
-      // this.currentStep = 1;
-      // Object.keys(obj).forEach(function(key) {
-      //   obj[key] = "";
-      // });
+      this.$emit("submit", this.input.name, this.input.deadline, this.input.description,this.input.targetId);
     }
   },
   created() {
   },
   watch: {
-    taskData: function() {
-      this.input.name = this.taskData.taskName;
-      this.input.category = this.taskData.category;
-      this.input.memo = this.taskData.taskMemo;
-      this.input.deadline = this.taskData.taskDeadline;
-      this.input.taskId = this.taskData.taskId;
+    targetData: function() {
+      this.input.name = this.targetData.name;
+      this.input.description = this.targetData.description;
+      this.input.deadline = this.targetData.deadline;
+      this.input.targetId = this.targetData.targetId
     }
   }
 };
@@ -130,14 +106,11 @@ $primary: #6245ea;
     }
   }
 }
-.categoryOptions__input {
-  width: 300px;
-}
 
-.expirationDate__input {
+.deadline__input {
   width: 200px;
 }
-.memo__input {
+.description__input {
   ::v-deep .v-text-field__slot {
     height: 50px;
   }

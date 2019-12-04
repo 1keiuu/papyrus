@@ -20,9 +20,7 @@
           </div>
         </div>
         <v-card-actions>
-          <v-card-subtitle v-if="targetData.deadline"
-            >期日:{{ targetData.deadline }}
-          </v-card-subtitle>
+          <v-card-subtitle v-if="DiffDate">期日:{{ this.DiffDate }} </v-card-subtitle>
           <v-card-subtitle v-else>期日未設定</v-card-subtitle>
 
           <v-spacer></v-spacer>
@@ -38,6 +36,7 @@
                 height="29px"
                 v-on="on"
                 color="#707070"
+                @click="handleEditTargetButtonClick(targetData)"
               >
                 <v-icon size="18"> mdi-file-document-edit-outline</v-icon>
               </v-btn>
@@ -60,7 +59,12 @@
           </div>
         </v-expand-transition>
       </v-card>
-      <v-btn color="#8471e2" outlined class="targetSheet__add-button">
+      <v-btn
+        color="#8471e2"
+        outlined
+        class="targetSheet__add-button"
+        @click="handleAddTaskButtonClick"
+      >
         <v-icon>
           mdi-plus
         </v-icon>
@@ -74,40 +78,123 @@
       >
         <TaskCard :taskData="taskData[index]" class="taskCard"> </TaskCard>
       </div>
-      <EditTaskModal ref="editTaskModal" :taskData="selectedTaskData"></EditTaskModal>
+      <EditTaskModal
+        ref="editTaskModal"
+        @submit="submitEditTaskData"
+        :taskData="selectedTaskData"
+      ></EditTaskModal>
+      <AddTaskModal ref="addTaskModal"></AddTaskModal>
+      <EditTargetModal
+        ref="editTargetModal"
+        @submit="submitEditTargetData"
+        :targetData="selectedTargetData"
+      ></EditTargetModal>
     </v-sheet>
   </v-app>
 </template>
 
 <script>
+import firebase from "firebase";
+import moment from "moment";
 import TaskCard from "./TaskCard";
+import store from "../../store";
 import EditTaskModal from "./modal/EditTaskModal";
+import AddTaskModal from "./modal/AddTaskModal";
+import EditTargetModal from "./modal/EditTargetModal";
 
 export default {
   name: "TargetSheet",
   components: {
     TaskCard,
-    EditTaskModal
+    EditTaskModal,
+    AddTaskModal,
+    EditTargetModal
   },
   data() {
     return {
       show: false,
       isHover: false,
-      selectedTaskData: []
-    };
+      selectedTaskData: [],
+      selectedTargetData: [],
+      userId:firebase.auth().currentUser.uid,
+      targetData:this.targetDataProps
+    }
   },
-  props: ["targetData", "taskData"],
+  props: ["targetDataProps", "taskData"],
   methods: {
     handleTaskCardClick(taskData) {
       this.selectedTaskData = taskData;
-      this.openModal();
+      this.openModal("editTask");
     },
-    openModal() {
-      this.$refs.editTaskModal.openDialog();
+    handleAddTaskButtonClick(taskData) {
+      this.selectedTaskData = taskData;
+      this.openModal("addTask");
+    },
+    handleEditTargetButtonClick(targetData) {
+      this.selectedTargetData = targetData;
+      this.openModal("editTarget");
+    },
+    openModal(target) {
+      switch (target) {
+        case "editTask":
+          this.$refs.editTaskModal.openDialog();
+          break;
+        case "addTask":
+          this.$refs.addTaskModal.openDialog();
+          break;
+        case "editTarget":
+          this.$refs.editTargetModal.openDialog();
+          break;
+        default:
+      }
+    },
+    submitEditTaskData(inputName, inputDate, selectedCategory, inputMemo, taskId) {
+      firebase
+        .firestore()
+        .collection("tasks")
+        .doc(this.userId)
+        .set(
+          {
+            [taskId]: {
+              taskId: taskId,
+              taskName: inputName,
+              taskDeadline: inputDate,
+              category: selectedCategory,
+              taskMemo: inputMemo,
+              status: "Doing"
+            }
+          },
+          { merge: true }
+        );
+    },
+    submitEditTargetData(inputName, inputDeadline, inputDescrition, targetId) {
+      this.$parent.targetData.length = 0
+      firebase
+        .firestore()
+        .collection("targetss")
+        .doc(this.userId)
+        .set(
+          {
+            [targetId]: {
+              name: inputName,
+              deadline: inputDeadline,
+              description: inputDescrition
+            }
+          },
+          { merge: true }
+        );
     }
   },
   mounted() {
-    // console.log(this.taskData);
+    console.log(this.targetData);
+  },
+  computed: {
+    Deadline() {
+      return moment(this.targetData.deadline);
+    },
+    DiffDate() {
+      return this.Deadline.diff(moment(new Date()), "day");
+    }
   }
 };
 </script>
@@ -156,7 +243,7 @@ $secondary: #8471e2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   &:hover {
@@ -173,7 +260,7 @@ $secondary: #8471e2;
 }
 
 .taskCard {
-  z-index: 100;
+  z-index: 1;
   &:hover {
     background-color: rgb(197, 187, 245, 0.2);
   }

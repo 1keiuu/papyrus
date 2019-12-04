@@ -99,7 +99,7 @@ export default {
             [this.taskId]: {
               taskId: this.taskId,
               taskName: inputName,
-              taskDate: inputDate,
+              taskDeadline: inputDate,
               category: selectedCategory,
               taskMemo: inputMemo,
               status: "Doing"

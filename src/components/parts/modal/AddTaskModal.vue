@@ -111,12 +111,13 @@ export default {
       name: "",
       deadline: "",
       category: "",
-      memo: "",
+      memo: ""
     },
-    categoryOptions: ["target1", "target2", "target3","keep"],
+    categoryOptions: ["target1", "target2", "target3", "keep"],
     currentStep: 0,
     memoRules: [v => v.length <= 150 || ""]
   }),
+  props: ["targetData"],
   methods: {
     openDialog() {
       this.dialog = true;
@@ -135,13 +136,19 @@ export default {
         this.input.name,
         this.input.deadline,
         this.input.category,
-        this.input.memo,
+        this.input.memo
       );
       const obj = this.input;
       this.currentStep = 1;
       Object.keys(obj).forEach(function(key) {
         obj[key] = "";
       });
+    }
+  },
+  watch: {
+    targetData: function() {
+      this.input.category = this.targetData;
+      console.log(this.targetData)
     }
   }
 };

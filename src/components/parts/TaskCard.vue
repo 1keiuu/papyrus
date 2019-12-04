@@ -1,10 +1,10 @@
 <template>
-  <v-card width="290" height="80">
+  <v-card width="290">
     <v-card-title class="taskCard__title">
       {{taskData.taskName}}
     </v-card-title>
     <v-card-subtitle class="taskCard__subTitle">
-      期日:{{taskData.taskDate}}
+      期日:{{taskData.taskDeadline}}
     </v-card-subtitle>
   </v-card>
 </template>
@@ -29,9 +29,11 @@ export default {
 };
 </script>
 <style scoped>
+
 .taskCard__title{
   font-size: 13px;
-  padding-top:8px;
+    line-height: 20px;
+  padding-top:10px;
     padding-bottom:27px;
 
 }
