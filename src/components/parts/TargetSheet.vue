@@ -116,9 +116,9 @@ export default {
       isHover: false,
       selectedTaskData: [],
       selectedTargetData: [],
-      userId:firebase.auth().currentUser.uid,
-      targetData:this.targetDataProps
-    }
+      userId: firebase.auth().currentUser.uid,
+      targetData: this.targetDataProps
+    };
   },
   props: ["targetDataProps", "taskData"],
   methods: {
@@ -168,7 +168,8 @@ export default {
         );
     },
     submitEditTargetData(inputName, inputDeadline, inputDescrition, targetId) {
-      this.$parent.targetData.length = 0
+      this.$parent.targetData.length = 0;
+      // this.targetDataProps.splice()
       firebase
         .firestore()
         .collection("targetss")
@@ -183,6 +184,12 @@ export default {
           },
           { merge: true }
         );
+      const data = {
+        name: inputName,
+        deadline: inputDeadline,
+        description: inputDescrition,
+        targetId: targetId
+      };
     }
   },
   mounted() {

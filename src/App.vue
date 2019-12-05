@@ -89,7 +89,7 @@ export default {
       }
       store.commit("setUserName", inputName);
     },
-    submitTaskData(inputName, inputDate, selectedCategory, inputMemo) {
+    submitTaskData(inputName, inputDate, selectedCategory, inputMemo,taskId) {
       firebase
         .firestore()
         .collection("tasks")
@@ -108,6 +108,15 @@ export default {
           { merge: true }
         );
       store.commit("setTaskId", 1);
+      const data = {
+        taskId: taskId,
+        taskName: inputName,
+        taskDeadline: inputDate,
+        category: selectedCategory,
+        taskMemo: inputMemo,
+        status: "Doing"
+      };
+      store.commit("setTasksData", data);
     }
   },
   computed: {
@@ -122,10 +131,18 @@ export default {
     },
     taskId() {
       return this.$store.getters.taskId;
+    },
+    tasksData() {
+      return this.$store.getters.tasksData;
+    }
+  },
+  watch:{
+    tasksData:function() {
+      console.log(this.tasksData)
     }
   },
   created() {
-    console.log(window.location.pathname);
+    console.log(this.$store.state);
   }
 };
 </script>

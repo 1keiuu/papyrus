@@ -11,7 +11,33 @@ export default new Vuex.Store({
     profileImageUrl: "",
     isSignIn: false,
     taskId: 1,
-    taskData: []
+    targetsData: [
+      {
+        name: "primary",
+        description: "",
+        deadline: "",
+        targetId: "target1"
+      },
+      {
+        name: "secondary",
+        description: "",
+        deadline: "",
+        targetId: "tertiary"
+      },
+      {
+        name: "primary",
+        description: "",
+        deadline: "",
+        targetId: "keep"
+      },
+      {
+        name: "primary",
+        description: "",
+        deadline: "",
+        targetId: "keep"
+      }
+    ],
+    tasksData: []
   },
   mutations: {
     setSignIn(state, payload) {
@@ -29,9 +55,18 @@ export default new Vuex.Store({
     setTaskId(state, payload) {
       state.taskId += payload;
     },
-    setTaskData(state, taskData) {
-      // state.taskData.push(payload)
-      Vue.set(state, 'taskData', taskData);
+    setTargetsData(state, payload) {
+      state.targetsData.push(payload);
+    },
+    setTasksData(state, payload) {
+      state.tasksData.push(payload);
+    },
+    deleteTasksData(state, payload) {
+      if (payload === "all") {
+        state.tasksData.length = 0;
+      } else {
+        console.log('a')
+      }
     }
   },
   getters: {
@@ -50,8 +85,11 @@ export default new Vuex.Store({
     taskId(state) {
       return state.taskId;
     },
-    taskData(state) {
-      return state.taskData;
+    targetsData(state) {
+      return state.targetsData;
+    },
+    tasksData(state) {
+      return state.tasksData;
     }
   },
   plugins: [createPersistedState()]

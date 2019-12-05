@@ -7,16 +7,17 @@
           :options="options"
           @start="onStart"
           @end="onEnd"
-          v-for="(sheet, index) in targetData"
+          v-for="(sheet, index) in targetsData"
           :key="index"
           class="targetSheet__wrapper"
         > -->
-        <div class="targetSheet__wrapper" v-for="(sheet, index) in targetData" :key="index">
+        <div class="targetSheet__wrapper" v-for="(sheet, index) in targetsData" :key="index">
           <TargetSheet
             :class="{ moving: status.moving }"
-            :targetDataProps="targetData[index]"
-            :taskData="tasksData[index]"
+            :targetDataProps="targetsData[index]"
+            :taskData="typedTasksData[index]"
           ></TargetSheet>
+          <v-btn @click="onB"></v-btn>
         </div>
         <!-- </draggable> -->
       </v-layout>
@@ -41,50 +42,23 @@ export default {
         group: "myGroup",
         animation: 200
       },
-      userId:firebase.auth().currentUser.uid,
-      targetData: [],
-      tasksData: [],
+      userId: firebase.auth().currentUser.uid,
       task1Data: [],
       task2Data: [],
       task3Data: [],
-      keep: [],
-      taskData: [],
+      typedTasksData: [],
       status: {
         moving: false
       }
     };
   },
   created() {
-    firebase
-      .firestore()
-      .collection("tasks")
-      .doc(this.userId)
-      .get()
-      .then(doc => {
-        const obj = doc.data();
-        Object.keys(obj).forEach(key => {
-          this.taskData.push(obj[key]);
-        });
-        const target1 = this.taskData.filter((item, index) => item.category === "target1");
-        target1.map(data => this.task1Data.push(data));
-        const target2 = this.taskData.filter((item, index) => item.category === "target2");
-        target2.map(data => this.task2Data.push(data));
-        const target3 = this.taskData.filter((item, index) => item.category === "target3");
-        target3.map(data => this.task3Data.push(data));
-        const keep = this.taskData.filter((item, index) => item.category === "keep");
-        keep.map(data => this.keep.push(data));
-
-        this.tasksData.push(this.task1Data, this.task2Data, this.task3Data, this.keep);
-        console.log(JSON.parse(JSON.stringify(this.tasksData)));
-      })
-      .catch(err => {
-        console.log(err);
-      });
     // firebase
     //   .firestore()
     //   .collection("tasks")
     //   .doc(this.userId)
-    //   .onSnapshot(doc => {
+    //   .get()
+    //   .then(doc => {
     //     const obj = doc.data();
     //     Object.keys(obj).forEach(key => {
     //       this.taskData.push(obj[key]);
@@ -97,22 +71,45 @@ export default {
     //     target3.map(data => this.task3Data.push(data));
     //     const keep = this.taskData.filter((item, index) => item.category === "keep");
     //     keep.map(data => this.keep.push(data));
+
     //     this.tasksData.push(this.task1Data, this.task2Data, this.task3Data, this.keep);
     //     console.log(JSON.parse(JSON.stringify(this.tasksData)));
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
     //   });
-    firebase
-      .firestore()
-      .collection("targetss")
-      .doc(this.userId)
-      .onSnapshot(doc => {
-        const obj = doc.data();
-        Object.keys(obj).forEach(key => {
-          this.targetData.push(obj[key]);
-        });
-      });
+
+    // firebase
+    //   .firestore()
+    //   .collection("targetss")
+    //   .doc(this.userId)
+    //   .onSnapshot(doc => {
+    //     const obj = doc.data();
+    //     Object.keys(obj).forEach(key => {
+    //       this.targetsData.push(obj[key]);
+    //     });
+    //   });
+    // console.log(JSON.parse(JSON.stringify(this.tasksData)));
+
+    // const obj = this.tasksData
+    // Object.keys(obj).forEach(key => {
+    //   this.tasksData.push(obj[key]);
+    // });
+    const target1 = this.storedTasksData.filter((item, index) => item.category === "target1");
+    target1.map(data => this.task1Data.push(data));
+    const target2 = this.storedTasksData.filter((item, index) => item.category === "target2");
+    target2.map(data => this.task2Data.push(data));
+    const target3 = this.storedTasksData.filter((item, index) => item.category === "target3");
+    target3.map(data => this.task3Data.push(data));
+    const keep = this.storedTasksData.filter((item, index) => item.category === "keep");
+    keep.map(data => this.keep.push(data));
+
+    this.typedTasksData.push(this.task1Data, this.task2Data, this.task3Data, this.keep);
+    console.log(this.storedTasksData);
+    console.log(this.typedTasksData);
   },
   methods: {
-    submitEditTargetData(inputName,inputDescription,inputDeadline,targetId) {
+    submitEditTargetData(inputName, inputDescription, inputDeadline, targetId) {
       firebase
         .firestore()
         .collection("targetss")
@@ -126,10 +123,58 @@ export default {
             }
           },
           { merge: true }
-        )
+        );
     },
+    onB() {
+      store.commit("deleteTasksData", "all");
+    }
   },
-  computed: {}
+  watch: {
+    storedTasksData(array) {
+      const newtask = array[array.length - 1];
+      console.log(array)
+      switch (newtask.category) {
+        case "target1":
+          this.typedTasksData[0].push(newtask);
+          break;
+        case "target2":
+          this.typedTasksData[1].push(newtask);
+          break;
+        case "target3":
+          this.typedTasksData[3].push(newtask);
+          break;
+        case "keep":
+          this.typedTasksData[4].push(newtask);
+          break;
+        case null:
+          this.typedTasksData.length = 0;
+          break;
+        default:
+      }
+      // const target1 = this.storedTasksData.filter((item, index) => item.category === "target1");
+      // target1.map(data => this.task1Data.push(data));
+      // const target2 = this.storedTasksData.filter((item, index) => item.category === "target2");
+      // target2.map(data => this.task2Data.push(data));
+      // const target3 = this.storedTasksData.filter((item, index) => item.category === "target3");
+      // target3.map(data => this.task3Data.push(data));
+      // const keep = this.storedTasksData.filter((item, index) => item.category === "keep");
+      // keep.map(data => this.keep.push(data));
+      // this.typedTasksData.push(this.task1Data, this.task2Data, this.task3Data, this.keep);
+      // console.log(array[array.length - 1]);
+      // console.log(this.typedTasksData);
+    }
+  },
+  computed: {
+    targetsData() {
+      return this.$store.getters.targetsData;
+    },
+    storedTasksData() {
+      return JSON.parse(JSON.stringify(this.$store.getters.tasksData));
+    },
+    keep() {
+      return this.$store.getters.keep;
+    }
+  }
 };
 </script>
 

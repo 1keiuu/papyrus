@@ -136,7 +136,8 @@ export default {
         this.input.name,
         this.input.deadline,
         this.input.category,
-        this.input.memo
+        this.input.memo,
+        this.taskId
       );
       const obj = this.input;
       this.currentStep = 1;
@@ -149,6 +150,11 @@ export default {
     targetData: function() {
       this.input.category = this.targetData;
       console.log(this.targetData)
+    }
+  },
+  computed:{
+    taskId() {
+      return this.$store.getters.taskId
     }
   }
 };
