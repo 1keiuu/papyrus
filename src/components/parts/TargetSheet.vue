@@ -80,8 +80,10 @@
       </div>
       <EditTaskModal
         ref="editTaskModal"
-        @submit="submitEditTaskData"
+        @store="submitEditTaskData"
         @delete="deleteTaskData"
+        @archive="changeTaskStatus"
+        @complete="changeTaskStatus"
         :taskData="selectedTaskData"
       ></EditTaskModal>
       <AddTaskModal ref="addTaskModal"></AddTaskModal>
@@ -135,6 +137,14 @@ export default {
       this.selectedTargetData = targetData;
       this.openModal("editTarget");
     },
+    changeTaskStatus(targetRank,taskId,status) {
+      const data = {
+        targetRank:targetRank,
+        taskId: taskId,
+        status:status
+      }
+      store.commit('changeTaskStatus',data)
+    },
     openModal(target) {
       switch (target) {
         case "editTask":
@@ -163,7 +173,7 @@ export default {
               taskDeadline: inputDate,
               targetRank: selectedTargetRank,
               taskMemo: inputMemo,
-              status: "Doing"
+              status: "doing"
             }
           },
           { merge: true }
@@ -174,7 +184,7 @@ export default {
         taskDeadline: inputDate,
         targetRank: selectedTargetRank,
         taskMemo: inputMemo,
-        status: "Doing",
+        status: "doing",
         formerTargetRank: formerTargetRank
       };
       store.commit("editTaskData", data);
@@ -212,7 +222,6 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.targetData);
   },
   computed: {
     Deadline() {
@@ -227,7 +236,9 @@ export default {
 <style scoped lang="scss">
 $primary: #6245ea;
 $secondary: #8471e2;
-
+.v-tooltip__content{
+    font-size: 12px;
+}
 .targetSheet__title-wrapper {
   position: absolute;
   width: 235px;
@@ -283,6 +294,7 @@ $secondary: #8471e2;
 }
 .taskCard__wrapper {
   margin: 5px 0px;
+  display: contents;
 }
 
 .taskCard {

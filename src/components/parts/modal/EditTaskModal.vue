@@ -37,14 +37,14 @@
         <v-row class="submitButton__wrapper">
           <v-layout justify-space-around>
             <div>
-              <v-btn outlined color="#F25151"><v-icon>mdi-check</v-icon>タスクを完了する</v-btn>
+              <v-btn outlined color="#F25151" @click="handleCompleteButtonClick"><v-icon>mdi-check</v-icon>タスクを完了する</v-btn>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn fab outlined color="indigo lighten-2" v-on="on" height="36" width="36"
+                  <v-btn fab outlined color="indigo lighten-2" v-on="on" height="36" width="36" @click="handleArchiveButtonClick"
                     ><v-icon>mdi-history</v-icon></v-btn
                   >
                 </template>
-                <span>アーカイブにする</span>
+                <span >アーカイブにする</span>
               </v-tooltip>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
@@ -62,7 +62,7 @@
                 <span>削除する</span>
               </v-tooltip>
             </div>
-            <v-btn color="#6245ea" class="submitButton" outlined @click="handleSubmitButtonClick">
+            <v-btn color="#6245ea" class="submitButton" outlined @click="handleStoreButtonClick">
               保存
             </v-btn>
           </v-layout>
@@ -94,10 +94,10 @@ export default {
     openDialog() {
       this.dialog = true;
     },
-    handleSubmitButtonClick() {
+    handleStoreButtonClick() {
       this.dialog = false;
       this.$emit(
-        "submit",
+        "store",
         this.input.name,
         this.input.deadline,
         this.input.targetRank,
@@ -106,6 +106,13 @@ export default {
         this.formerTargetRank
       );
     },
+    handleArchiveButtonClick() {
+      this.$emit("archive",this.taskData.targetRank,this.taskData.taskId, "archived");
+    },
+    handleCompleteButtonClick() {
+      this.$emit("complete",this.taskData.targetRank,this.taskData.taskId, "completed");
+    },
+
     handleDeleteButtonClick() {
       if (window.confirm("タスクを削除してよろしいですか?")) {
         this.$emit("delete", this.input.targetRank, this.input.taskId);
@@ -113,8 +120,7 @@ export default {
       }
     }
   },
-  created() {
-  },
+  created() {},
   watch: {
     taskData: function() {
       this.input.name = this.taskData.taskName;
@@ -158,6 +164,10 @@ $primary: #6245ea;
 .title__line {
   width: 150px;
   border-bottom: 2px solid $primary;
+}
+
+.v-tooltip__content {
+  font-size: 12px;
 }
 
 .name__input {

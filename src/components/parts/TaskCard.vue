@@ -1,5 +1,5 @@
 <template>
-  <v-card width="290">
+  <v-card width="290" v-if="taskData.status==='doing'">
     <v-card-title class="taskCard__title">
       {{taskData.taskName}}
     </v-card-title>
@@ -16,7 +16,6 @@ export default {
   name: "TaskCard",
   data() {
     return {
-      show: false
     };
   },
   components:{
@@ -40,4 +39,5 @@ export default {
 .taskCard__subTitle{
     padding-bottom:8px;
 }
+
 </style>

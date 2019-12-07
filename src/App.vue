@@ -102,7 +102,7 @@ export default {
               taskDeadline: inputDate,
               targetRank: selectedTargetRank,
               taskMemo: inputMemo,
-              status: "Doing"
+              status: "doing"
             }
           },
           { merge: true }
@@ -114,7 +114,7 @@ export default {
         taskDeadline: inputDate,
         targetRank: selectedTargetRank,
         taskMemo: inputMemo,
-        status: "Doing"
+        status: "doing"
       };
       store.commit("setTasksData", data);
     }

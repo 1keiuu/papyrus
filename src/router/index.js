@@ -19,11 +19,6 @@ const routes = [
     name: 'ManageTask',
     component: require('@/components/pages/ManageTask').default,
   },
-  {
-    path: '/grobals/Navigation',
-    name: 'Navigation',
-    component: require('@/components/globals/Navigation').default,
-  },
 ];
 
 const router = new VueRouter({

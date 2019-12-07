@@ -90,7 +90,6 @@ export default new Vuex.Store({
     },
     editTaskData(state, payload) {
       // 編集には編集前のデータと後のデータが必要
-
       // 編集前のTargetIndex
       const formerTargetIndex = getTargetIndex(payload.formerTargetRank);
       // 編集後のTargetIndex
@@ -100,6 +99,22 @@ export default new Vuex.Store({
       // 編集前のTaskDataを消して、後のDataを追加
       selectedTasks.splice(taskIndex,1)
       state.tasksData[targetIndex].push(payload);
+    },
+    changeTaskStatus(state,payload) {
+      const targetIndex = getTargetIndex(payload.targetRank);
+      const selectedTasks = state.tasksData[targetIndex];
+      const taskIndex = getSelectedTaskIndex(selectedTasks,payload)
+
+      switch (payload.status) {
+        case "archived":
+          selectedTasks[taskIndex].status = 'archived'
+          break;
+        case "completed":
+          selectedTasks[taskIndex].status = 'completed'
+          break;
+        default:
+      }
+      return null;
     },
     deleteTaskData(state, payload) {
       if (payload === "all") {

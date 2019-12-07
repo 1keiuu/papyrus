@@ -48,7 +48,6 @@ export default {
         title: "タスク"
       }
     ]
-    // currentPath:
   }),
   methods: {
     sampleClick(target) {
@@ -75,7 +74,7 @@ $secondary: #8471e2;
 }
 
 .v-card {
-  margin-top: 80px;
+  padding-top: 85px;
   height: 100vh;
 }
 
@@ -86,6 +85,10 @@ $secondary: #8471e2;
 
 .v-list-item-icon {
   padding-left: 5px;
+}
+
+.v-tooltip__content{
+    font-size: 12px;
 }
 
 .v-list-item--active {

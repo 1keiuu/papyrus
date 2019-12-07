@@ -178,6 +178,10 @@ $secondary: #707070;
   padding-bottom: 0px;
 }
 
+.v-tooltip__content{
+    font-size: 12px;
+}
+
 .layoutTextarea {
   margin-top: 0px;
   padding-top: 0px;
