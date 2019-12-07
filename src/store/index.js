@@ -4,6 +4,30 @@ import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
+// 削除対象のタスクが所属するtargetのtargetsData内でのindex
+const getTargetIndex = payload => {
+  switch (payload) {
+    case "rank1":
+      return 0;
+    case "rank2":
+      return 1;
+    case "rank3":
+      return 2;
+    case "rank4":
+      return 3;
+    default:
+  }
+  return null;
+};
+const getSelectedTaskIndex = (array, payload) => {
+  for (let i = 0; i < array.length; i += 1) {
+    if (array[i].taskId === payload.taskId) {
+      return i;
+    }
+  }
+  return null;
+};
+
 export default new Vuex.Store({
   state: {
     userName: "",
@@ -16,28 +40,28 @@ export default new Vuex.Store({
         name: "primary",
         description: "",
         deadline: "",
-        targetId: "target1"
+        targetRank: "rank1"
       },
       {
         name: "secondary",
         description: "",
         deadline: "",
-        targetId: "tertiary"
+        targetRank: "rank2"
       },
       {
-        name: "primary",
+        name: "tertiary",
         description: "",
         deadline: "",
-        targetId: "keep"
+        targetRank: "rank3"
       },
       {
-        name: "primary",
+        name: "keep",
         description: "",
         deadline: "",
-        targetId: "keep"
+        targetRank: "rank4"
       }
     ],
-    tasksData: []
+    tasksData: [[], [], [], []]
   },
   mutations: {
     setSignIn(state, payload) {
@@ -59,13 +83,36 @@ export default new Vuex.Store({
       state.targetsData.push(payload);
     },
     setTasksData(state, payload) {
-      state.tasksData.push(payload);
+      // 追加対象のタスクが所属するtargetのtargetsData内でのindex
+      const targetIndex = getTargetIndex(payload.targetRank);
+      console.log(payload);
+      state.tasksData[targetIndex].push(payload);
     },
-    deleteTasksData(state, payload) {
+    editTaskData(state, payload) {
+      // 編集には編集前のデータと後のデータが必要
+
+      // 編集前のTargetIndex
+      const formerTargetIndex = getTargetIndex(payload.formerTargetRank);
+      // 編集後のTargetIndex
+      const targetIndex = getTargetIndex(payload.targetRank);
+      const selectedTasks = state.tasksData[formerTargetIndex];
+      const taskIndex = getSelectedTaskIndex(selectedTasks,payload)
+      // 編集前のTaskDataを消して、後のDataを追加
+      selectedTasks.splice(taskIndex,1)
+      state.tasksData[targetIndex].push(payload);
+    },
+    deleteTaskData(state, payload) {
       if (payload === "all") {
-        state.tasksData.length = 0;
+        // TasksDataの初期化
+        state.tasksData.splice(0, 4, [], [], [], []);
+      } else if (typeof payload.taskId === "number") {
+        // 削除対象のタスクが所属するtargetのtargetsData内でのindex
+        const targetIndex = getTargetIndex(payload.targetRank);
+        const selectedTasks = state.tasksData[targetIndex];
+        const taskIndex = getSelectedTaskIndex(selectedTasks, payload);
+        selectedTasks.splice(taskIndex, 1);
       } else {
-        console.log('a')
+        console.log("undefined deleteType");
       }
     }
   },

@@ -13,9 +13,8 @@
         > -->
         <div class="targetSheet__wrapper" v-for="(sheet, index) in targetsData" :key="index">
           <TargetSheet
-            :class="{ moving: status.moving }"
             :targetDataProps="targetsData[index]"
-            :taskData="typedTasksData[index]"
+            :taskData="storedTasksData[index]"
           ></TargetSheet>
           <v-btn @click="onB"></v-btn>
         </div>
@@ -43,70 +42,30 @@ export default {
         animation: 200
       },
       userId: firebase.auth().currentUser.uid,
-      task1Data: [],
-      task2Data: [],
-      task3Data: [],
-      typedTasksData: [],
-      status: {
-        moving: false
-      }
+      // primaryTaskData: [],
+      // secondaryTaskData: [],
+      // tertiaryTaskData: [],
+      // keepTaskData: [],
+      // typedTasksData: [],
     };
   },
   created() {
-    // firebase
-    //   .firestore()
-    //   .collection("tasks")
-    //   .doc(this.userId)
-    //   .get()
-    //   .then(doc => {
-    //     const obj = doc.data();
-    //     Object.keys(obj).forEach(key => {
-    //       this.taskData.push(obj[key]);
-    //     });
-    //     const target1 = this.taskData.filter((item, index) => item.category === "target1");
-    //     target1.map(data => this.task1Data.push(data));
-    //     const target2 = this.taskData.filter((item, index) => item.category === "target2");
-    //     target2.map(data => this.task2Data.push(data));
-    //     const target3 = this.taskData.filter((item, index) => item.category === "target3");
-    //     target3.map(data => this.task3Data.push(data));
-    //     const keep = this.taskData.filter((item, index) => item.category === "keep");
-    //     keep.map(data => this.keep.push(data));
-
-    //     this.tasksData.push(this.task1Data, this.task2Data, this.task3Data, this.keep);
-    //     console.log(JSON.parse(JSON.stringify(this.tasksData)));
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-
-    // firebase
-    //   .firestore()
-    //   .collection("targetss")
-    //   .doc(this.userId)
-    //   .onSnapshot(doc => {
-    //     const obj = doc.data();
-    //     Object.keys(obj).forEach(key => {
-    //       this.targetsData.push(obj[key]);
-    //     });
-    //   });
-    // console.log(JSON.parse(JSON.stringify(this.tasksData)));
-
-    // const obj = this.tasksData
-    // Object.keys(obj).forEach(key => {
-    //   this.tasksData.push(obj[key]);
-    // });
-    const target1 = this.storedTasksData.filter((item, index) => item.category === "target1");
-    target1.map(data => this.task1Data.push(data));
-    const target2 = this.storedTasksData.filter((item, index) => item.category === "target2");
-    target2.map(data => this.task2Data.push(data));
-    const target3 = this.storedTasksData.filter((item, index) => item.category === "target3");
-    target3.map(data => this.task3Data.push(data));
-    const keep = this.storedTasksData.filter((item, index) => item.category === "keep");
-    keep.map(data => this.keep.push(data));
-
-    this.typedTasksData.push(this.task1Data, this.task2Data, this.task3Data, this.keep);
-    console.log(this.storedTasksData);
-    console.log(this.typedTasksData);
+    // this.storedTasksData.filter((item, index) => {
+    //   switch (item.targetRank) {
+    //     case "primary":
+    //       return this.primaryTaskData.push(item)
+    //     case "secondary":
+    //       return this.secondaryTaskData.push(item)
+    //     case "rank3":
+    //       return this.tertiaryTaskData.push(item)
+    //     case "keep":
+    //       return this.keepTaskData.push(item)
+    //     default:
+    //       console.log('none')
+    //   }
+    //   return false
+    // })
+    // this.typedTasksData.push(this.primaryTaskData, this.secondaryTaskData, this.tertiaryTaskData, this.keepTaskData);
   },
   methods: {
     submitEditTargetData(inputName, inputDescription, inputDeadline, targetId) {
@@ -126,42 +85,31 @@ export default {
         );
     },
     onB() {
-      store.commit("deleteTasksData", "all");
+      store.commit("deleteTaskData", "all");
     }
   },
   watch: {
     storedTasksData(array) {
       const newtask = array[array.length - 1];
-      console.log(array)
-      switch (newtask.category) {
-        case "target1":
+      // 新しいデータが追加された時の処理
+      switch (newtask.targetRank) {
+        case "rank1":
           this.typedTasksData[0].push(newtask);
           break;
-        case "target2":
+        case "rank2":
           this.typedTasksData[1].push(newtask);
           break;
-        case "target3":
-          this.typedTasksData[3].push(newtask);
+        case "rank3":
+          this.typedTasksData[2].push(newtask);
           break;
-        case "keep":
-          this.typedTasksData[4].push(newtask);
+        case "rank4":
+          this.typedTasksData[3].push(newtask);
           break;
         case null:
           this.typedTasksData.length = 0;
           break;
         default:
       }
-      // const target1 = this.storedTasksData.filter((item, index) => item.category === "target1");
-      // target1.map(data => this.task1Data.push(data));
-      // const target2 = this.storedTasksData.filter((item, index) => item.category === "target2");
-      // target2.map(data => this.task2Data.push(data));
-      // const target3 = this.storedTasksData.filter((item, index) => item.category === "target3");
-      // target3.map(data => this.task3Data.push(data));
-      // const keep = this.storedTasksData.filter((item, index) => item.category === "keep");
-      // keep.map(data => this.keep.push(data));
-      // this.typedTasksData.push(this.task1Data, this.task2Data, this.task3Data, this.keep);
-      // console.log(array[array.length - 1]);
-      // console.log(this.typedTasksData);
     }
   },
   computed: {
@@ -171,9 +119,6 @@ export default {
     storedTasksData() {
       return JSON.parse(JSON.stringify(this.$store.getters.tasksData));
     },
-    keep() {
-      return this.$store.getters.keep;
-    }
   }
 };
 </script>

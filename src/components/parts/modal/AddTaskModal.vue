@@ -26,10 +26,10 @@
                     class="name__input"
                   ></v-text-field>
                   <v-select
-                    :items="categoryOptions"
-                    v-model="input.category"
+                    :items="targetRankOptions"
+                    v-model="input.targetRank"
                     label="目標名"
-                    class="categoryOptions__input"
+                    class="targetRankOptions__input"
                   ></v-select>
                   <v-text-field
                     v-model="input.deadline"
@@ -74,8 +74,8 @@
                   </v-row>
                   <v-col cols="12" sm="6">
                     <v-select
-                      :items="categoryOptions"
-                      v-model="input.category"
+                      :items="targetRankOptions"
+                      v-model="input.targetRank"
                       label="目標もしくはカテゴリ"
                     ></v-select>
                   </v-col>
@@ -110,10 +110,10 @@ export default {
     input: {
       name: "",
       deadline: "",
-      category: "",
+      targetRank: "",
       memo: ""
     },
-    categoryOptions: ["target1", "target2", "target3", "keep"],
+    targetRankOptions: ["rank1", "rank2", "rank3", "rank4"],
     currentStep: 0,
     memoRules: [v => v.length <= 150 || ""]
   }),
@@ -123,19 +123,20 @@ export default {
       this.dialog = true;
     },
     handleNextButtonClick() {
-      if (this.input.name === "" || this.input.category === "") {
+      if (this.input.name === "" || this.input.targetRank === "") {
         alert("insufficient form ");
       } else {
         this.currentStep = 2;
       }
     },
     handleSubmitButtonClick() {
+      console.log(this.input)
       this.dialog = false;
       this.$emit(
         "submit",
         this.input.name,
         this.input.deadline,
-        this.input.category,
+        this.input.targetRank,
         this.input.memo,
         this.taskId
       );
@@ -148,7 +149,7 @@ export default {
   },
   watch: {
     targetData: function() {
-      this.input.category = this.targetData;
+      // this.input.targetData = this.targetData;
       console.log(this.targetData)
     }
   },
@@ -210,7 +211,7 @@ $primary: #6245ea;
     }
   }
 }
-.categoryOptions__input {
+.targetRankOptions__input {
   width: 300px;
 }
 

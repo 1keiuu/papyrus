@@ -89,7 +89,7 @@ export default {
       }
       store.commit("setUserName", inputName);
     },
-    submitTaskData(inputName, inputDate, selectedCategory, inputMemo,taskId) {
+    submitTaskData(inputName, inputDate, selectedTargetRank, inputMemo,taskId) {
       firebase
         .firestore()
         .collection("tasks")
@@ -100,7 +100,7 @@ export default {
               taskId: this.taskId,
               taskName: inputName,
               taskDeadline: inputDate,
-              category: selectedCategory,
+              targetRank: selectedTargetRank,
               taskMemo: inputMemo,
               status: "Doing"
             }
@@ -112,7 +112,7 @@ export default {
         taskId: taskId,
         taskName: inputName,
         taskDeadline: inputDate,
-        category: selectedCategory,
+        targetRank: selectedTargetRank,
         taskMemo: inputMemo,
         status: "Doing"
       };

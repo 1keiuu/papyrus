@@ -81,6 +81,7 @@
       <EditTaskModal
         ref="editTaskModal"
         @submit="submitEditTaskData"
+        @delete="deleteTaskData"
         :taskData="selectedTaskData"
       ></EditTaskModal>
       <AddTaskModal ref="addTaskModal"></AddTaskModal>
@@ -148,7 +149,8 @@ export default {
         default:
       }
     },
-    submitEditTaskData(inputName, inputDate, selectedCategory, inputMemo, taskId) {
+    submitEditTaskData(inputName, inputDate, selectedTargetRank, inputMemo, taskId,formerTargetRank) {
+      console.log(formerTargetRank)
       firebase
         .firestore()
         .collection("tasks")
@@ -159,13 +161,23 @@ export default {
               taskId: taskId,
               taskName: inputName,
               taskDeadline: inputDate,
-              category: selectedCategory,
+              targetRank: selectedTargetRank,
               taskMemo: inputMemo,
               status: "Doing"
             }
           },
           { merge: true }
         );
+      const data = {
+        taskId: taskId,
+        taskName: inputName,
+        taskDeadline: inputDate,
+        targetRank: selectedTargetRank,
+        taskMemo: inputMemo,
+        status: "Doing",
+        formerTargetRank: formerTargetRank
+      };
+      store.commit("editTaskData", data);
     },
     submitEditTargetData(inputName, inputDeadline, inputDescrition, targetId) {
       this.$parent.targetData.length = 0;
@@ -190,10 +202,17 @@ export default {
         description: inputDescrition,
         targetId: targetId
       };
+    },
+    deleteTaskData(targetRank, taskId) {
+      const taskData = {
+        targetRank: targetRank,
+        taskId: taskId
+      };
+      this.$store.commit("deleteTaskData", taskData);
     }
   },
   mounted() {
-    console.log(this.targetData);
+    // console.log(this.targetData);
   },
   computed: {
     Deadline() {

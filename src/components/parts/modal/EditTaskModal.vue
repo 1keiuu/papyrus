@@ -11,10 +11,10 @@
           <v-container fluid>
             <v-text-field v-model="input.name" label="タスク名" class="name__input"> </v-text-field>
             <v-select
-              :items="categoryOptions"
-              v-model="input.category"
+              :items="targetRankOptions"
+              v-model="input.targetRank"
               label="目標名"
-              class="categoryOptions__input"
+              class="targetRankOptions__input"
             ></v-select>
             <v-text-field
               v-model="input.deadline"
@@ -35,9 +35,37 @@
         </v-card-text>
 
         <v-row class="submitButton__wrapper">
-          <v-btn color="#6245ea" class="submitButton" outlined @click="handleSubmitButtonClick">
-            保存
-          </v-btn>
+          <v-layout justify-space-around>
+            <div>
+              <v-btn outlined color="#F25151"><v-icon>mdi-check</v-icon>タスクを完了する</v-btn>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-btn fab outlined color="indigo lighten-2" v-on="on" height="36" width="36"
+                    ><v-icon>mdi-history</v-icon></v-btn
+                  >
+                </template>
+                <span>アーカイブにする</span>
+              </v-tooltip>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    fab
+                    outlined
+                    color="#8471e2"
+                    height="36"
+                    width="36"
+                    v-on="on"
+                    @click="handleDeleteButtonClick"
+                    ><v-icon>mdi-trash-can-outline</v-icon></v-btn
+                  >
+                </template>
+                <span>削除する</span>
+              </v-tooltip>
+            </div>
+            <v-btn color="#6245ea" class="submitButton" outlined @click="handleSubmitButtonClick">
+              保存
+            </v-btn>
+          </v-layout>
         </v-row>
       </v-card>
     </v-dialog>
@@ -52,11 +80,12 @@ export default {
     input: {
       name: "",
       deadline: "",
-      category: "",
+      targetRank: "",
       memo: "",
       taskId: ""
     },
-    categoryOptions: ["target1", "target2", "target3", "keep"],
+    formerTargetRank: "",
+    targetRankOptions: ["rank1", "rank2", "rank3", "rank4"],
     currentStep: 0,
     memoRules: [v => v.length <= 150 || ""]
   }),
@@ -71,15 +100,17 @@ export default {
         "submit",
         this.input.name,
         this.input.deadline,
-        this.input.category,
+        this.input.targetRank,
         this.input.memo,
-        this.input.taskId
+        this.input.taskId,
+        this.formerTargetRank
       );
-      // const obj = this.input;
-      // this.currentStep = 1;
-      // Object.keys(obj).forEach(function(key) {
-      //   obj[key] = "";
-      // });
+    },
+    handleDeleteButtonClick() {
+      if (window.confirm("タスクを削除してよろしいですか?")) {
+        this.$emit("delete", this.input.targetRank, this.input.taskId);
+        this.dialog = false;
+      }
     }
   },
   created() {
@@ -87,10 +118,11 @@ export default {
   watch: {
     taskData: function() {
       this.input.name = this.taskData.taskName;
-      this.input.category = this.taskData.category;
+      this.input.targetRank = this.taskData.targetRank;
       this.input.memo = this.taskData.taskMemo;
       this.input.deadline = this.taskData.taskDeadline;
       this.input.taskId = this.taskData.taskId;
+      this.formerTargetRank = this.taskData.targetRank;
     }
   }
 };
@@ -104,6 +136,13 @@ $primary: #6245ea;
 }
 ::v-deep .v-label {
   font-size: 14px !important;
+}
+.v-tooltip__content {
+  font-size: 12px;
+}
+
+.v-btn--outlined {
+  border: 1.5px solid;
 }
 
 .title__wrapper {
@@ -130,7 +169,7 @@ $primary: #6245ea;
     }
   }
 }
-.categoryOptions__input {
+.targetRankOptions__input {
   width: 300px;
 }
 
