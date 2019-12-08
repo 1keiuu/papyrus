@@ -3,6 +3,7 @@
     <p-header
       @logout="handleHeaderMenuLogoutClick"
       @edit="handleHeaderMenuEditProfileClick"
+      @archivedTasks="handleHeaderArchivedTasksClick"
       @addTask="handleHeaderAddTaskButtonClick"
       v-if="$route.name !== 'no_auth/login'"
       v-bind:userName="this.userName"
@@ -16,6 +17,7 @@
         v-bind:userName="this.userName"
       ></ProfileEditModal>
       <AddTaskModal ref="addTaskModal" @submit="submitTaskData"></AddTaskModal>
+      <ArchivedTasksModal :tasksData='tasksData' :targetsData='targetsData' ref="archivedTasksModal"></ArchivedTasksModal>
     </v-content>
   </v-app>
 </template>
@@ -27,6 +29,7 @@ import Header from "@/components/globals/Header";
 import ProfileEditModal from "./components/parts/modal/ProfileEditModal";
 import AddTaskModal from "./components/parts/modal/AddTaskModal";
 import Navigation from "@/components/globals/Navigation";
+import ArchivedTasksModal from "@/components/parts/modal/ArchivedTasksModal"
 
 export default {
   name: "App",
@@ -34,7 +37,8 @@ export default {
     "p-header": Header,
     ProfileEditModal,
     AddTaskModal,
-    "p-navigation": Navigation
+    "p-navigation": Navigation,
+    ArchivedTasksModal
   },
   data() {
     return {
@@ -54,11 +58,17 @@ export default {
     handleHeaderAddTaskButtonClick() {
       this.openAddTaskModal();
     },
+    handleHeaderArchivedTasksClick() {
+      this.openArchivedTasksModal()
+    },
     openAddTaskModal() {
       this.$refs.addTaskModal.openDialog();
     },
     openProfileEditModal() {
       this.$refs.profileEditModal.openDialog();
+    },
+    openArchivedTasksModal() {
+      this.$refs.archivedTasksModal.openDialog();
     },
     submitProfileData(inputName, selectedItems, inputImage) {
       const metadata = {
@@ -134,12 +144,14 @@ export default {
     },
     tasksData() {
       return this.$store.getters.tasksData;
+    },
+    targetsData() {
+      return this.$store.getters.targetsData;
     }
   },
   watch:{
-    tasksData:function() {
-      console.log(this.tasksData)
-    }
+    // tasksData:function() {
+    // }
   },
   created() {
     console.log(this.$store.state);

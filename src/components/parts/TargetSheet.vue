@@ -293,11 +293,11 @@ $secondary: #8471e2;
   margin-bottom: 10px;
 }
 .taskCard__wrapper {
-  margin: 5px 0px;
   display: contents;
 }
 
 .taskCard {
+  margin: 5px 0px;
   z-index: 1;
   &:hover {
     background-color: rgb(197, 187, 245, 0.2);

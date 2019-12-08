@@ -85,7 +85,6 @@ export default new Vuex.Store({
     setTasksData(state, payload) {
       // 追加対象のタスクが所属するtargetのtargetsData内でのindex
       const targetIndex = getTargetIndex(payload.targetRank);
-      console.log(payload);
       state.tasksData[targetIndex].push(payload);
     },
     editTaskData(state, payload) {

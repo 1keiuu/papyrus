@@ -18,6 +18,7 @@
               rounded
               outlined
               v-on="on"
+              @click="handleArchivedTasksButtonClick"
             >
               <v-layout justify-center fill-height>
                 <v-icon class="archive__icon">mdi-history</v-icon>
@@ -116,6 +117,9 @@ export default {
           break;
         default:
       }
+    },
+    handleArchivedTasksButtonClick() {
+      this.$emit("archivedTasks");
     },
     handleAddTaskButtonClick() {
       this.$emit("addTask");
