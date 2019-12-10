@@ -45,7 +45,8 @@ export default {
     input: {
       name: "",
       deadline: "",
-      description: ""
+      description: "",
+      targetId:""
     }
     // descriptionRules: [v => v.length <= 150 || ""]
   }),
@@ -56,7 +57,7 @@ export default {
     },
     handleSubmitButtonClick() {
       this.dialog = false;
-      this.$emit("submit", this.input.name, this.input.deadline, this.input.description,this.input.targetId);
+      this.$emit("submit", this.input.name, this.input.deadline, this.input.description,this.input.targetRank);
     }
   },
   created() {
@@ -66,7 +67,7 @@ export default {
       this.input.name = this.targetData.name;
       this.input.description = this.targetData.description;
       this.input.deadline = this.targetData.deadline;
-      this.input.targetId = this.targetData.targetId
+      this.input.targetRank = this.targetData.targetRank
     }
   }
 };

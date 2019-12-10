@@ -128,6 +128,10 @@ export default new Vuex.Store({
       } else {
         console.log("undefined deleteType");
       }
+    },
+    editTargetData(state,payload) {
+      const targetIndex = getTargetIndex(payload.targetRank);
+      state.targetsData.splice(targetIndex,1,payload)
     }
   },
   getters: {

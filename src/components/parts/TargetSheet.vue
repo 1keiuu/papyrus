@@ -120,10 +120,9 @@ export default {
       selectedTaskData: [],
       selectedTargetData: [],
       userId: firebase.auth().currentUser.uid,
-      targetData: this.targetDataProps
     };
   },
-  props: ["targetDataProps", "taskData"],
+  props: ["targetData", "taskData"],
   methods: {
     handleTaskCardClick(taskData) {
       this.selectedTaskData = taskData;
@@ -163,7 +162,7 @@ export default {
       console.log(formerTargetRank)
       firebase
         .firestore()
-        .collection("tasks")
+        .collection("targetss")
         .doc(this.userId)
         .set(
           {
@@ -189,29 +188,28 @@ export default {
       };
       store.commit("editTaskData", data);
     },
-    submitEditTargetData(inputName, inputDeadline, inputDescrition, targetId) {
-      this.$parent.targetData.length = 0;
-      // this.targetDataProps.splice()
+    submitEditTargetData(inputName, inputDeadline, inputDescrition, targetRank) {
       firebase
         .firestore()
         .collection("targetss")
         .doc(this.userId)
-        .set(
+        .update(
           {
-            [targetId]: {
+            [targetRank]: {
               name: inputName,
               deadline: inputDeadline,
-              description: inputDescrition
+              description: inputDescrition,
+              targetRank: targetRank
             }
-          },
-          { merge: true }
+          }
         );
       const data = {
         name: inputName,
         deadline: inputDeadline,
         description: inputDescrition,
-        targetId: targetId
+        targetRank: targetRank
       };
+      this.$store.commit("editTargetData", data);
     },
     deleteTaskData(targetRank, taskId) {
       const taskData = {

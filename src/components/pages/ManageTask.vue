@@ -2,23 +2,13 @@
   <v-app class="container">
     <v-container>
       <v-layout class="targetSheet__layout">
-        <!-- <draggable
-          group="myGroup"
-          :options="options"
-          @start="onStart"
-          @end="onEnd"
-          v-for="(sheet, index) in targetsData"
-          :key="index"
-          class="targetSheet__wrapper"
-        > -->
-        <div class="targetSheet__wrapper" v-for="(sheet, index) in targetsData" :key="index">
+        <div class="targetSheet__wrapper" v-for="(sheet, index) in storedTargetsData" :key="index">
           <TargetSheet
-            :targetDataProps="targetsData[index]"
+            :targetData="storedTargetsData[index]"
             :taskData="storedTasksData[index]"
           ></TargetSheet>
           <v-btn @click="onB"></v-btn>
         </div>
-        <!-- </draggable> -->
       </v-layout>
     </v-container>
   </v-app>
@@ -42,30 +32,9 @@ export default {
         animation: 200
       },
       userId: firebase.auth().currentUser.uid,
-      // primaryTaskData: [],
-      // secondaryTaskData: [],
-      // tertiaryTaskData: [],
-      // keepTaskData: [],
-      // typedTasksData: [],
     };
   },
   created() {
-    // this.storedTasksData.filter((item, index) => {
-    //   switch (item.targetRank) {
-    //     case "primary":
-    //       return this.primaryTaskData.push(item)
-    //     case "secondary":
-    //       return this.secondaryTaskData.push(item)
-    //     case "rank3":
-    //       return this.tertiaryTaskData.push(item)
-    //     case "keep":
-    //       return this.keepTaskData.push(item)
-    //     default:
-    //       console.log('none')
-    //   }
-    //   return false
-    // })
-    // this.typedTasksData.push(this.primaryTaskData, this.secondaryTaskData, this.tertiaryTaskData, this.keepTaskData);
   },
   methods: {
     submitEditTargetData(inputName, inputDescription, inputDeadline, targetId) {
@@ -88,33 +57,9 @@ export default {
       store.commit("deleteTaskData", "all");
     }
   },
-  watch: {
-    storedTasksData(array) {
-      const newtask = array[array.length - 1];
-      // 新しいデータが追加された時の処理
-      switch (newtask.targetRank) {
-        case "rank1":
-          this.typedTasksData[0].push(newtask);
-          break;
-        case "rank2":
-          this.typedTasksData[1].push(newtask);
-          break;
-        case "rank3":
-          this.typedTasksData[2].push(newtask);
-          break;
-        case "rank4":
-          this.typedTasksData[3].push(newtask);
-          break;
-        case null:
-          this.typedTasksData.length = 0;
-          break;
-        default:
-      }
-    }
-  },
   computed: {
-    targetsData() {
-      return this.$store.getters.targetsData;
+    storedTargetsData() {
+      return JSON.parse(JSON.stringify(this.$store.getters.targetsData));
     },
     storedTasksData() {
       return JSON.parse(JSON.stringify(this.$store.getters.tasksData));
