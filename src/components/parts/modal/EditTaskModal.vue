@@ -104,6 +104,9 @@ export default {
     openDialog() {
       this.dialog = true;
     },
+    closeDialog() {
+      this.dialog = false;
+    },
     handleStoreButtonClick() {
       this.dialog = false;
       this.$emit(
@@ -117,10 +120,12 @@ export default {
       );
     },
     handleArchiveButtonClick() {
-      this.$emit("archive", this.input , "archived");
+      this.$emit("archive", this.input, "archived");
+      this.closeDialog();
     },
     handleCompleteButtonClick() {
-      this.$emit("complete", this.taskData.targetRank, this.taskData.taskId, "completed");
+      this.$emit("complete", this.input, "completed");
+      this.closeDialog();
     },
 
     handleDeleteButtonClick() {
@@ -138,7 +143,7 @@ export default {
       this.input.memo = this.taskData.taskMemo;
       this.input.deadline = this.taskData.taskDeadline;
       this.input.taskId = this.taskData.taskId;
-      this.input.status = this.taskData.status
+      this.input.status = this.taskData.status;
       this.formerTargetRank = this.taskData.targetRank;
     }
   }

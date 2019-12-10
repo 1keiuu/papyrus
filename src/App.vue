@@ -4,6 +4,7 @@
       @logout="handleHeaderMenuLogoutClick"
       @edit="handleHeaderMenuEditProfileClick"
       @archivedTasks="handleHeaderArchivedTasksClick"
+      @completedTasks="handleHeaderCompletedTasksClick"
       @addTask="handleHeaderAddTaskButtonClick"
       v-if="$route.name !== 'no_auth/login'"
       v-bind:userName="this.userName"
@@ -18,6 +19,7 @@
       ></ProfileEditModal>
       <AddTaskModal ref="addTaskModal" @submit="submitTaskData"></AddTaskModal>
       <ArchivedTasksModal :tasksData='tasksData' :targetsData='targetsData' ref="archivedTasksModal"></ArchivedTasksModal>
+      <CompletedTasksModal :tasksData='tasksData' :targetsData='targetsData' ref="completedTasksModal"></CompletedTasksModal>
     </v-content>
   </v-app>
 </template>
@@ -30,6 +32,7 @@ import ProfileEditModal from "./components/parts/modal/ProfileEditModal";
 import AddTaskModal from "./components/parts/modal/AddTaskModal";
 import Navigation from "@/components/globals/Navigation";
 import ArchivedTasksModal from "@/components/parts/modal/ArchivedTasksModal"
+import CompletedTasksModal from "@/components/parts/modal/CompletedTasksModal"
 
 export default {
   name: "App",
@@ -38,7 +41,8 @@ export default {
     ProfileEditModal,
     AddTaskModal,
     "p-navigation": Navigation,
-    ArchivedTasksModal
+    ArchivedTasksModal,
+    CompletedTasksModal
   },
   data() {
     return {
@@ -61,6 +65,9 @@ export default {
     handleHeaderArchivedTasksClick() {
       this.openArchivedTasksModal()
     },
+    handleHeaderCompletedTasksClick() {
+      this.openCompletedTasksModal()
+    },
     openAddTaskModal() {
       this.$refs.addTaskModal.openDialog();
     },
@@ -69,6 +76,9 @@ export default {
     },
     openArchivedTasksModal() {
       this.$refs.archivedTasksModal.openDialog();
+    },
+    openCompletedTasksModal() {
+      this.$refs.completedTasksModal.openDialog();
     },
     submitProfileData(inputName, selectedItems, inputImage) {
       const metadata = {
@@ -170,5 +180,9 @@ export default {
 
 .p-header {
   z-index: 3;
+}
+
+.addTaskModal{
+  overflow: hidden !important;
 }
 </style>

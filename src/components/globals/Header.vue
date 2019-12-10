@@ -1,6 +1,6 @@
 <template>
   <!-- <v-app> -->
-  <v-app-bar app height="84px">
+  <v-app-bar app height="74px">
     <h1 class="align-center font-weight-bold" style="font-size: 30px ; color:#8471E2 ">Papyrus</h1>
     <v-spacer></v-spacer>
 
@@ -10,7 +10,7 @@
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
             <v-btn
-              class="mb-1 mr-7 button-group__archive"
+              class="mr-7 button-group__archive"
               fab
               color="indigo lighten-2"
               width="36"
@@ -32,6 +32,7 @@
           color="indigo lighten-2"
           small
           outlined
+          @click="handleCompletedTasksButtonClick"
         >
           <v-icon small>mdi-check</v-icon>
           完了済を見る
@@ -123,10 +124,10 @@ export default {
     },
     handleAddTaskButtonClick() {
       this.$emit("addTask");
+    },
+    handleCompletedTasksButtonClick() {
+      this.$emit("completedTasks");
     }
-    // handleEditTargetButtonClick: () => {
-    //   this.$emit("setTarget");
-    // }
   },
   created: function() {
     const ref = firebase
@@ -213,15 +214,21 @@ $secondary:#8471E2;
 
 .button-group__wrapper {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 }
 
+.button-group__completed{
+  height:32px !important;
+  font-size:14px !important
+}
+.button-group__add-task{
+  height:32px !important;
+  font-size:14px !important
+}
 
 .archive__icon {
   padding-right: 2px;
 }
 
-.button-group__add-task{
-  height:34px !important
-}
+
 </style>

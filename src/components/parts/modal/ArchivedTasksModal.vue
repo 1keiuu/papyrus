@@ -8,7 +8,7 @@
       <v-tabs v-model="tab">
         <v-tab v-for="(targetTitle, index) in rankedTargetsData" :key="index">{{ targetTitle }}</v-tab>
       </v-tabs>
-      <v-tabs-items v-model="tab">
+      <v-tabs-items v-model="tab" class="items__wrapper">
         <v-tab-item v-for="(tasks, index) in filteredTasksData" :key="index">
           <v-list v-if="tasks.length >= 1" two-line="">
             <v-list-item v-for="(task, index) in tasks" :key="index">
@@ -52,7 +52,7 @@
 </template>
 <script>
 export default {
-  name: "ArchivedTasksModal",
+  name: "CompletedTasksModal",
   data: () => ({
     dialog: false,
     tab: null,
@@ -104,6 +104,13 @@ export default {
 <style lang="scss" scoped>
 $primary: #6245ea;
 $secondary: #8471e2;
+
+
+.items__wrapper{
+  max-height:450px;
+  overflow-y: scroll;
+  height:450px !important;
+}
 
 .v-card {
   min-height: 500px;

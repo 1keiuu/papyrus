@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-container fluid fill-height>
-      <v-layout wrap>
+      <v-layout>
         <div class="inner-left__wrapper"><MissionState></MissionState> <Goals></Goals></div>
         <div class="inner-right__wrapper">
           <Matrix></Matrix>

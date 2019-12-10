@@ -103,20 +103,30 @@ export default new Vuex.Store({
       const targetIndex = getTargetIndex(payload.inputData.targetRank);
       const selectedTasks = state.tasksData[targetIndex];
       const taskIndex = getSelectedTaskIndex(selectedTasks, payload.inputData);
-      const data = {
+      console.log(taskIndex)
+      console.log(payload)
+      const ArchivedData = {
         targetRank: payload.inputData.targetRank,
         taskDeadline: payload.inputData.deadline,
         taskId: payload.inputData.taskId,
         taskMemo: payload.inputData.memo,
         taskName: payload.inputData.name,
         status: "archived"
-      }
+      };
+      const completedData = {
+        targetRank: payload.inputData.targetRank,
+        taskDeadline: payload.inputData.deadline,
+        taskId: payload.inputData.taskId,
+        taskMemo: payload.inputData.memo,
+        taskName: payload.inputData.name,
+        status: "completed"
+      };
       switch (payload.status) {
         case "archived":
-          state.tasksData[targetIndex].splice(taskIndex, 1,data);
+          state.tasksData[targetIndex].splice(taskIndex, 1, ArchivedData);
           break;
         case "completed":
-          selectedTasks[taskIndex].status = "completed";
+          state.tasksData[targetIndex].splice(taskIndex, 1, completedData);
           break;
         default:
       }

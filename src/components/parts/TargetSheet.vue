@@ -139,6 +139,7 @@ export default {
     changeTaskStatus(inputData, status) {
       const data = { inputData: inputData, status: status };
       store.commit("changeTaskStatus", data);
+      console.log(data)
     },
     openModal(target) {
       switch (target) {
@@ -162,7 +163,6 @@ export default {
       taskId,
       formerTargetRank
     ) {
-      console.log(formerTargetRank);
       firebase
         .firestore()
         .collection("targetss")
