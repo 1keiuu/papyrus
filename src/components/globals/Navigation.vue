@@ -15,7 +15,7 @@
                 <v-list-item-icon class="v-list-item-icon" v-on="on">
                   <v-icon v-text="item.icon" class="v-icon"></v-icon>
                 </v-list-item-icon>
-                <v-list-item-content class="v-list-item-content"> </v-list-item-content>
+                <v-list-item-content class="v-list-item-content"></v-list-item-content>
               </template>
               <span>{{ item.title }}</span>
             </v-tooltip>
@@ -39,13 +39,13 @@ export default {
         icon: "mdi-home",
         name: "Home",
         path: "/",
-        title:'ホーム'
+        title: "ホーム"
       },
       {
         icon: "mdi-clipboard-list-outline",
         name: "sampleTask",
         path: "/smapleTask",
-        title:"タスク"
+        title: "タスク"
       }
     ]
     // currentPath:
@@ -61,14 +61,13 @@ export default {
           break;
         default:
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-
-$secondary : #8471E2;
+$secondary: #8471e2;
 
 .v-navigation {
   position: fixed;
@@ -88,7 +87,7 @@ $secondary : #8471E2;
   padding-left: 5px;
 }
 
-.v-list-item--active{
-  border-right:2px solid $secondary;
+.v-list-item--active {
+  border-right: 2px solid $secondary;
 }
 </style>

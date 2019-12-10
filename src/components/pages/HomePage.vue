@@ -2,7 +2,7 @@
   <v-content>
     <v-container fluid fill-height>
       <v-layout wrap>
-        <div class="inner-left__wrapper"><MissionState></MissionState> <Goals></Goals></div>
+        <div class="inner-left__wrapper"><MissionState></MissionState><Goals></Goals></div>
         <div class="inner-right__wrapper">
           <Matrix></Matrix>
           <div class="matrix__wrapper"></div>
@@ -21,6 +21,7 @@ import router from "@/router";
 import MissionState from "../parts/MissionState";
 import Goals from "../parts/Goals";
 import Matrix from "../parts/Matrix";
+
 // import firebaseConfig from "../../main";
 // firebase.initializeApp(firebaseConfig);
 
@@ -36,7 +37,7 @@ export default {
     ProfileEditModal,
     MissionState,
     Goals,
-    Matrix
+    Matrix,
   },
   methods: {
     logout() {
@@ -57,7 +58,7 @@ export default {
         .collection("user_info")
         .doc(this.userId)
         .update({ interests: selectedItems });
-    }
+    },
   },
   mounted() {},
   computed: {

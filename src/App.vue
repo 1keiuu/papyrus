@@ -9,7 +9,7 @@
     ></p-header>
     <p-navigation class="p-navigation" v-if="$route.name !== 'no_auth/login'"></p-navigation>
     <v-content>
-      <router-view ref="rv" class='router-view' />
+      <router-view ref="rv" class="router-view" />
       <ProfileEditModal
         ref="profileEditModal"
         @submit="submitProfileData"
@@ -34,7 +34,7 @@ export default {
     "p-header": Header,
     ProfileEditModal,
     AddTaskModal,
-    "p-navigation": Navigation
+    "p-navigation": Navigation,
   },
   data() {
     return {
@@ -88,7 +88,7 @@ export default {
             console.log(error);
           });
       } else {
-        console.log()
+        console.log();
       }
       store.commit("setUserName", inputName);
     },
@@ -100,7 +100,7 @@ export default {
         .collection("task")
         .doc()
         .set({ taskName: inputName, taskDate: inputDate, category: selectedCategory });
-    }
+    },
   },
   computed: {
     userStatus() {
@@ -129,7 +129,7 @@ export default {
   z-index: 3;
 }
 
-.router-view{
+.router-view {
   overflow: hidden;
 }
 </style>
