@@ -100,33 +100,43 @@ export default new Vuex.Store({
       state.tasksData[targetIndex].push(payload);
     },
     changeTaskStatus(state, payload) {
+      // payloadはtaskのデータとstatusの入ったObject
       const targetIndex = getTargetIndex(payload.inputData.targetRank);
       const selectedTasks = state.tasksData[targetIndex];
       const taskIndex = getSelectedTaskIndex(selectedTasks, payload.inputData);
-      console.log(taskIndex)
-      console.log(payload)
-      const ArchivedData = {
+      const DoingTask = {
         targetRank: payload.inputData.targetRank,
-        taskDeadline: payload.inputData.deadline,
+        deadline: payload.inputData.deadline,
         taskId: payload.inputData.taskId,
-        taskMemo: payload.inputData.memo,
-        taskName: payload.inputData.name,
+        memo: payload.inputData.memo,
+        name: payload.inputData.name,
+        status: "doing"
+      };
+      const ArchivedTask = {
+        targetRank: payload.inputData.targetRank,
+        deadline: payload.inputData.deadline,
+        taskId: payload.inputData.taskId,
+        memo: payload.inputData.memo,
+        name: payload.inputData.name,
         status: "archived"
       };
-      const completedData = {
+      const completedTask = {
         targetRank: payload.inputData.targetRank,
-        taskDeadline: payload.inputData.deadline,
+        deadline: payload.inputData.deadline,
         taskId: payload.inputData.taskId,
-        taskMemo: payload.inputData.memo,
-        taskName: payload.inputData.name,
+        memo: payload.inputData.memo,
+        name: payload.inputData.name,
         status: "completed"
       };
       switch (payload.status) {
         case "archived":
-          state.tasksData[targetIndex].splice(taskIndex, 1, ArchivedData);
+          state.tasksData[targetIndex].splice(taskIndex, 1, ArchivedTask);
           break;
         case "completed":
-          state.tasksData[targetIndex].splice(taskIndex, 1, completedData);
+          state.tasksData[targetIndex].splice(taskIndex, 1, completedTask);
+          break;
+        case "doing":
+          state.tasksData[targetIndex].splice(taskIndex, 1, DoingTask);
           break;
         default:
       }

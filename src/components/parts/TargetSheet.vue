@@ -139,7 +139,6 @@ export default {
     changeTaskStatus(inputData, status) {
       const data = { inputData: inputData, status: status };
       store.commit("changeTaskStatus", data);
-      console.log(data)
     },
     openModal(target) {
       switch (target) {
@@ -171,10 +170,10 @@ export default {
           {
             [taskId]: {
               taskId: taskId,
-              taskName: inputName,
-              taskDeadline: inputDate,
+              name: inputName,
+              deadline: inputDate,
               targetRank: selectedTargetRank,
-              taskMemo: inputMemo,
+              memo: inputMemo,
               status: "doing"
             }
           },
@@ -182,10 +181,10 @@ export default {
         );
       const data = {
         taskId: taskId,
-        taskName: inputName,
-        taskDeadline: inputDate,
+        name: inputName,
+        deadline: inputDate,
         targetRank: selectedTargetRank,
-        taskMemo: inputMemo,
+        memo: inputMemo,
         status: "doing",
         formerTargetRank: formerTargetRank
       };

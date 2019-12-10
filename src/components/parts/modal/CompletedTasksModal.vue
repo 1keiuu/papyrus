@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on }"> </template>
     <v-card>
       <v-layout align-center justify-space-between>
-        <v-card-title class="title__wrapper">アーカイブされたタスク</v-card-title>
+        <v-card-title class="title__wrapper">完了済みのタスク</v-card-title>
       </v-layout>
       <v-tabs v-model="tab">
         <v-tab v-for="(targetTitle, index) in rankedTargetsData" :key="index">{{
@@ -34,7 +34,7 @@
               </v-btn>
             </v-list-item>
           </v-list>
-          <span v-else>アーカイブされているタスクはありません</span>
+          <span v-else>完了済みのタスクはありません</span>
         </v-tab-item>
       </v-tabs-items>
       <v-layout
@@ -58,7 +58,7 @@
 <script>
 import store from "../../../store";
 export default {
-  name: "CompletedTasksModal",
+  name: "ArchivedTasksModal",
   data: () => ({
     dialog: false,
     tab: null,
@@ -107,19 +107,19 @@ export default {
     },
     filteredTasksData() {
       const rankedTasks = [];
-      const archivedTasks1 = this.tasksData[0].filter(function(task) {
-        return task.status === "archived";
+      const completedTasks1 = this.tasksData[0].filter(function(task) {
+        return task.status === "completed";
       });
-      const archivedTasks2 = this.tasksData[1].filter(function(task) {
-        return task.status === "archived";
+      const completedTasks2 = this.tasksData[1].filter(function(task) {
+        return task.status === "completed";
       });
-      const archivedTasks3 = this.tasksData[2].filter(function(task) {
-        return task.status === "archived";
+      const completedTasks3 = this.tasksData[2].filter(function(task) {
+        return task.status === "completed";
       });
-      const archivedTasks4 = this.tasksData[3].filter(function(task) {
-        return task.status === "archived";
+      const completedTasks4 = this.tasksData[3].filter(function(task) {
+        return task.status === "completed";
       });
-      rankedTasks.push(archivedTasks1, archivedTasks2, archivedTasks3, archivedTasks4);
+      rankedTasks.push(completedTasks1, completedTasks2, completedTasks3, completedTasks4);
       return rankedTasks;
     }
   }
@@ -129,15 +129,15 @@ export default {
 $primary: #6245ea;
 $secondary: #8471e2;
 
+.v-card {
+  min-height: 500px;
+}
 .items__wrapper {
   max-height: 450px;
   overflow-y: scroll;
   height: 450px !important;
 }
 
-.v-card {
-  min-height: 500px;
-}
 .v-application p {
   margin-bottom: 0px;
   font-size: 18px;

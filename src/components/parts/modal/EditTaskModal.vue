@@ -138,10 +138,10 @@ export default {
   created() {},
   watch: {
     taskData: function() {
-      this.input.name = this.taskData.taskName;
+      this.input.name = this.taskData.name;
       this.input.targetRank = this.taskData.targetRank;
-      this.input.memo = this.taskData.taskMemo;
-      this.input.deadline = this.taskData.taskDeadline;
+      this.input.memo = this.taskData.memo;
+      this.input.deadline = this.taskData.deadline;
       this.input.taskId = this.taskData.taskId;
       this.input.status = this.taskData.status;
       this.formerTargetRank = this.taskData.targetRank;

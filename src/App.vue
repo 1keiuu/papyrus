@@ -118,10 +118,10 @@ export default {
           {
             [this.taskId]: {
               taskId: this.taskId,
-              taskName: inputName,
-              taskDeadline: inputDate,
+              name: inputName,
+              deadline: inputDate,
               targetRank: selectedTargetRank,
-              taskMemo: inputMemo,
+              memo: inputMemo,
               status: "doing"
             }
           },
@@ -130,10 +130,10 @@ export default {
       store.commit("setTaskId", 1);
       const data = {
         taskId: taskId,
-        taskName: inputName,
-        taskDeadline: inputDate,
+        name: inputName,
+        deadline: inputDate,
         targetRank: selectedTargetRank,
-        taskMemo: inputMemo,
+        memo: inputMemo,
         status: "doing"
       };
       store.commit("setTasksData", data);

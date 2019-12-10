@@ -1,10 +1,10 @@
 <template>
   <v-card width="290" v-if="taskData.status==='doing'">
     <v-card-title class="taskCard__title">
-      {{taskData.taskName}}
+      {{taskData.name}}
     </v-card-title>
     <v-card-subtitle class="taskCard__subTitle">
-      期日:{{taskData.taskDeadline}}
+      期日:{{taskData.deadline}}
     </v-card-subtitle>
   </v-card>
 </template>
