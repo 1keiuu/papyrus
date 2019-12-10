@@ -94,22 +94,29 @@ export default new Vuex.Store({
       // 編集後のTargetIndex
       const targetIndex = getTargetIndex(payload.targetRank);
       const selectedTasks = state.tasksData[formerTargetIndex];
-      const taskIndex = getSelectedTaskIndex(selectedTasks,payload)
+      const taskIndex = getSelectedTaskIndex(selectedTasks, payload);
       // 編集前のTaskDataを消して、後のDataを追加
-      selectedTasks.splice(taskIndex,1)
+      selectedTasks.splice(taskIndex, 1);
       state.tasksData[targetIndex].push(payload);
     },
-    changeTaskStatus(state,payload) {
-      const targetIndex = getTargetIndex(payload.targetRank);
+    changeTaskStatus(state, payload) {
+      const targetIndex = getTargetIndex(payload.inputData.targetRank);
       const selectedTasks = state.tasksData[targetIndex];
-      const taskIndex = getSelectedTaskIndex(selectedTasks,payload)
-
+      const taskIndex = getSelectedTaskIndex(selectedTasks, payload.inputData);
+      const data = {
+        targetRank: payload.inputData.targetRank,
+        taskDeadline: payload.inputData.deadline,
+        taskId: payload.inputData.taskId,
+        taskMemo: payload.inputData.memo,
+        taskName: payload.inputData.name,
+        status: "archived"
+      }
       switch (payload.status) {
         case "archived":
-          selectedTasks[taskIndex].status = 'archived'
+          state.tasksData[targetIndex].splice(taskIndex, 1,data);
           break;
         case "completed":
-          selectedTasks[taskIndex].status = 'completed'
+          selectedTasks[taskIndex].status = "completed";
           break;
         default:
       }
@@ -129,9 +136,9 @@ export default new Vuex.Store({
         console.log("undefined deleteType");
       }
     },
-    editTargetData(state,payload) {
+    editTargetData(state, payload) {
       const targetIndex = getTargetIndex(payload.targetRank);
-      state.targetsData.splice(targetIndex,1,payload)
+      state.targetsData.splice(targetIndex, 1, payload);
     }
   },
   getters: {

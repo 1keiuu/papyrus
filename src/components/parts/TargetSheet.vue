@@ -119,7 +119,7 @@ export default {
       isHover: false,
       selectedTaskData: [],
       selectedTargetData: [],
-      userId: firebase.auth().currentUser.uid,
+      userId: firebase.auth().currentUser.uid
     };
   },
   props: ["targetData", "taskData"],
@@ -136,13 +136,9 @@ export default {
       this.selectedTargetData = targetData;
       this.openModal("editTarget");
     },
-    changeTaskStatus(targetRank,taskId,status) {
-      const data = {
-        targetRank:targetRank,
-        taskId: taskId,
-        status:status
-      }
-      store.commit('changeTaskStatus',data)
+    changeTaskStatus(inputData, status) {
+      const data = { inputData: inputData, status: status };
+      store.commit("changeTaskStatus", data);
     },
     openModal(target) {
       switch (target) {
@@ -158,8 +154,15 @@ export default {
         default:
       }
     },
-    submitEditTaskData(inputName, inputDate, selectedTargetRank, inputMemo, taskId,formerTargetRank) {
-      console.log(formerTargetRank)
+    submitEditTaskData(
+      inputName,
+      inputDate,
+      selectedTargetRank,
+      inputMemo,
+      taskId,
+      formerTargetRank
+    ) {
+      console.log(formerTargetRank);
       firebase
         .firestore()
         .collection("targetss")
@@ -193,16 +196,14 @@ export default {
         .firestore()
         .collection("targetss")
         .doc(this.userId)
-        .update(
-          {
-            [targetRank]: {
-              name: inputName,
-              deadline: inputDeadline,
-              description: inputDescrition,
-              targetRank: targetRank
-            }
+        .update({
+          [targetRank]: {
+            name: inputName,
+            deadline: inputDeadline,
+            description: inputDescrition,
+            targetRank: targetRank
           }
-        );
+        });
       const data = {
         name: inputName,
         deadline: inputDeadline,
@@ -219,8 +220,7 @@ export default {
       this.$store.commit("deleteTaskData", taskData);
     }
   },
-  mounted() {
-  },
+  mounted() {},
   computed: {
     Deadline() {
       return moment(this.targetData.deadline);
@@ -234,8 +234,8 @@ export default {
 <style scoped lang="scss">
 $primary: #6245ea;
 $secondary: #8471e2;
-.v-tooltip__content{
-    font-size: 12px;
+.v-tooltip__content {
+  font-size: 12px;
 }
 .targetSheet__title-wrapper {
   position: absolute;

@@ -37,14 +37,23 @@
         <v-row class="submitButton__wrapper">
           <v-layout justify-space-around>
             <div>
-              <v-btn outlined color="#F25151" @click="handleCompleteButtonClick"><v-icon>mdi-check</v-icon>タスクを完了する</v-btn>
+              <v-btn outlined color="#F25151" @click="handleCompleteButtonClick"
+                ><v-icon>mdi-check</v-icon>タスクを完了する</v-btn
+              >
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn fab outlined color="indigo lighten-2" v-on="on" height="36" width="36" @click="handleArchiveButtonClick"
+                  <v-btn
+                    fab
+                    outlined
+                    color="indigo lighten-2"
+                    v-on="on"
+                    height="36"
+                    width="36"
+                    @click="handleArchiveButtonClick"
                     ><v-icon>mdi-history</v-icon></v-btn
                   >
                 </template>
-                <span >アーカイブにする</span>
+                <span>アーカイブにする</span>
               </v-tooltip>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
@@ -82,7 +91,8 @@ export default {
       deadline: "",
       targetRank: "",
       memo: "",
-      taskId: ""
+      taskId: "",
+      status: ""
     },
     formerTargetRank: "",
     targetRankOptions: ["rank1", "rank2", "rank3", "rank4"],
@@ -107,10 +117,10 @@ export default {
       );
     },
     handleArchiveButtonClick() {
-      this.$emit("archive",this.taskData.targetRank,this.taskData.taskId, "archived");
+      this.$emit("archive", this.input , "archived");
     },
     handleCompleteButtonClick() {
-      this.$emit("complete",this.taskData.targetRank,this.taskData.taskId, "completed");
+      this.$emit("complete", this.taskData.targetRank, this.taskData.taskId, "completed");
     },
 
     handleDeleteButtonClick() {
@@ -128,6 +138,7 @@ export default {
       this.input.memo = this.taskData.taskMemo;
       this.input.deadline = this.taskData.taskDeadline;
       this.input.taskId = this.taskData.taskId;
+      this.input.status = this.taskData.status
       this.formerTargetRank = this.taskData.targetRank;
     }
   }

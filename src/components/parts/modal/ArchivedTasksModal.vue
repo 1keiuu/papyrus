@@ -4,15 +4,14 @@
     <v-card>
       <v-layout align-center justify-space-between>
         <v-card-title class="title__wrapper">アーカイブされたタスク</v-card-title>
-
       </v-layout>
       <v-tabs v-model="tab">
-        <v-tab v-for="(targetTitle, index) in targetTitles" :key="index">{{ targetTitle }}</v-tab>
+        <v-tab v-for="(targetTitle, index) in rankedTargetsData" :key="index">{{ targetTitle }}</v-tab>
       </v-tabs>
       <v-tabs-items v-model="tab">
-        <v-tab-item v-for="(task, index) in tasks" :key="index">
-          <v-list v-if="task.length >= 1" two-line="">
-            <v-list-item v-for="(task, index) in task[0]" :key="index">
+        <v-tab-item v-for="(tasks, index) in filteredTasksData" :key="index">
+          <v-list v-if="tasks.length >= 1" two-line="">
+            <v-list-item v-for="(task, index) in tasks" :key="index">
               <v-checkbox v-model="selectedTasks" :value="task"></v-checkbox>
               <v-list-item-content>
                 <v-list-item-title>{{ task.taskName }}</v-list-item-title>
@@ -36,11 +35,16 @@
           <span v-else>アーカイブされているタスクはありません</span>
         </v-tab-item>
       </v-tabs-items>
-      <v-layout v-if="selectedTasks.length" justify-space-between align-center class="selected-tasks__wrapper">
-        <p>{{selectedTasks.length}}件選択中</p>
+      <v-layout
+        v-if="selectedTasks.length"
+        justify-space-between
+        align-center
+        class="selected-tasks__wrapper"
+      >
+        <p>{{ selectedTasks.length }}件選択中</p>
         <div>
-        <v-btn rounded>元に戻す</v-btn>
-        <v-btn>削除する</v-btn>
+          <v-btn rounded>元に戻す</v-btn>
+          <v-btn>削除する</v-btn>
         </div>
       </v-layout>
     </v-card>
@@ -56,7 +60,7 @@ export default {
     targetTitles: [],
     selectedTasks: [],
     show: false,
-    isOpenedIndex:''
+    isOpenedIndex: ""
   }),
   props: ["tasksData", "targetsData"],
   methods: {
@@ -65,46 +69,56 @@ export default {
     },
     isOpened(index) {
       if (this.isOpenedIndex !== index) {
-        this.isOpenedIndex = index
+        this.isOpenedIndex = index;
       } else if (this.isOpenedIndex === index) {
-        this.isOpenedIndex = ''
+        this.isOpenedIndex = "";
       }
     }
   },
-  created() {
-    this.targetsData.forEach((target, index) => {
-      this.targetTitles.push(target.name);
-    });
-    this.tasksData.forEach((task, index) => {
-      if (task[0]) {
-        if (task[0].status === "archived") {
-          this.tasks[index].push(task);
-        }
-      }
-    });
-    console.log(this.tasks);
-  },
-  watch: {}
+  watch: {},
+  computed: {
+    rankedTargetsData() {
+      const data = [this.targetsData[0].name,this.targetsData[1].name,this.targetsData[2].name,this.targetsData[3].name]
+      return data
+    },
+    filteredTasksData() {
+      const rankedTasks = [];
+      const archivedTasks1 = this.tasksData[0].filter(function(task) {
+        return task.status === "archived";
+      });
+      const archivedTasks2 = this.tasksData[1].filter(function(task) {
+        return task.status === "archived";
+      });
+      const archivedTasks3 = this.tasksData[2].filter(function(task) {
+        return task.status === "archived";
+      });
+      const archivedTasks4 = this.tasksData[3].filter(function(task) {
+        return task.status === "archived";
+      });
+      rankedTasks.push(archivedTasks1, archivedTasks2, archivedTasks3, archivedTasks4);
+      return rankedTasks;
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
 $primary: #6245ea;
-$secondary:#8471E2;
+$secondary: #8471e2;
 
 .v-card {
   min-height: 500px;
 }
-.v-application p{
-  margin-bottom:0px;
+.v-application p {
+  margin-bottom: 0px;
   font-size: 18px;
-    color: #F3F5F9;
+  color: #f3f5f9;
 }
 
-.selected-tasks__wrapper{
-  width:100%;
-  height:55px;
-  padding:0px 10px;
-  background-color:$secondary;
+.selected-tasks__wrapper {
+  width: 100%;
+  height: 55px;
+  padding: 0px 10px;
+  background-color: $secondary;
   position: absolute;
   bottom: 0;
 }

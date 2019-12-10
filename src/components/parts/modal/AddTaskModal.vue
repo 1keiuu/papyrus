@@ -130,7 +130,6 @@ export default {
       }
     },
     handleSubmitButtonClick() {
-      console.log(this.input)
       this.dialog = false;
       this.$emit(
         "submit",
