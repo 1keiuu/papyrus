@@ -1,11 +1,21 @@
 <template>
-  <v-dialog v-model="dialog" max-width="600px">
+  <v-dialog v-model="dialog" fullscreen max-width="600px" transition="dialog-bottom-transition">
     <template v-slot:activator="{ on }"> </template>
     <v-card>
-      <v-card-title>
+      <v-app-bar  class="header">
+          <v-layout justify-space-around align-center>
+          <v-layout align-center>
+        <v-btn icon dark @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+              <v-card-title>
         <span class="headline">プロフィールを編集</span>
       </v-card-title>
-      <v-card-text>
+          </v-layout>
+        <v-btn text color="white" @click="handleSubmitButtonClick">保存</v-btn>
+          </v-layout>
+      </v-app-bar>
+
         <v-container>
           <v-tabs>
             <v-tab v-for="(tab, index) in tabs" :key="`tab-${index}`" :href="`#tab-${index}`">
@@ -44,13 +54,6 @@
             </v-tab-item>
           </v-tabs>
         </v-container>
-        <small>*反映に時間がかかることがございます</small>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="dialog = false">キャンセル</v-btn>
-        <v-btn color="blue darken-1" text @click="handleSubmitButtonClick">保存</v-btn>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
@@ -86,3 +89,20 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="scss">
+$primary: #6245ea;
+$secondary:#8471E2;
+
+.header{
+  display: flex;
+  background:$secondary;
+  color:white;
+}
+.v-toolbar__content{
+  width:100vw !important
+}
+.v-sheet{
+  border-radius:0px !important
+}
+</style>
