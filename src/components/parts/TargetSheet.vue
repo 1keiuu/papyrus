@@ -63,7 +63,7 @@
         color="#8471e2"
         outlined
         class="targetSheet__add-button"
-        @click="handleAddTaskButtonClick"
+        @click="handleAddTaskButtonClick(targetData)"
       >
         <v-icon>
           mdi-plus
@@ -86,12 +86,12 @@
         @complete="changeTaskStatus"
         :taskData="selectedTaskData"
       ></EditTaskModal>
-      <AddTaskModal ref="addTaskModal"></AddTaskModal>
       <EditTargetModal
         ref="editTargetModal"
         @submit="submitEditTargetData"
         :targetData="selectedTargetData"
       ></EditTargetModal>
+      <AddTaskModal ref="addTaskModal" :targetData="targetData" :targetRankProp="targetData.targetRank"></AddTaskModal>
     </v-sheet>
   </v-app>
 </template>
@@ -128,8 +128,8 @@ export default {
       this.selectedTaskData = taskData;
       this.openModal("editTask");
     },
-    handleAddTaskButtonClick(taskData) {
-      this.selectedTaskData = taskData;
+    handleAddTaskButtonClick(targetData) {
+      this.selectedTargetData = targetData;
       this.openModal("addTask");
     },
     handleEditTargetButtonClick(targetData) {

@@ -135,7 +135,8 @@ export default {
       }
     }
   },
-  created() {},
+  created() {
+  },
   watch: {
     taskData: function() {
       this.input.name = this.taskData.name;

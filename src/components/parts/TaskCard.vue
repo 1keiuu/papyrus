@@ -3,8 +3,11 @@
     <v-card-title class="taskCard__title">
       {{taskData.name}}
     </v-card-title>
-    <v-card-subtitle class="taskCard__subTitle">
+    <v-card-subtitle v-if="taskData.deadline" class="taskCard__subTitle">
       期日:{{taskData.deadline}}
+    </v-card-subtitle>
+    <v-card-subtitle v-else class="taskCard__subTitle">
+      期日未設定
     </v-card-subtitle>
   </v-card>
 </template>

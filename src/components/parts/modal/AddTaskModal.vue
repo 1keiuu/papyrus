@@ -117,7 +117,7 @@ export default {
     currentStep: 0,
     memoRules: [v => v.length <= 150 || ""]
   }),
-  props: ["targetData"],
+  props: ["targetData","targetRankProp"],
   methods: {
     openDialog() {
       this.dialog = true;
@@ -146,15 +146,13 @@ export default {
       });
     }
   },
-  watch: {
-    targetData: function() {
-      // this.input.targetData = this.targetData;
-      console.log(this.targetData)
-    }
+  watch: {},
+  created() {
+    this.input.targetRank = this.targetRankProp;
   },
-  computed:{
+  computed: {
     taskId() {
-      return this.$store.getters.taskId
+      return this.$store.getters.taskId;
     }
   }
 };
