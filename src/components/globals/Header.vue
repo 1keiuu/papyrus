@@ -99,7 +99,7 @@ export default {
       ],
       loading: true,
       files: [],
-      profileImageUrl: this.profileImageUrlState
+      // profileImageUrl: this.profileImageUrlState
     };
   },
   props: ["userName"],
@@ -130,22 +130,22 @@ export default {
     }
   },
   created: function() {
-    const ref = firebase
-      .storage()
-      .ref()
-      .child("profile")
-      .child(this.userId);
-    ref
-      .getDownloadURL()
-      .then(url => {
-        this.profileImageUrl = url;
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // const ref = firebase
+    //   .storage()
+    //   .ref()
+    //   .child("profile")
+    //   .child(this.userId);
+    // ref
+    //   .getDownloadURL()
+    //   .then(url => {
+    //     this.profileImageUrl = url;
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   },
   computed: {
-    profileImageUrlState() {
+    profileImageUrl() {
       return this.$store.getters.profileImageUrl;
     },
     userId() {

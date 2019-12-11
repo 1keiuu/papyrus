@@ -18,8 +18,16 @@
         v-bind:userName="this.userName"
       ></ProfileEditModal>
       <AddTaskModal ref="addTaskModal" @submit="submitTaskData"></AddTaskModal>
-      <ArchivedTasksModal :tasksData='tasksData' :targetsData='targetsData' ref="archivedTasksModal"></ArchivedTasksModal>
-      <CompletedTasksModal :tasksData='tasksData' :targetsData='targetsData' ref="completedTasksModal"></CompletedTasksModal>
+      <ArchivedTasksModal
+        :tasksData="tasksData"
+        :targetsData="targetsData"
+        ref="archivedTasksModal"
+      ></ArchivedTasksModal>
+      <CompletedTasksModal
+        :tasksData="tasksData"
+        :targetsData="targetsData"
+        ref="completedTasksModal"
+      ></CompletedTasksModal>
     </v-content>
   </v-app>
 </template>
@@ -31,8 +39,8 @@ import Header from "@/components/globals/Header";
 import ProfileEditModal from "./components/parts/modal/ProfileEditModal";
 import AddTaskModal from "./components/parts/modal/AddTaskModal";
 import Navigation from "@/components/globals/Navigation";
-import ArchivedTasksModal from "@/components/parts/modal/ArchivedTasksModal"
-import CompletedTasksModal from "@/components/parts/modal/CompletedTasksModal"
+import ArchivedTasksModal from "@/components/parts/modal/ArchivedTasksModal";
+import CompletedTasksModal from "@/components/parts/modal/CompletedTasksModal";
 
 export default {
   name: "App",
@@ -63,10 +71,10 @@ export default {
       this.openAddTaskModal();
     },
     handleHeaderArchivedTasksClick() {
-      this.openArchivedTasksModal()
+      this.openArchivedTasksModal();
     },
     handleHeaderCompletedTasksClick() {
-      this.openCompletedTasksModal()
+      this.openCompletedTasksModal();
     },
     openAddTaskModal() {
       this.$refs.addTaskModal.openDialog();
@@ -99,6 +107,12 @@ export default {
           .then(snapshot => {
             snapshot.ref.getDownloadURL().then(downloadURL => {
               store.commit("setProfileImageUrl", downloadURL);
+              firebase
+                .firestore()
+                .collection("user_info")
+                .doc(this.userId)
+                .update({ profileImage: downloadURL });
+              console.log(downloadURL);
             });
           })
           .catch(error => {
@@ -109,7 +123,7 @@ export default {
       }
       store.commit("setUserName", inputName);
     },
-    submitTaskData(inputName, inputDate, selectedTargetRank, inputMemo,taskId) {
+    submitTaskData(input) {
       firebase
         .firestore()
         .collection("tasks")
@@ -118,10 +132,14 @@ export default {
           {
             [this.taskId]: {
               taskId: this.taskId,
-              name: inputName,
-              deadline: inputDate,
-              targetRank: selectedTargetRank,
-              memo: inputMemo,
+              name: input.name,
+              deadline: input.deadline,
+              targetRank: input.targetRank,
+              memo: input.memo,
+              answer1: input.answer1,
+              answer2: input.answer2,
+              answer3: input.answer3,
+              importanceScore: input.importanceScore,
               status: "doing"
             }
           },
@@ -129,13 +147,18 @@ export default {
         );
       store.commit("setTaskId", 1);
       const data = {
-        taskId: taskId,
-        name: inputName,
-        deadline: inputDate,
-        targetRank: selectedTargetRank,
-        memo: inputMemo,
+        taskId: this.taskId,
+        name: input.name,
+        deadline: input.deadline,
+        targetRank: input.targetRank,
+        memo: input.memo,
+        answer1: input.answer1,
+        answer2: input.answer2,
+        answer3: input.answer3,
+        importanceScore: input.importanceScore,
         status: "doing"
       };
+      console.log(data)
       store.commit("setTasksData", data);
     }
   },
@@ -159,7 +182,7 @@ export default {
       return this.$store.getters.targetsData;
     }
   },
-  watch:{
+  watch: {
     // tasksData:function() {
     // }
   },
@@ -182,7 +205,7 @@ export default {
   z-index: 3;
 }
 
-.addTaskModal{
+.addTaskModal {
   overflow: hidden !important;
 }
 </style>

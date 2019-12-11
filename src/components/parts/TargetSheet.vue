@@ -91,7 +91,11 @@
         @submit="submitEditTargetData"
         :targetData="selectedTargetData"
       ></EditTargetModal>
-      <AddTaskModal ref="addTaskModal" :targetData="targetData" :targetRankProp="targetData.targetRank"></AddTaskModal>
+      <AddTaskModal
+        ref="addTaskModal"
+        :targetData="targetData"
+        :targetRankProp="targetData.targetRank"
+      ></AddTaskModal>
     </v-sheet>
   </v-app>
 </template>
@@ -154,39 +158,40 @@ export default {
         default:
       }
     },
-    submitEditTaskData(
-      inputName,
-      inputDate,
-      selectedTargetRank,
-      inputMemo,
-      taskId,
-      formerTargetRank
-    ) {
+    submitEditTaskData(input, formerTargetRank) {
       firebase
         .firestore()
         .collection("targetss")
         .doc(this.userId)
         .set(
           {
-            [taskId]: {
-              taskId: taskId,
-              name: inputName,
-              deadline: inputDate,
-              targetRank: selectedTargetRank,
-              memo: inputMemo,
-              status: "doing"
+            [input.taskId]: {
+              taskId: input.taskId,
+              name: input.name,
+              deadline: input.deadline,
+              targetRank: input.targetRank,
+              memo: input.memo,
+              status: "doing",
+              answer1: input.answer1,
+              answer2: input.answer2,
+              answer3: input.answer3,
+              importanceScore: input.importanceScore
             }
           },
           { merge: true }
         );
       const data = {
-        taskId: taskId,
-        name: inputName,
-        deadline: inputDate,
-        targetRank: selectedTargetRank,
-        memo: inputMemo,
+        taskId: input.taskId,
+        name: input.name,
+        deadline: input.deadline,
+        targetRank: input.targetRank,
+        memo: input.memo,
         status: "doing",
-        formerTargetRank: formerTargetRank
+        formerTargetRank: formerTargetRank,
+        answer1: input.answer1,
+        answer2: input.answer2,
+        answer3: input.answer3,
+        importanceScore: input.importanceScore
       };
       store.commit("editTaskData", data);
     },

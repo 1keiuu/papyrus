@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" max-width="800px">
+    <v-dialog v-model="dialog" class="modal" max-width="800px">
       <template v-slot:activator="{ on }"> </template>
       <v-card>
         <v-card-title class="title__wrapper">
@@ -60,27 +60,99 @@
             <v-stepper-content step="2">
               <v-card-text>
                 <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="input.name" label="タスク名"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="input.deadline"
-                        label="期日"
-                        type="deadline"
-                      ></v-text-field>
-                    </v-col>
+                  <v-row class="question__wrapper">
+                    <div class="question__icon">1</div>
+                    <div class="question__textArea">
+                      <p>このタスクは目標の達成にどれほど貢献しますか？</p>
+                    </div>
+                    <v-btn-toggle
+                      v-model="input.answer1"
+                      tile
+                      class="question__buttonGroup"
+                      color="deep-purple accent-4"
+                      group
+                    >
+                      <v-btn value=1>
+                        1
+                      </v-btn>
+                      <v-btn value=2>
+                        2
+                      </v-btn>
+                      <v-btn value=3>
+                        3
+                      </v-btn>
+                      <v-btn value=4>
+                        4
+                      </v-btn>
+                      <v-btn value=5>
+                        5
+                      </v-btn>
+                    </v-btn-toggle>
                   </v-row>
-                  <v-col cols="12" sm="6">
-                    <v-select
-                      :items="targetRankOptions"
-                      v-model="input.targetRank"
-                      label="目標もしくはカテゴリ"
-                    ></v-select>
-                  </v-col>
+                  <v-divider></v-divider>
+                  <v-row class="question__wrapper">
+                    <div class="question__icon">2</div>
+                    <div class="question__textArea">
+                      <p>
+                        このタスクを終えることで私生活や他の活動、周りの人々に良い影響を与えますか？
+                      </p>
+                    </div>
+                    <v-btn-toggle
+                      v-model="input.answer2"
+                      tile
+                      class="question__buttonGroup"
+                      color="deep-purple accent-4"
+                      group
+                    >
+                      <v-btn value=1>
+                        1
+                      </v-btn>
+                      <v-btn value=2>
+                        2
+                      </v-btn>
+                      <v-btn value=3>
+                        3
+                      </v-btn>
+                      <v-btn value=4>
+                        4
+                      </v-btn>
+                      <v-btn value=5>
+                        5
+                      </v-btn>
+                    </v-btn-toggle>
+                  </v-row>
+                  <v-divider></v-divider>
+                  <v-row class="question__wrapper">
+                    <div class="question__icon">3</div>
+                    <div class="question__textArea">
+                      <p>このタスクは人から頼まれたものですか？</p>
+                    </div>
+                    <v-btn-toggle
+                      v-model="input.answer3"
+                      tile
+                      class="question__buttonGroup"
+                      color="deep-purple accent-4"
+                      group
+                    >
+                      <v-btn value=1>
+                        1
+                      </v-btn>
+                      <v-btn value=2>
+                        2
+                      </v-btn>
+                      <v-btn value=3>
+                        3
+                      </v-btn>
+                      <v-btn value=4>
+                        4
+                      </v-btn>
+                      <v-btn value=5>
+                        5
+                      </v-btn>
+                    </v-btn-toggle>
+                  </v-row>
+                  <v-divider></v-divider>
                 </v-container>
-                <small>*反映に時間がかかることがございます</small>
               </v-card-text>
               <v-card-actions>
                 <v-row class="buttonGroup__wrapper">
@@ -111,17 +183,28 @@ export default {
       name: "",
       deadline: "",
       targetRank: "",
-      memo: ""
+      memo: "",
+      answer1: "",
+      answer2: "",
+      answer3: "",
+      importanceScore: ""
     },
     targetRankOptions: ["rank1", "rank2", "rank3", "rank4"],
     currentStep: 0,
     memoRules: [v => v.length <= 150 || ""]
   }),
-  props: ["targetData","targetRankProp"],
+  props: ["targetData", "targetRankProp"],
   methods: {
     openDialog() {
       this.dialog = true;
     },
+    // cancelDialog() {
+    //   const obj = this.input;
+    //   this.currentStep = 1;
+    //   Object.keys(obj).forEach(function(key) {
+    //     obj[key] = "";
+    //   });
+    // },
     handleNextButtonClick() {
       if (this.input.name === "" || this.input.targetRank === "") {
         alert("insufficient form ");
@@ -130,14 +213,29 @@ export default {
       }
     },
     handleSubmitButtonClick() {
+      const calculateRation = payload => {
+        switch (payload) {
+          case "rank1":
+            return 1.5;
+          case "rank2":
+            return 1.3;
+          case "rank3":
+            return 1.2;
+          case "rank4":
+            return 1.1;
+          default:
+            return null;
+        }
+      };
+      this.input.answer1 = Number(this.input.answer1)
+      this.input.answer2 = Number(this.input.answer2)
+      this.input.answer3 = Number(this.input.answer3)
+      const targetRankRatio = calculateRation(this.input.targetRank)
+      this.input.importanceScore = targetRankRatio * (this.input.answer1 + this.input.answer2 + this.input.answer3)
       this.dialog = false;
       this.$emit(
         "submit",
-        this.input.name,
-        this.input.deadline,
-        this.input.targetRank,
-        this.input.memo,
-        this.taskId
+        this.input
       );
       const obj = this.input;
       this.currentStep = 1;
@@ -160,9 +258,13 @@ export default {
 
 <style lang="scss" scoped>
 $primary: #6245ea;
+$secondary: #8471e2;
 
-.container {
-  width: 620px;
+.modal {
+  height: 680px;
+}
+.v-application p {
+  margin-bottom: 0;
 }
 ::v-deep .v-label {
   font-size: 14px !important;
@@ -244,5 +346,44 @@ $primary: #6245ea;
 }
 .backButton__icon {
   padding-right: 5px;
+}
+.question__wrapper {
+  flex-wrap: unset;
+  margin-top: 70px;
+  margin-bottom: 5px;
+  align-items: center;
+  &:first-child {
+    margin-top: 10px;
+  }
+}
+.question__textArea {
+  width: 430px;
+  font-size: 15px;
+  padding-left: 10px;
+}
+.question__icon {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: $secondary;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 13px;
+}
+
+.question__buttonGroup {
+  width: 250px;
+  height: 33px;
+  border: 0.3px solid #707070;
+  .v-btn {
+    min-width: auto !important;
+    padding: 0;
+    margin: 0 !important;
+    height: 33px !important;
+    width: 50px !important;
+    border-left: 0.3px solid #707070 !important;
+  }
 }
 </style>

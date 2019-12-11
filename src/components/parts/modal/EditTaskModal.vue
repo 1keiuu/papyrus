@@ -92,7 +92,11 @@ export default {
       targetRank: "",
       memo: "",
       taskId: "",
-      status: ""
+      status: "",
+      answer1:"",
+      answer2:"",
+      answer3:"",
+      importanceScore:""
     },
     formerTargetRank: "",
     targetRankOptions: ["rank1", "rank2", "rank3", "rank4"],
@@ -111,11 +115,7 @@ export default {
       this.dialog = false;
       this.$emit(
         "store",
-        this.input.name,
-        this.input.deadline,
-        this.input.targetRank,
-        this.input.memo,
-        this.input.taskId,
+        this.input,
         this.formerTargetRank
       );
     },
@@ -139,12 +139,7 @@ export default {
   },
   watch: {
     taskData: function() {
-      this.input.name = this.taskData.name;
-      this.input.targetRank = this.taskData.targetRank;
-      this.input.memo = this.taskData.memo;
-      this.input.deadline = this.taskData.deadline;
-      this.input.taskId = this.taskData.taskId;
-      this.input.status = this.taskData.status;
+      this.input = this.taskData
       this.formerTargetRank = this.taskData.targetRank;
     }
   }
