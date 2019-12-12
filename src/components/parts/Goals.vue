@@ -7,10 +7,16 @@
         </p>
         <div class="goals-centarLine"></div>
         <v-expansion-panels>
-          <v-expansion-panel v-for="(item, i) in items" :key="i">
+          <v-expansion-panel v-for="(item, i) in items" v-bind:key="i">
             <v-hover v-slot:default="{ hover }">
               <v-expansion-panel-header>
-                <v-list-item-subtitle>{{ item.name }}</v-list-item-subtitle>
+                <v-list-item-subtitle v-if="item.name == 'dialogFirst'">
+                  {{ goalsFirstName }}</v-list-item-subtitle
+                >
+                <v-list-item-subtitle v-else-if="item.name == 'dialogSecond'">{{
+                  goalsSecondName
+                }}</v-list-item-subtitle>
+                <v-list-item-subtitle v-else>{{ goalsThirdName }}</v-list-item-subtitle>
                 <v-layout justify-end>
                   <div class="goals-btn" :class="{ 'on-hover': hover }" :elevation="hover ? 12 : 2">
                     <v-btn
@@ -78,7 +84,7 @@
                   </v-card>
                 </v-dialog>
                 <v-dialog v-model="dialogSecond" scrollable max-width="880px">
-                  <v-card height="514px" class="goalsSecond-dialog_card" color="blue">
+                  <v-card height="514px" class="goalsSecond-dialog_card">
                     <v-divider></v-divider>
                     <v-container fluid class="pa-12">
                       <v-layout>
@@ -129,7 +135,7 @@
                   </v-card>
                 </v-dialog>
                 <v-dialog v-model="dialogThird" scrollable max-width="880px">
-                  <v-card height="514px" class="goalsThird-dialog_card" color="red">
+                  <v-card height="514px" class="goalsThird-dialog_card">
                     <v-divider></v-divider>
                     <v-container fluid class="pa-12">
                       <v-layout>
@@ -182,7 +188,15 @@
               </v-expansion-panel-header>
             </v-hover>
             <v-expansion-panel-content
-              ><p>{{ goalsFirstText }}</p>
+              ><p v-if="item.name == 'dialogFirst'">
+                {{ goalsFirstText }}
+              </p>
+              <p v-else-if="item.name == 'dialogSecond'">
+                {{ goalsSecondText }}
+              </p>
+              <p v-else>
+                {{ goalsThirdText }}
+              </p>
               <v-text-field label="期日" type="date" class="goalsFirst-Date__input"></v-text-field
             ></v-expansion-panel-content>
           </v-expansion-panel>
@@ -255,6 +269,7 @@ export default {
           { goalsFirstText: this.goalsFirstText, goalsFirstName: this.goalsFirstName },
           { merge: true }
         );
+      this.dialogFirst = false;
     },
     handleGoalsSecondButtonClick() {
       const user = firebase.auth().currentUser;
@@ -266,6 +281,7 @@ export default {
           { goalsSecondText: this.goalsSecondText, goalsSecondName: this.goalsSecondName },
           { merge: true }
         );
+      this.dialogSecond = false;
     },
     handleGoalsThirdButtonClick() {
       const user = firebase.auth().currentUser;
@@ -277,8 +293,9 @@ export default {
           { goalsThirdText: this.goalsThirdText, goalsThirdName: this.goalsThirdName },
           { merge: true }
         );
+      this.dialogThird = false;
     },
-    getGoalsData() {
+    getGoalsFirstData() {
       const user = firebase.auth().currentUser;
       firebase
         .firestore()
@@ -292,7 +309,42 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    getGoalsSecondData() {
+      const user = firebase.auth().currentUser;
+      firebase
+        .firestore()
+        .collection("targets")
+        .doc(user.uid)
+        .get()
+        .then(doc => {
+          this.goalsSecondText = doc.data().goalsSecondText;
+          this.goalsSecondName = doc.data().goalsSecondName;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getGoalsThirdData() {
+      const user = firebase.auth().currentUser;
+      firebase
+        .firestore()
+        .collection("targets")
+        .doc(user.uid)
+        .get()
+        .then(doc => {
+          this.goalsThirdText = doc.data().goalsThirdText;
+          this.goalsThirdName = doc.data().goalsThirdName;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
+  },
+  created: function() {
+    this.getGoalsFirstData();
+    this.getGoalsSecondData();
+    this.getGoalsThirdData();
   }
 };
 </script>
