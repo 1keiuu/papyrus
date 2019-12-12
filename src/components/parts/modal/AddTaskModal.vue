@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" class="modal" max-width="800px">
+    <v-dialog v-model="dialog" class="modal" max-width="880px" overlay-color="black" overlay-opacity="0.65">
       <template v-slot:activator="{ on }"> </template>
       <v-card>
         <v-card-title class="title__wrapper">

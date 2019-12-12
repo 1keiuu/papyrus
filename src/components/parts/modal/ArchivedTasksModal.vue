@@ -1,5 +1,5 @@
 <template>
-  <v-dialog class="dialog" v-model="dialog" max-width="800px">
+  <v-dialog class="dialog" v-model="dialog" max-width="880px" overlay-color="black" overlay-opacity="0.65">
     <template v-slot:activator="{ on }"> </template>
     <v-card>
       <v-layout align-center justify-space-between>
