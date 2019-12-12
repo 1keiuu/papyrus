@@ -15,7 +15,7 @@
                 <v-list-item-icon class="v-list-item-icon" v-on="on">
                   <v-icon v-text="item.icon" class="v-icon"></v-icon>
                 </v-list-item-icon>
-                <v-list-item-content class="v-list-item-content"> </v-list-item-content>
+                <v-list-item-content class="v-list-item-content"></v-list-item-content>
               </template>
               <span>{{ item.title }}</span>
             </v-tooltip>
@@ -60,8 +60,8 @@ export default {
           break;
         default:
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
