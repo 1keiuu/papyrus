@@ -1,7 +1,7 @@
 <template>
 <v-hover v-slot:default="{hover}">
-  <v-container class="v-container">
-    <v-layout wrap>
+  <v-container >
+    <v-layout class="matrix__container">
       <v-card class="v-card">
         <v-layout wrap>
         <p class="pTitle">時間管理のマトリックス</p>
@@ -25,6 +25,13 @@ export default {
 </script>
 
 <style scoped>
+.container{
+    padding:0;
+}
+.matrix__container{
+  justify-content: flex-end;
+  padding-right: 30px;
+}
 .pTitle {
   color: #434343;
   font-size: 20px;
@@ -41,10 +48,8 @@ export default {
 }
 
 .v-card {
-  width: 597px;
+  width: 600px;
   height: 626px;
-  margin-top: 10px;
-  margin-left: 30px;
 }
 .mdiHelp {
   color: #707070;

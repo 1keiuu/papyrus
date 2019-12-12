@@ -1,8 +1,15 @@
 <template>
   <v-content>
-    <v-container fluid fill-height>
-      <v-layout wrap>
-        <div class="inner-left__wrapper"><MissionState></MissionState><Goals></Goals></div>
+    <v-container fluid fill-height class="home__container">
+      <v-layout>
+        <div class="inner-left__wrapper">
+          <div class="missionState">
+          <MissionState></MissionState>
+          </div>
+          <div class="targets__wrapper">
+          <Goals></Goals>
+          </div>
+        </div>
         <div class="inner-right__wrapper">
           <Matrix></Matrix>
           <div class="matrix__wrapper"></div>
@@ -37,7 +44,7 @@ export default {
     ProfileEditModal,
     MissionState,
     Goals,
-    Matrix,
+    Matrix
   },
   methods: {
     logout() {
@@ -58,7 +65,7 @@ export default {
         .collection("user_info")
         .doc(this.userId)
         .update({ interests: selectedItems });
-    },
+    }
   },
   mounted() {},
   computed: {
@@ -72,21 +79,24 @@ export default {
 <style scoped>
 .v-content {
   padding: 0px !important;
+  height: 100vh;
   overflow: hidden;
 }
-.container {
+.home__container {
+  margin-left: 70px;
   padding: 0px;
+  padding-top: 30px;
 }
 .inner-right__wrapper {
-  width: 510px;
-  height: 576px;
-  margin-left: 30px;
-  padding-top: 30px;
+  width: 648px;
+  height: 100vh;
+}
+.targets__wrapper{
+  margin-top:30px;
 }
 .inner-left__wrapper {
-  width: 600px;
-  height: 200px;
-  margin-left: 60px;
-  padding-top: 30px;
+  width: 648px;
+  height: 100vh;
+  padding-left: 30px;
 }
 </style>

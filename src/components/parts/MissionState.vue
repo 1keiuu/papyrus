@@ -151,7 +151,7 @@ $secondary: #707070;
 }
 
 .container {
-  margin-left: 30px;
+  padding:0px;
   box-sizing: content-box;
 }
 

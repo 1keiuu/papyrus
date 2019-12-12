@@ -1,5 +1,5 @@
 <template>
-  <v-container class="containa">
+  <v-container>
     <v-layout>
       <v-card class="goals">
         <p class="goals-title">
@@ -298,6 +298,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container{
+  padding:0;
+}
 .goals-title {
   opacity: 1;
   color: #434343;
@@ -318,8 +321,6 @@ export default {
 .goals {
   width: 520px;
   height: 230px;
-  margin-left: 42px;
-  margin-top: 30px;
 }
 
 .goals-editButton {
