@@ -161,7 +161,7 @@ export default {
     submitEditTaskData(input, formerTargetRank) {
       firebase
         .firestore()
-        .collection("targetss")
+        .collection("tasks")
         .doc(this.userId)
         .set(
           {
@@ -198,7 +198,7 @@ export default {
     submitEditTargetData(inputName, inputDeadline, inputDescrition, targetRank) {
       firebase
         .firestore()
-        .collection("targetss")
+        .collection("targets")
         .doc(this.userId)
         .update({
           [targetRank]: {

@@ -40,7 +40,7 @@ export default {
     submitEditTargetData(inputName, inputDescription, inputDeadline, targetId) {
       firebase
         .firestore()
-        .collection("targetss")
+        .collection("targets")
         .doc(this.userId)
         .set(
           {

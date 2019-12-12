@@ -61,7 +61,6 @@ export default {
   },
   methods: {
     culcImportance(taskData) {
-      console.log(taskData)
       const taskDeadline = taskData.deadline;
       const deadlineDiff = moment(taskDeadline).diff(moment(new Date()), "day");
       const ic = () => {

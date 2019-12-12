@@ -96,6 +96,7 @@
 </template>
 <script>
 import firebase, { firestore } from "firebase/app";
+import store from "../../store";
 
 export default {
   name: "MissionState",
@@ -122,24 +123,21 @@ export default {
         .doc(user.uid)
         .set({ missionState: inputText }, { merge: true });
       this.isEditActive = false;
-    },
-    getMissionStateData() {
-      const user = firebase.auth().currentUser;
-      firebase
-        .firestore()
-        .collection("targets")
-        .doc(user.uid)
-        .get()
-        .then(doc => {
-          this.inputText = doc.data().missionState;
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      store.commit("setMissionState", inputText);
     }
   },
-  created: function() {
-    this.getMissionStateData();
+  created() {
+    this.inputText = this.missionState;
+  },
+  watch: {
+    missionState() {
+      this.inputText = this.missionState;
+    }
+  },
+  computed: {
+    missionState() {
+      return store.getters.missionState;
+    }
   }
 };
 </script>
@@ -194,8 +192,8 @@ $secondary: #707070;
   padding-bottom: 0px;
 }
 
-.v-tooltip__content{
-    font-size: 12px;
+.v-tooltip__content {
+  font-size: 12px;
 }
 
 .missionState-textarea-edit {

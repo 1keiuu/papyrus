@@ -34,6 +34,7 @@ export default new Vuex.Store({
     userId: "",
     profileImageUrl: "",
     isSignIn: false,
+    missionState:"",
     taskId: 1,
     targetsData: [
       {
@@ -75,6 +76,9 @@ export default new Vuex.Store({
     },
     setProfileImageUrl(state, payload) {
       state.profileImageUrl = payload;
+    },
+    setMissionState(state,payload) {
+      state.missionState = payload
     },
     setTaskId(state, payload) {
       state.taskId += payload;
@@ -173,6 +177,9 @@ export default new Vuex.Store({
     },
     profileImageUrl(state) {
       return state.profileImageUrl;
+    },
+    missionState(state) {
+      return state.missionState
     },
     taskId(state) {
       return state.taskId;
