@@ -75,7 +75,7 @@
                       <v-layout justify-end>
                         <v-btn
                           @click="handleGoalsFirstButtonClick()"
-                          class="goalsFirstSaveButton"
+                          class="goalsSaveButton"
                           color="#71B1F2"
                           >保存</v-btn
                         >
@@ -126,7 +126,7 @@
                       <v-layout justify-end>
                         <v-btn
                           @click="handleGoalsSecondButtonClick()"
-                          class="goalsSecondSaveButton"
+                          class="goalsSaveButton"
                           color="#71B1F2"
                           >保存</v-btn
                         >
@@ -177,7 +177,7 @@
                       <v-layout justify-end>
                         <v-btn
                           @click="handleGoalsThirdButtonClick()"
-                          class="goalsThirdSaveButton"
+                          class="goalsSaveButton"
                           color="#71B1F2"
                           >保存</v-btn
                         >
@@ -396,7 +396,7 @@ export default {
   height: 52px;
 }
 
-.goalsFirstSaveButton {
+.goalsSaveButton {
   color: white;
   width: 150px;
   height: 52px;
