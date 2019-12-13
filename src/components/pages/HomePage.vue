@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-content class="home__content">
     <v-container fluid fill-height class="home__container">
       <v-layout>
         <div class="inner-left__wrapper">
@@ -79,8 +79,6 @@ export default {
 <style scoped>
 .v-content {
   padding: 0px !important;
-  height: 100vh;
-  overflow: hidden;
 }
 .home__container {
   margin-left: 70px;

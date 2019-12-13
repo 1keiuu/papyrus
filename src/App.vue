@@ -196,6 +196,12 @@ export default {
   display: none;
 }
 
+.v-application{
+  height: 100vh !important;
+  overflow-y: hidden !important;
+  background: #F3F5F9 ;
+}
+
 .p-navigation {
   position: absolute;
   z-index: 2;

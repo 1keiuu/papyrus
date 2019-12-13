@@ -70,7 +70,6 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  overflow-x: scroll;
   padding: 0px;
 }
 @media (min-width: 960px) {
@@ -89,6 +88,7 @@ export default {
 
 .targetSheet__wrapper {
   margin-left: 20px;
+        display: inline;
 }
 .targetSheet__wrapper:last-child {
   padding-right: 10px;

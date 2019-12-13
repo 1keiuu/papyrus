@@ -238,6 +238,9 @@ export default {
 <style scoped lang="scss">
 $primary: #6245ea;
 $secondary: #8471e2;
+.v-application{
+        display: inline;
+}
 .v-tooltip__content {
   font-size: 12px;
 }
