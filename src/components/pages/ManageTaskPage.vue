@@ -27,10 +27,6 @@ export default {
   },
   data() {
     return {
-      options: {
-        group: "myGroup",
-        animation: 200
-      },
       userId: firebase.auth().currentUser.uid,
     };
   },

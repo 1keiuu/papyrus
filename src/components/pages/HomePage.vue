@@ -11,8 +11,9 @@
           </div>
         </div>
         <div class="inner-right__wrapper">
-          <Matrix></Matrix>
-          <div class="matrix__wrapper"></div>
+          <div class="calender__wrapper">
+            <Calender></Calender>
+          </div>
         </div>
       </v-layout>
       <ProfileEditModal ref="profileEdit" @submit="submitProfileData"></ProfileEditModal>
@@ -27,15 +28,7 @@ import ProfileEditModal from "../parts/modal/ProfileEditModal";
 import router from "@/router";
 import MissionState from "../parts/MissionState";
 import Goals from "../parts/Goals";
-import Matrix from "../parts/Matrix";
-
-// import firebaseConfig from "../../main";
-// firebase.initializeApp(firebaseConfig);
-
-// const storageRef = firebase
-//   .storage()
-//   .ref()
-//   .child("profile");
+import Calender from "../parts/Calender"
 
 export default {
   name: "HomePage",
@@ -44,7 +37,7 @@ export default {
     ProfileEditModal,
     MissionState,
     Goals,
-    Matrix
+    Calender
   },
   methods: {
     logout() {
@@ -96,5 +89,10 @@ export default {
   width: 648px;
   height: 100vh;
   padding-left: 30px;
+  margin-right:30px;
+}
+.calender__wrapper{
+  width:560px;
+  height:585px;
 }
 </style>

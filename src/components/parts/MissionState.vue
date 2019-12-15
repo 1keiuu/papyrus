@@ -1,5 +1,4 @@
 <template>
-  <v-app class="v-app">
     <v-container class="container">
       <v-layout>
         <v-card
@@ -92,7 +91,6 @@
         </v-card>
       </v-layout>
     </v-container>
-  </v-app>
 </template>
 <script>
 import firebase, { firestore } from "firebase/app";

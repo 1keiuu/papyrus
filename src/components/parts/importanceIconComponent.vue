@@ -46,7 +46,7 @@
 <script>
 import moment from "moment";
 export default {
-  name: "importanceIcon",
+  name: "ImportanceIcon",
   props: ["taskData"],
   data() {
     return {
@@ -90,7 +90,6 @@ export default {
         });
       };
       ic().then(() => {
-        // console.log(this.iconName);
       });
     }
   },

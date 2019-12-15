@@ -9,11 +9,11 @@
       <v-card-title class="taskCard__title">
         {{ taskData.name }}
       </v-card-title>
-      <importanceIcon
+      <ImportanceIcon
         class="taskCard__importanceIcon"
         :class="{ '--active': isHover }"
         :taskData="taskData"
-      ></importanceIcon>
+      ></ImportanceIcon>
     </v-layout>
     <v-card-subtitle v-if="taskData.deadline" class="taskCard__subTitle">
       期日:{{ taskData.deadline }}
@@ -26,7 +26,7 @@
 
 <script>
 import store from "../../store";
-import importanceIcon from "./importanceIconComponent";
+import ImportanceIcon from "./ImportanceIconComponent";
 export default {
   name: "TaskCard",
   data() {
@@ -35,7 +35,7 @@ export default {
     };
   },
   components: {
-    importanceIcon
+    ImportanceIcon
   },
   props: ["taskData"],
   computed: {},

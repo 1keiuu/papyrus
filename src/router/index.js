@@ -16,8 +16,13 @@ const routes = [
   },
   {
     path: '/manageTask',
-    name: 'ManageTask',
-    component: require('@/components/pages/ManageTask').default,
+    name: 'manageTask',
+    component: require('@/components/pages/ManageTaskPage').default,
+  },
+  {
+    path: '/matrix',
+    name: 'matrix',
+    component: require('@/components/pages/MatrixPage').default,
   },
 ];
 

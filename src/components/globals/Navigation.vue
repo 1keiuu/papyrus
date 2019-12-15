@@ -8,7 +8,7 @@
             v-for="(item, i) in items"
             :key="i"
             class="v-list-item"
-            @click="sampleClick(item.name)"
+            @click="handleItemClick(item.name)"
           >
             <v-tooltip right>
               <template v-slot:activator="{ on }">
@@ -44,13 +44,19 @@ export default {
       {
         icon: "mdi-clipboard-list-outline",
         name: "ManageTask",
-        path: "/manageTask",
-        title: "タスク"
+        path: "/manageTaskPage",
+        title: "タスク管理"
+      },
+      {
+        icon: "mdi-border-all",
+        name: "Matrix",
+        path: "/matrixPage",
+        title: "時間管理のマトリックス"
       }
     ]
   }),
   methods: {
-    sampleClick(target) {
+    handleItemClick(target) {
       switch (target) {
         case "Home":
           this.$router.push("/", () => {});
@@ -58,10 +64,13 @@ export default {
         case "ManageTask":
           this.$router.push("/manageTask", () => {});
           break;
+        case "Matrix":
+          this.$router.push("/matrix", () => {});
+          break;
         default:
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -70,7 +79,7 @@ $secondary: #8471e2;
 
 .v-navigation {
   position: fixed;
-  z-index:20
+  z-index: 20;
 }
 
 .v-card {
@@ -87,8 +96,8 @@ $secondary: #8471e2;
   padding-left: 5px;
 }
 
-.v-tooltip__content{
-    font-size: 12px;
+.v-tooltip__content {
+  font-size: 12px;
 }
 
 .v-list-item--active {
