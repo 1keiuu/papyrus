@@ -91,8 +91,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$primary: #6245ea;
-$secondary:#8471E2;
+$primary: #56a5bf;
+$secondary:#7DC0D6;
+$accent: #ff7e2f;
 
 .header{
   display: flex;

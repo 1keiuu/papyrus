@@ -1,7 +1,7 @@
 <template>
   <!-- <v-app> -->
   <v-app-bar app height="74px">
-    <h1 class="align-center font-weight-bold" style="font-size: 30px ; color:#8471E2 ">Papyrus</h1>
+    <h1 class="align-center font-weight-bold" style="font-size: 30px ; color:#56a5bf">Papyrus</h1>
     <v-spacer></v-spacer>
 
     <div class="Menu-items__container">
@@ -37,7 +37,7 @@
           <v-icon small>mdi-check</v-icon>
           完了済を見る
         </v-btn>
-        <v-btn class="ma-2 pl-3 mr-8 button-group__add-task" color="red lighten-2" dark @click="handleAddTaskButtonClick">
+        <v-btn class="ma-2 pl-3 mr-8 button-group__add-task" flat color="#ff7e2f" dark @click="handleAddTaskButtonClick">
           <v-icon class="pr-1">mdi-plus</v-icon>
           タスクを追加
         </v-btn>
@@ -52,7 +52,7 @@
         </div>
         <div class="avator__wrapper" v-show="!profileImageUrl">
           <v-avatar size="50" v-on="on" class="avator" style="cursor:pointer">
-            <v-icon color="#6245ea">mdi-account</v-icon>
+            <v-icon color="#417D91">mdi-account</v-icon>
           </v-avatar>
         </div>
       </template>
@@ -155,10 +155,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-$addButtonColor: #ef9a9a;
-$targetButtonColor: #9fa8da;
-$primary: #6245ea;
-$secondary:#8471E2;
+$primary: #56a5bf;
+$secondary:#7DC0D6;
+$accent: #ff7e2f;
 
 .v-application p {
   margin-bottom: 0px;
@@ -223,7 +222,8 @@ $secondary:#8471E2;
 }
 .button-group__add-task{
   height:32px !important;
-  font-size:14px !important
+  font-size:14px !important;
+  box-shadow: 0 0 0 !important;
 }
 
 .archive__icon {

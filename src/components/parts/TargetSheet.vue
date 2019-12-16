@@ -60,7 +60,7 @@
         </v-expand-transition>
       </v-card>
       <v-btn
-        color="#8471e2"
+        color="#417D91"
         outlined
         class="targetSheet__add-button"
         @click="handleAddTaskButtonClick(targetData)"
@@ -70,13 +70,16 @@
         </v-icon>
         追加
       </v-btn>
+      <div         class="taskCard__container"
+>
       <div
         v-for="(card, index) in taskData"
         :key="index"
-        class="taskCard__wrapper"
+         class="taskCard__wrapper"
         @click="handleTaskCardClick(taskData[index])"
       >
         <TaskCard :taskData="taskData[index]" class="taskCard"> </TaskCard>
+      </div>
       </div>
       <EditTaskModal
         ref="editTaskModal"
@@ -236,8 +239,9 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-$primary: #6245ea;
-$secondary: #8471e2;
+$primary: #56a5bf;
+$secondary:#7DC0D6;
+$accent: #ff7e2f;
 .v-application{
         display: inline;
 }
@@ -251,7 +255,7 @@ $secondary: #8471e2;
   top: 160px;
   left: 90px;
   border-radius: 2px;
-  background-color: $secondary;
+  background-color: $primary;
 }
 .targetSheet__thumbnail-wrapper {
   &:hover {
@@ -297,9 +301,14 @@ $secondary: #8471e2;
   width: 290px;
   margin-bottom: 10px;
 }
-.taskCard__wrapper {
-  display: contents;
+.taskCard__container {
+max-height:310px;
+display:inline;
+overflow-y:scroll
 }
+.taskCard__wrapper {
+    margin: 10px 10px;
+    }
 
 .taskCard {
   margin: 5px 0px;

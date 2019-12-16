@@ -257,8 +257,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$primary: #6245ea;
-$secondary: #8471e2;
+$primary: #56a5bf;
+$secondary:#7DC0D6;
+$accent: #ff7e2f;
 
 .modal {
   height: 680px;
