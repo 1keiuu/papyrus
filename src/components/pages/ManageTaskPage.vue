@@ -7,8 +7,8 @@
             :targetData="storedTargetsData[index]"
             :taskData="storedTasksData[index]"
           ></TargetSheet>
-          <v-btn @click="onB"></v-btn>
         </div>
+                  <v-btn @click="onB">リセットボタン</v-btn>
       </v-layout>
     </v-container>
   </v-app>

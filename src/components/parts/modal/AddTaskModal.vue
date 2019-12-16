@@ -1,6 +1,12 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" class="modal" max-width="880px" overlay-color="black" overlay-opacity="0.65">
+    <v-dialog
+      v-model="dialog"
+      class="modal"
+      max-width="880px"
+      overlay-color="black"
+      overlay-opacity="0.65"
+    >
       <template v-slot:activator="{ on }"> </template>
       <v-card>
         <v-card-title class="title__wrapper">
@@ -72,19 +78,19 @@
                       color="deep-purple accent-4"
                       group
                     >
-                      <v-btn value=1>
+                      <v-btn value="1">
                         1
                       </v-btn>
-                      <v-btn value=2>
+                      <v-btn value="2">
                         2
                       </v-btn>
-                      <v-btn value=3>
+                      <v-btn value="3">
                         3
                       </v-btn>
-                      <v-btn value=4>
+                      <v-btn value="4">
                         4
                       </v-btn>
-                      <v-btn value=5>
+                      <v-btn value="5">
                         5
                       </v-btn>
                     </v-btn-toggle>
@@ -104,19 +110,19 @@
                       color="deep-purple accent-4"
                       group
                     >
-                      <v-btn value=1>
+                      <v-btn value="1">
                         1
                       </v-btn>
-                      <v-btn value=2>
+                      <v-btn value="2">
                         2
                       </v-btn>
-                      <v-btn value=3>
+                      <v-btn value="3">
                         3
                       </v-btn>
-                      <v-btn value=4>
+                      <v-btn value="4">
                         4
                       </v-btn>
-                      <v-btn value=5>
+                      <v-btn value="5">
                         5
                       </v-btn>
                     </v-btn-toggle>
@@ -134,19 +140,19 @@
                       color="deep-purple accent-4"
                       group
                     >
-                      <v-btn value=1>
+                      <v-btn value="1">
                         1
                       </v-btn>
-                      <v-btn value=2>
+                      <v-btn value="2">
                         2
                       </v-btn>
-                      <v-btn value=3>
+                      <v-btn value="3">
                         3
                       </v-btn>
-                      <v-btn value=4>
+                      <v-btn value="4">
                         4
                       </v-btn>
-                      <v-btn value=5>
+                      <v-btn value="5">
                         5
                       </v-btn>
                     </v-btn-toggle>
@@ -174,6 +180,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   name: "AddTaskModal",
   data: () => ({
@@ -187,7 +194,8 @@ export default {
       answer1: "",
       answer2: "",
       answer3: "",
-      importanceScore: ""
+      importanceScore: "",
+      importanceArea: ""
     },
     targetRankOptions: ["rank1", "rank2", "rank3", "rank4"],
     currentStep: 0,
@@ -227,21 +235,37 @@ export default {
             return null;
         }
       };
-      this.input.answer1 = Number(this.input.answer1)
-      this.input.answer2 = Number(this.input.answer2)
-      this.input.answer3 = Number(this.input.answer3)
-      const targetRankRatio = calculateRation(this.input.targetRank)
-      this.input.importanceScore = targetRankRatio * (this.input.answer1 + this.input.answer2 + this.input.answer3)
-      this.dialog = false;
-      this.$emit(
-        "submit",
-        this.input
-      );
+
+      this.input.answer1 = Number(this.input.answer1);
+      this.input.answer2 = Number(this.input.answer2);
+      this.input.answer3 = Number(this.input.answer3);
+      const targetRankRatio = calculateRation(this.input.targetRank);
+      this.input.importanceScore = targetRankRatio * (this.input.answer1 + this.input.answer2 + this.input.answer3);
+
+      const deadlineDiff = moment(this.input.deadline).diff(moment(new Date()), "day");
+      if (deadlineDiff >= 7) {
+        if (this.input.importanceScore > 11) {
+          this.input.importanceArea = "secondArea";
+        } else {
+          this.input.importanceArea = "forthArea";
+        }
+      } else if (deadlineDiff <= 7) {
+        if (this.input.importanceScore > 11) {
+          this.input.importanceArea = "firstArea";
+        } else {
+          this.input.importanceArea = "thirdArea";
+        }
+      }
+
+
+      this.$emit("submit", this.input);
+
       const obj = this.input;
       this.currentStep = 1;
       Object.keys(obj).forEach(function(key) {
         obj[key] = "";
       });
+      this.dialog = false;
     }
   },
   watch: {},
@@ -258,7 +282,7 @@ export default {
 
 <style lang="scss" scoped>
 $primary: #56a5bf;
-$secondary:#7DC0D6;
+$secondary: #7dc0d6;
 $accent: #ff7e2f;
 
 .modal {

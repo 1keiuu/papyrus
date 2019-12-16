@@ -70,17 +70,17 @@
         </v-icon>
         追加
       </v-btn>
-      <div         class="taskCard__container"
->
-      <div
-        v-for="(card, index) in taskData"
-        :key="index"
-         class="taskCard__wrapper"
-        @click="handleTaskCardClick(taskData[index])"
-      >
-        <TaskCard :taskData="taskData[index]" class="taskCard"> </TaskCard>
+      <div class="taskCard__container">
+        <div
+          v-for="(card, index) in taskData"
+          :key="index"
+          class="taskCard__wrapper"
+          @click="handleTaskCardClick(taskData[index])"
+        >
+          <TaskCard :taskData="taskData[index]" class="taskCard"> </TaskCard>
+        </div>
       </div>
-      </div>
+
       <EditTaskModal
         ref="editTaskModal"
         @store="submitEditTaskData"
@@ -240,10 +240,10 @@ export default {
 </script>
 <style scoped lang="scss">
 $primary: #56a5bf;
-$secondary:#7DC0D6;
+$secondary: #7dc0d6;
 $accent: #ff7e2f;
-.v-application{
-        display: inline;
+.v-application {
+  display: inline;
 }
 .v-tooltip__content {
   font-size: 12px;
@@ -302,13 +302,13 @@ $accent: #ff7e2f;
   margin-bottom: 10px;
 }
 .taskCard__container {
-max-height:310px;
-display:inline;
-overflow-y:scroll
+  max-height: 310px;
+  display: inline;
+  overflow-y: scroll;
 }
 .taskCard__wrapper {
-    margin: 10px 10px;
-    }
+  margin: 10px 10px;
+}
 
 .taskCard {
   margin: 5px 0px;

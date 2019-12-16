@@ -51,10 +51,9 @@
 
 <script>
 import moment from "moment";
-
 import MatrixGraph from "../parts/MatrixGraph";
 import MatrixTaskLists from "../parts/MatrixTaskLists";
-
+import store from "../../store";
 export default {
   name: "Matrix",
   components: {
@@ -79,47 +78,65 @@ export default {
       isCardHover: false
     };
   },
-  methods:{
-    culcImportance(taskData) {
-      const taskDeadline = taskData.deadline;
-      const deadlineDiff = moment(taskDeadline).diff(moment(new Date()), "day");
-      const ic = () => {
-        if (deadlineDiff >= 7) {
-          switch (taskData.importanceScore > 11) {
-            case true:
-              this.iconName = "secondArea";
-              break;
-            case false:
-              this.iconName = "forthArea";
-              break;
-            default:
-          }
-        } else if (this.deadlineDiff <= 7) {
-          switch (taskData.importanceScore > 11) {
-            case true:
-              this.iconName = "firstArea";
-              break;
-            case false:
-              this.iconName = "thirdArea";
-              break;
-            default:
-          }
-        }
-        return new Promise(function(resolve) {
-          resolve();
-        });
-      };
-      ic().then(() => {
+  methods: {
+    // culcImportance(tasksData) {
+    //   tasksData.forEach(rankedTasksData => {
+    //     rankedTasksData.forEach(taskData => {
+    //       const taskDeadline = taskData.deadline;
+    //       const deadlineDiff = moment(taskDeadline).diff(moment(new Date()), "day");
+    //       const data = {
+    //         taskId: taskData.taskId,
+    //         name: taskData.name,
+    //         deadline: taskData.deadline,
+    //         targetRank: taskData.targetRank,
+    //         memo: taskData.memo,
+    //         status: "doing",
+    //         answer1: taskData.answer1,
+    //         answer2: taskData.answer2,
+    //         answer3: taskData.answer3,
+    //         importanceScore: taskData.importanceScore,
+    //         formerTargetRank: taskData.targetRank,
+    //         importanceArea: ""
+    //       };
+    //       if (deadlineDiff >= 7) {
+    //         switch (taskData.importanceScore > 11) {
+    //           case true:
+    //             data.importanceArea = "secondArea";
+    //             break;
+    //           case false:
+    //             data.importanceArea = "forthArea";
+    //             break;
+    //           default:
+    //         }
+    //       } else if (this.deadlineDiff <= 7) {
+    //         switch (taskData.importanceScore > 11) {
+    //           case true:
+    //             data.importanceArea = "firstArea";
+    //             break;
+    //           case false:
+    //             data.importanceArea = "thirdArea";
+    //             break;
+    //           default:
+    //         }
+    //       }
+    //       store.commit("editTaskData", data);
+    //     });
+    //   });
+    // },
+    sortTasksByImportance() {
+      this.storedTasksData.forEach(rankedTasksData => {
+        const a = rankedTasksData.filter(taskData => taskData.importanceArea === "firstArea");
+        console.log(a);
       });
     }
   },
-  watch: {
-    storedTasksData(taskData) {
-      this.culcImportance(taskData);
-    }
-  },
+  // watch: {
+  //   storedTasksData() {
+  //     this.culcImportance(this.storedTasksData);
+  //   }
+  // },
   created() {
-    this.culcImportance(this.storedTasksData);
+    this.sortTasksByImportance();
   },
   computed: {
     storedTargetsData() {
@@ -127,14 +144,14 @@ export default {
     },
     storedTasksData() {
       return JSON.parse(JSON.stringify(this.$store.getters.tasksData));
-    },
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
 $primary: #56a5bf;
-$secondary:#7DC0D6;
+$secondary: #7dc0d6;
 $accent: #ff7e2f;
 
 .v-application p {

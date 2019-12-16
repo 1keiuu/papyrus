@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import firebase from "firebase/app";
 import store from "./store";
 import Header from "@/components/globals/Header";
@@ -55,7 +56,8 @@ export default {
   data() {
     return {
       name: "",
-      profileImage: ""
+      profileImage: "",
+      importanceScore: ""
     };
   },
   methods: {
@@ -124,6 +126,20 @@ export default {
       store.commit("setUserName", inputName);
     },
     submitTaskData(input) {
+      const data = {
+        taskId: this.taskId,
+        name: input.name,
+        deadline: input.deadline,
+        targetRank: input.targetRank,
+        memo: input.memo,
+        answer1: input.answer1,
+        answer2: input.answer2,
+        answer3: input.answer3,
+        importanceScore: input.importanceScore,
+        importanceArea: input.importanceArea,
+        status: "doing"
+      };
+
       firebase
         .firestore()
         .collection("tasks")
@@ -140,26 +156,15 @@ export default {
               answer2: input.answer2,
               answer3: input.answer3,
               importanceScore: input.importanceScore,
+              importanceArea: input.importanceArea,
               status: "doing"
             }
           },
           { merge: true }
         );
       store.commit("setTaskId", 1);
-      const data = {
-        taskId: this.taskId,
-        name: input.name,
-        deadline: input.deadline,
-        targetRank: input.targetRank,
-        memo: input.memo,
-        answer1: input.answer1,
-        answer2: input.answer2,
-        answer3: input.answer3,
-        importanceScore: input.importanceScore,
-        status: "doing"
-      };
-      console.log(data)
       store.commit("setTasksData", data);
+      console.log(data);
     }
   },
   computed: {
@@ -196,10 +201,10 @@ export default {
   display: none;
 }
 
-.v-application{
+.v-application {
   height: 100vh !important;
   overflow-y: hidden !important;
-  background: #F3F5F9 ;
+  background: #f3f5f9;
 }
 
 .p-navigation {

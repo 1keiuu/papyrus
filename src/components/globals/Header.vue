@@ -37,7 +37,7 @@
           <v-icon small>mdi-check</v-icon>
           完了済を見る
         </v-btn>
-        <v-btn class="ma-2 pl-3 mr-8 button-group__add-task" flat color="#ff7e2f" dark @click="handleAddTaskButtonClick">
+        <v-btn class="ma-2 pl-3 mr-8 button-group__add-task" color="#ff7e2f" dark @click="handleAddTaskButtonClick">
           <v-icon class="pr-1">mdi-plus</v-icon>
           タスクを追加
         </v-btn>
