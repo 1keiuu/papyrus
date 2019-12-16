@@ -40,8 +40,8 @@
       </v-tabs>
       <v-card class="matrix-tasks-list__card">
         <v-tabs-items v-model="tab">
-          <v-tab-item v-for="(task, index) in TasksData" :key="index">
-            <MatrixTaskLists></MatrixTaskLists>
+          <v-tab-item v-for="(task, index) in sortedTasks" :key="index">
+            <MatrixTaskLists :tasksData="task"></MatrixTaskLists>
           </v-tab-item>
         </v-tabs-items>
       </v-card>
@@ -63,19 +63,15 @@ export default {
   data() {
     return {
       tasksNumbers: [
-        { title: "第一領域のタスク数", number: 6 },
-        { title: "第二領域のタスク数", number: 7 },
-        { title: "第三領域のタスク数", number: 8 },
-        { title: "第四領域のタスク数", number: 14 }
+        { title: "第一領域のタスク数", number: Number() },
+        { title: "第二領域のタスク数", number: Number() },
+        { title: "第三領域のタスク数", number: Number() },
+        { title: "第四領域のタスク数", number: Number() }
       ],
       tabsName: ["第一領域", "第二領域", "第三領域", "第四領域"],
-      TasksData: [
-        { title: "第一領域のタスク数", number: 6 },
-        { title: "第二領域のタスク数", number: 7 },
-        { title: "第三領域のタスク数", number: 8 },
-        { title: "第四領域のタスク数", number: 14 }
-      ],
-      isCardHover: false
+      isCardHover: false,
+      sortedTasks: [[], [], [], []],
+      tab: null
     };
   },
   methods: {
@@ -125,8 +121,31 @@ export default {
     // },
     sortTasksByImportance() {
       this.storedTasksData.forEach(rankedTasksData => {
-        const a = rankedTasksData.filter(taskData => taskData.importanceArea === "firstArea");
-        console.log(a);
+        const firstAreaTasks = rankedTasksData.filter(
+          taskData => taskData.importanceArea === "firstArea"
+        );
+        const secondAreaTasks = rankedTasksData.filter(
+          taskData => taskData.importanceArea === "secondArea"
+        );
+        const thirdAreaTasks = rankedTasksData.filter(
+          taskData => taskData.importanceArea === "thirdArea"
+        );
+        const forthAreaTasks = rankedTasksData.filter(
+          taskData => taskData.importanceArea === "forthArea"
+        );
+
+        // sortedTasks[0]は第一領域にはいるタスク全て
+        this.sortedTasks[0].push(firstAreaTasks);
+        this.sortedTasks[1].push(secondAreaTasks);
+        this.sortedTasks[2].push(thirdAreaTasks);
+        this.sortedTasks[3].push(forthAreaTasks);
+      });
+    },
+    culcTasksNumber() {
+      this.sortedTasks.forEach((sortedByImportanceTasks, index) => {
+        sortedByImportanceTasks.forEach(tasks => {
+          this.tasksNumbers[index].number += tasks.length;
+        });
       });
     }
   },
@@ -137,6 +156,7 @@ export default {
   // },
   created() {
     this.sortTasksByImportance();
+    this.culcTasksNumber();
   },
   computed: {
     storedTargetsData() {
