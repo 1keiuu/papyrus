@@ -71,12 +71,12 @@
         追加
       </v-btn>
       <div
-      class="taskCard__wrapper"
-      >
-        <TaskCard :taskData="taskData[index]"         v-for="(card, index) in taskData"
+        v-for="(card, index) in taskData"
         :key="index"
+        class="taskCard__wrapper"
         @click="handleTaskCardClick(taskData[index])"
- class="taskCard"> </TaskCard>
+      >
+        <TaskCard :taskData="taskData[index]" class="taskCard"> </TaskCard>
       </div>
       <EditTaskModal
         ref="editTaskModal"
@@ -298,9 +298,7 @@ $secondary: #8471e2;
   margin-bottom: 10px;
 }
 .taskCard__wrapper {
-  display: inline;
-  overflow-y:scroll;
-  max-height:310px;
+  display: contents;
 }
 
 .taskCard {
