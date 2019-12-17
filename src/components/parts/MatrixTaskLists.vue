@@ -58,6 +58,9 @@ export default {
     handleEditButtonClick() {
       console.log("clicked")
     }
+  },
+  created() {
+    console.log(this.tasksData)
   }
 };
 </script>

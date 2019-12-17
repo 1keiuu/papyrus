@@ -1,96 +1,97 @@
 <template>
-    <v-container class="container">
-      <v-layout>
-        <v-card
-          class="missionState"
-          @mouseenter="isCardHover = true"
-          @mouseleave="isEditActive === true ? (isCardHover = true) : (isCardHover = false)"
-        >
-          <v-flex>
-            <v-layout wrap>
-              <p class="missionState-title">ミッションステート / なりたい理想像</p>
-              <div :class="{ '--hover': isCardHover }" class="missionState-btn">
-                <v-btn
-                  tile
-                  class="missionState-saveButton"
-                  :class="{ '--active': isEditActive }"
-                  @click="handlesubmitButtonClick(inputText)"
-                  width="90px"
-                  height="30px"
-                  color="#8471e2"
-                  >保存</v-btn
-                >
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn
-                      class="missionState-helpButton"
-                      fab
-                      depressed
-                      outlined
-                      width="25px"
-                      height="25px"
-                      v-on="on"
-                    >
-                      <v-icon size="12px">mdi-help</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>テキストが入ります</span>
-                </v-tooltip>
-                <v-tooltip bottom
-                  ><template v-slot:activator="{ on }">
-                    <v-btn
-                      class="missionstate-editButton"
-                      v-show="!isEditActive"
-                      fab
-                      depressed
-                      @click="handleEditButtonClick"
-                      outlined
-                      width="32px"
-                      height="32px"
-                      v-on="on"
-                    >
-                      <v-icon size="20"> mdi-file-document-edit-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>編集</span>
-                </v-tooltip>
-                <v-btn
-                  class="missionState-cancelButton"
-                  v-show="isEditActive"
-                  fab
-                  depressed
-                  @click="handleEditButtonClick"
-                  outlined
-                  width="32px"
-                  height="32px"
-                >
-                  <v-icon size="20">mdi-cancel</v-icon>
-                </v-btn>
-              </div>
-            </v-layout>
-            <div class="missionState-centerLine"></div>
-            <div class="missionState-textarea">
-              <p v-show="!isEditActive">
-                {{ inputText }}
-              </p>
-              <v-layout class="missionState-textarea-edit">
-                <v-textarea
-                  v-show="isEditActive"
-                  class="missionState-textarea__edit"
-                  v-model="inputText"
-                  counter="150"
-                  no-resize
-                  height="80px"
-                  :rules="rules"
-                  maxlength="150"
-                >
-                </v-textarea>
-              </v-layout>
-            </div>
-          </v-flex>
-        </v-card>
-      </v-layout>
-    </v-container>
+  <div>
+    <div
+      class="missionState__title-wrapper"
+      @mouseenter="isCardHover = true"
+      @mouseleave="isCardHover = false"
+    >
+      <v-icon class="missionState__title-icon" color="white" size="23px">mdi-compass-outline</v-icon>
+      <p class="missionState__title">ミッションステート / なりたい理想像</p>
+      <div :class="{ '--hover': isCardHover }" class="missionState__btn">
+        <v-layout align-center>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                class="missionState__help-button"
+                fab
+                depressed
+                color="#ff7e2f"
+                width="25px"
+                height="25px"
+                v-on="on"
+              >
+                <v-icon size="12px">mdi-help</v-icon>
+              </v-btn>
+            </template>
+            <span>テキストが入ります</span>
+          </v-tooltip>
+          <v-tooltip bottom
+            ><template v-slot:activator="{ on }">
+              <v-btn
+                class="missionstate-editButton"
+                v-show="!isEditActive"
+                fab
+                depressed
+                @click="handleEditButtonClick"
+                color="#ff7e2f"
+                width="32px"
+                height="32px"
+                v-on="on"
+              >
+                <v-icon size="20"> mdi-file-document-edit-outline</v-icon>
+              </v-btn>
+            </template>
+            <span>編集</span>
+          </v-tooltip>
+          <v-btn
+            class="missionState__cancel-button"
+            v-show="isEditActive"
+            fab
+            depressed
+            @click="handleEditButtonClick"
+            color="#ff7e2f"
+            width="32px"
+            height="32px"
+          >
+            <v-icon size="20">mdi-cancel</v-icon>
+          </v-btn>
+        </v-layout>
+      </div>
+    </div>
+    <v-card
+      class="missionState"
+      @mouseenter="isCardHover = true"
+      @mouseleave="isEditActive === true ? (isCardHover = true) : (isCardHover = false)"
+    >
+      <div class="missionState__textarea">
+        <p v-show="!isEditActive">
+          {{ inputText }}
+        </p>
+        <v-layout class="missionState__textarea-edit">
+          <v-textarea
+            v-show="isEditActive"
+            v-model="inputText"
+            counter="150"
+            no-resize
+            height="80px"
+            :rules="rules"
+            maxlength="150"
+          >
+          </v-textarea>
+        </v-layout>
+      </div>
+    </v-card>
+    <v-btn
+      fab
+      class="missionState__save-button"
+      :class="{ '--active': isEditActive }"
+      height="40px"
+      width="40px"
+      @click="handlesubmitButtonClick(inputText)"
+      color="#ff7e2f"
+      ><v-icon>mdi-check</v-icon></v-btn
+    >
+  </div>
 </template>
 <script>
 import firebase, { firestore } from "firebase/app";
@@ -142,96 +143,97 @@ export default {
 
 <style lang="scss" scoped>
 $primary: #56a5bf;
-$secondary:#7DC0D6;
+$secondary: #7dc0d6;
 $accent: #ff7e2f;
-
-.v-app {
-  height: 200px;
-}
-
-.container {
-  padding:0px;
-  box-sizing: content-box;
-}
-
-.missionState-title {
-  color: #434343;
-  font-size: 20px;
-  margin-top: 17px;
-  margin-bottom: 12px;
-  margin-left: 20px;
-  font-weight: bold;
-}
 
 .missionState {
   width: 600px;
-  height: 200px;
+  height: 140px;
+}
+.missionState__title-wrapper {
+  width: 500px;
+  height: 50px;
+  padding-left: 15px;
+  padding-right: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  display: flex;
+  align-items: center;
+  background-color: $primary;
+  .missionState__title-icon {
+      margin-right: 15px;
+    }
+  .missionState__title {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    width: 100%;
+    margin: 0;
+  }
+  .missionstate-editButton {
+    color: #fff;
+    margin-right: 7px;
+  }
+
+  .missionState__cancel-button {
+    color: #fff;
+    margin-right: 7px;
+  }
+
+  .missionState__help-button {
+    color: #fff;
+    margin-right: 13px;
+  }
 }
 
-.missionState-centerLine {
-  border: solid $primary;
-  border-width: 1.2px;
-  width: 550px;
-}
-
-.missionState-textarea {
-  margin-top: 10px;
-  margin-right: 100px;
-  margin-left: 10px;
-  height: 110px;
-  width: 540px;
-  font-size: 14px;
-}
-
-.missionState-textarea__edit {
-  font-size: 14px;
-  margin-top: 7px;
-  padding-top: 0px;
-  margin-bottom: 0px;
-  padding-bottom: 0px;
-}
-
-.v-tooltip__content {
-  font-size: 12px;
-}
-
-.missionState-textarea-edit {
-  margin-top: 0px;
-  padding-top: 0px;
-  margin-bottom: 0px;
-  padding-bottom: 0px;
-}
-
-.missionstate-editButton {
-  color: $secondary;
-  margin-bottom: 7px;
-  margin-right: 7px;
-}
-
-.missionState-saveButton {
-  margin: 0px 18px;
+.missionState__save-button {
   color: white;
   opacity: 0;
-  touch-action: none;
   cursor: default;
+  background-color: rgb(255, 126, 47);
+  position: absolute;
+  right: 655px;
+  top: 170px;
   &.--active {
     opacity: 1;
     cursor: pointer;
   }
 }
 
-.missionState-cancelButton {
-  color: $secondary;
-  margin-bottom: 7px;
-  margin-right: 7px;
+.missionState__textarea {
+  margin-right: 100px;
+  margin-left: 10px;
+  height: 110px;
+  width: 540px;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.06px;
+  padding-top: 13px;
+}
+::v-deep .v-textarea {
+  padding: 0px;
+  margin: 0;
+}
+::v-deep .v-textarea textarea {
+  font-size: 14px !important;
+  padding-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  line-height: 24px !important;
 }
 
-.missionState-helpButton {
-  color: $secondary;
-  margin-right: 13px;
+.v-tooltip__content {
+  font-size: 12px;
 }
 
-.missionState-btn {
+.missionState__textarea-edit {
+  margin-top: 0px;
+  padding-top: 20px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.missionState__btn {
   align-self: center;
   opacity: 0;
   transition: all 100ms;

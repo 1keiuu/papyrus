@@ -26,6 +26,7 @@
             v-for="(item, index) in tasksNumbers"
             :key="index"
             @click="changeListTabIndex(index)"
+            :class="{'--active':tab===index}"
           >
             <p class="matrix-graph__tasks-number-title">{{ item.title }}</p>
             <p class="matrix-graph__tasks-number">{{ item.number }}</p>
@@ -175,11 +176,10 @@ $accent: #ff7e2f;
       margin-right: 15px;
     }
     .matrix__help-button {
-      border: 1px solid #ff7e2f;
       width: 30px;
       height: 30px;
       border-radius: 50%;
-      background-color: white;
+      background: $accent;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -187,7 +187,7 @@ $accent: #ff7e2f;
       cursor: pointer;
       .matrix__help-icon {
         padding-bottom: 1px;
-        color: #ff7e2f;
+        color: #fff;
       }
     }
   }
@@ -218,10 +218,10 @@ $accent: #ff7e2f;
         &:last-child {
           margin-right: 0px;
         }
-        &:hover{
-          background: #E5E3E3;
+        &.--active{
           .matrix-graph__tasks-number-title{
-            // color:white
+            color: $primary;
+            font-weight: bold;
           }
         }
         .matrix-graph__tasks-number-title {
