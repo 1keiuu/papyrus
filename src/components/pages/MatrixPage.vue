@@ -18,13 +18,14 @@
         @mouseleave="isCardHover = false"
       >
         <div class="matrix-graph__wrapper">
-          <MatrixGraph></MatrixGraph>
+          <MatrixGraph @graphAreaClicked="changeListTabIndex"></MatrixGraph>
         </div>
         <div class="matrix-graph__tasks-number-wrapper">
           <div
             class="matrix-graph__tasks-number-item"
             v-for="(item, index) in tasksNumbers"
             :key="index"
+            @click="changeListTabIndex(index)"
           >
             <p class="matrix-graph__tasks-number-title">{{ item.title }}</p>
             <p class="matrix-graph__tasks-number">{{ item.number }}</p>
@@ -109,17 +110,19 @@ export default {
         });
         this.tasksNumbers[index].number -= 4
       });
+    },
+    changeListTabIndex(tabIndex) {
+      this.tab = tabIndex
     }
   },
-  // watch: {
-  //   storedTasksData() {
-  //     this.culcImportance(this.storedTasksData);
-  //   }
-  // },
+  watch: {
+    // storedTasksData() {
+    //   this.culcImportance(this.storedTasksData);
+    // }
+  },
   created() {
     this.sortTasksByImportance();
     this.culcTasksNumber();
-    console.log(this.sortedTasks)
   },
   computed: {
     storedTargetsData() {
@@ -211,8 +214,15 @@ $accent: #ff7e2f;
         border-bottom: 1px solid $primary;
         padding: 0px 2px;
         margin-right: 10px;
+        cursor:pointer;
         &:last-child {
           margin-right: 0px;
+        }
+        &:hover{
+          background: #E5E3E3;
+          .matrix-graph__tasks-number-title{
+            // color:white
+          }
         }
         .matrix-graph__tasks-number-title {
           display: inline;

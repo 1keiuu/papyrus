@@ -9,31 +9,35 @@
     <div class="graph-area graph-area--first">
       <div
         class="graph-area__number-wrapper graph-area__number-wrapper--first"
-        @mouseenter="isFirstCardHover = true"
-        @mouseleave="isFirstCardHover = false"
+        @mouseenter="isFirstAreaHover = true"
+        @mouseleave="isFirstAreaHover = false"
+        @click="handleGraphAreaClick('first')"
       >
         <p class="graph-area__number graph-area__number--first">Ⅰ</p>
       </div>
       <div
         class="graph-area--active graph-area--active--first"
-        :class="{ '--hover': isFirstCardHover }"
+        :class="{ '--hover': isFirstAreaHover }"
       >
         <p class="graph-area__active-title">『必須』</p>
         <p>期限のあるタスク<br />やらないと大きな損失を被る<br />コントロールが重要</p>
       </div>
     </div>
     <div class="graph-area graph-area--second">
-      <div class="graph-area__number-wrapper graph-area__number-wrapper--second"         @mouseenter="isSecondCardHover = true"
-        @mouseleave="isSecondCardHover = false"
->
+      <div
+        class="graph-area__number-wrapper graph-area__number-wrapper--second"
+        @mouseenter="isSecondAreaHover = true"
+        @mouseleave="isSecondAreaHover = false"
+        @click="handleGraphAreaClick('second')"
+      >
         <p class="graph-area__number graph-area__number--second">Ⅱ</p>
       </div>
-            <div
+      <div
         class="graph-area--active graph-area--active--second"
-        :class="{ '--hover': isSecondCardHover }"
+        :class="{ '--hover': isSecondAreaHover }"
       >
         <p class="graph-area__active-title">『価値』</p>
-        <p>緊急性は無いが重要<br/>すぐには成果が出ない<br/>将来への投資</p>
+        <p>緊急性は無いが重要<br />すぐには成果が出ない<br />将来への投資</p>
       </div>
     </div>
 
@@ -42,27 +46,34 @@
     </div>
 
     <div class="graph-area graph-area--third">
-      <div class="graph-area__number-wrapper graph-area__number-wrapper--third"         @mouseenter="isThirdCardHover = true"
-        @mouseleave="isThirdCardHover = false"
->
+      <div
+        class="graph-area__number-wrapper graph-area__number-wrapper--third"
+        @mouseenter="isThirdAreaHover = true"
+        @mouseleave="isThirdAreaHover = false"
+        @click="handleGraphAreaClick('third')"
+      >
         <p class="graph-area__number graph-area__number--third">Ⅲ</p>
       </div>
-            <div
+      <div
         class="graph-area--active graph-area--active--third"
-        :class="{ '--hover': isThirdCardHover }"
+        :class="{ '--hover': isThirdAreaHover }"
       >
         <p class="graph-area__active-title">『錯覚』</p>
         <p>期限のあるタスク<br />やらないと大きな損失を被る<br />コントロールが重要</p>
       </div>
     </div>
     <div class="graph-area graph-area--forth">
-      <div class="graph-area__number-wrapper graph-area__number-wrapper--forth" @mouseenter="isForthCardHover = true"
-        @mouseleave="isForthCardHover = false">
+      <div
+        class="graph-area__number-wrapper graph-area__number-wrapper--forth"
+        @mouseenter="isForthAreaHover = true"
+        @mouseleave="isForthAreaHover = false"
+        @click="handleGraphAreaClick('forth')"
+      >
         <p class="graph-area__number graph-area__number--forth">Ⅳ</p>
       </div>
-                  <div
+      <div
         class="graph-area--active graph-area--active--forth"
-        :class="{ '--hover': isForthCardHover }"
+        :class="{ '--hover': isForthAreaHover }"
       >
         <p class="graph-area__active-title">『無駄』</p>
         <p>期限のあるタスク<br />やらないと大きな損失を被る<br />コントロールが重要</p>
@@ -77,11 +88,30 @@ export default {
   data() {
     return {
       tasksData: ["task1", "task2", "task3"],
-      isFirstCardHover: false,
-      isSecondCardHover:false,
-      isThirdCardHover:false,
-      isForthCardHover:false
+      isFirstAreaHover: false,
+      isSecondAreaHover: false,
+      isThirdAreaHover: false,
+      isForthAreaHover: false
     };
+  },
+  methods: {
+    handleGraphAreaClick(areaName) {
+      switch (areaName) {
+        case "first":
+          this.$emit("graphAreaClicked", 0);
+          break;
+        case "second":
+          this.$emit("graphAreaClicked", 1);
+          break;
+        case "third":
+          this.$emit("graphAreaClicked", 2);
+          break;
+        case "forth":
+          this.$emit("graphAreaClicked", 3);
+          break;
+        default:
+      }
+    }
   }
 };
 </script>
@@ -138,16 +168,16 @@ export default {
       font-size: 35px;
       font-weight: 500;
     }
-    &--second{
-    transform-origin: 0% 100%;
+    &--second {
+      transform-origin: 0% 100%;
     }
-        &--third{
-    transform-origin: 100% 0%;
-        height: 146px;
+    &--third {
+      transform-origin: 100% 0%;
+      height: 146px;
     }
-      &--forth{
-    transform-origin: 0% 0%;
-            height: 146px;
+    &--forth {
+      transform-origin: 0% 0%;
+      height: 146px;
     }
   }
   .graph-area__number-wrapper {
