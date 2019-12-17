@@ -1,14 +1,18 @@
 <template>
   <v-card class="tasks__list">
     <div class="tasks-list__items">
-      <v-list v-for="(tasks, index) in tasksData" :key="index">
+      <!-- <v-list v-for="(tasks, index) in tasksData" :key="index">
               <p class="taksks-list__item-title">
         {{targetsData[index].name}}
       </p>
         <v-list-item v-for="(task,index) in tasks" :key="index">
           <v-list-item-title>{{ task.name }}</v-list-item-title>
         </v-list-item>
-      </v-list>
+      </v-list> -->
+      <v-treeview
+    hoverable
+    :items="tasksData"
+  ></v-treeview>
     </div>
   </v-card>
 </template>
@@ -20,10 +24,8 @@ export default {
     return {};
   },
   props: ["tasksData"],
-  computed:{
-    targetsData() {
-      return this.$store.getters.targetsData
-    }
+  created() {
+    console.log(this.tasksData)
   }
 };
 </script>
