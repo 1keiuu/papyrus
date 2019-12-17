@@ -40,8 +40,8 @@
       </v-tabs>
       <v-card class="matrix-tasks-list__card">
         <v-tabs-items v-model="tab">
-          <v-tab-item v-for="(tasks, index) in sortedTasks" :key="index">
-            <MatrixTaskLists :tasksData="tasks"></MatrixTaskLists>
+          <v-tab-item v-for="(task, index) in sortedTasks" :key="index">
+            <MatrixTaskLists :tasksData="task"></MatrixTaskLists>
           </v-tab-item>
         </v-tabs-items>
       </v-card>
@@ -70,12 +70,7 @@ export default {
       ],
       tabsName: ["第一領域", "第二領域", "第三領域", "第四領域"],
       isCardHover: false,
-      sortedTasks: [
-        [{ id: 1, name: "", children: [] },{ id: 2, name: "", children: [] },{ id: 3, name: "", children: [] },{ id: 4, name: "", children: [] }],
-        [{ id: 1, name: "", children: [] },{ id: 2, name: "", children: [] },{ id: 3, name: "", children: [] },{ id: 4, name: "", children: [] }],
-        [{ id: 1, name: "", children: [] },{ id: 2, name: "", children: [] },{ id: 3, name: "", children: [] },{ id: 4, name: "", children: [] }],
-        [{ id: 1, name: "", children: [] },{ id: 2, name: "", children: [] },{ id: 3, name: "", children: [] },{ id: 4, name: "", children: [] }],
-      ],
+      sortedTasks: [[], [], [], []],
       tab: null
     };
   },
@@ -125,7 +120,7 @@ export default {
     //   });
     // },
     sortTasksByImportance() {
-      this.storedTasksData.forEach((rankedTasksData,index) => {
+      this.storedTasksData.forEach(rankedTasksData => {
         const firstAreaTasks = rankedTasksData.filter(
           taskData => taskData.importanceArea === "firstArea"
         );
@@ -138,12 +133,12 @@ export default {
         const forthAreaTasks = rankedTasksData.filter(
           taskData => taskData.importanceArea === "forthArea"
         );
-        console.log(firstAreaTasks)
+
         // sortedTasks[0]は第一領域にはいるタスク全て
-        this.sortedTasks[index][0].children = firstAreaTasks;
-        this.sortedTasks[index][1].children = secondAreaTasks;
-        this.sortedTasks[index][2].children = thirdAreaTasks;
-        this.sortedTasks[index][3].children = forthAreaTasks;
+        this.sortedTasks[0].push(firstAreaTasks);
+        this.sortedTasks[1].push(secondAreaTasks);
+        this.sortedTasks[2].push(thirdAreaTasks);
+        this.sortedTasks[3].push(forthAreaTasks);
       });
     },
     culcTasksNumber() {
@@ -152,14 +147,6 @@ export default {
           this.tasksNumbers[index].number += tasks.length;
         });
       });
-    },
-    setTargetsName() {
-      for (let i = 0; i <= 3; i += 1) {
-        this.sortedTasks[i][0].name = this.storedTargetsData[0].name;
-        this.sortedTasks[i][1].name = this.storedTargetsData[1].name;
-        this.sortedTasks[i][2].name = this.storedTargetsData[2].name;
-        this.sortedTasks[i][3].name = this.storedTargetsData[3].name;
-      }
     }
   },
   // watch: {
@@ -170,7 +157,6 @@ export default {
   created() {
     this.sortTasksByImportance();
     this.culcTasksNumber();
-    this.setTargetsName();
   },
   computed: {
     storedTargetsData() {
