@@ -46,7 +46,7 @@ export default {
       name: "",
       deadline: "",
       description: "",
-      targetId:""
+      targetRank:""
     }
     // descriptionRules: [v => v.length <= 150 || ""]
   }),

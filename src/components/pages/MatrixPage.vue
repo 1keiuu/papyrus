@@ -75,50 +75,6 @@ export default {
     };
   },
   methods: {
-    // culcImportance(tasksData) {
-    //   tasksData.forEach(rankedTasksData => {
-    //     rankedTasksData.forEach(taskData => {
-    //       const taskDeadline = taskData.deadline;
-    //       const deadlineDiff = moment(taskDeadline).diff(moment(new Date()), "day");
-    //       const data = {
-    //         taskId: taskData.taskId,
-    //         name: taskData.name,
-    //         deadline: taskData.deadline,
-    //         targetRank: taskData.targetRank,
-    //         memo: taskData.memo,
-    //         status: "doing",
-    //         answer1: taskData.answer1,
-    //         answer2: taskData.answer2,
-    //         answer3: taskData.answer3,
-    //         importanceScore: taskData.importanceScore,
-    //         formerTargetRank: taskData.targetRank,
-    //         importanceArea: ""
-    //       };
-    //       if (deadlineDiff >= 7) {
-    //         switch (taskData.importanceScore > 11) {
-    //           case true:
-    //             data.importanceArea = "secondArea";
-    //             break;
-    //           case false:
-    //             data.importanceArea = "forthArea";
-    //             break;
-    //           default:
-    //         }
-    //       } else if (this.deadlineDiff <= 7) {
-    //         switch (taskData.importanceScore > 11) {
-    //           case true:
-    //             data.importanceArea = "firstArea";
-    //             break;
-    //           case false:
-    //             data.importanceArea = "thirdArea";
-    //             break;
-    //           default:
-    //         }
-    //       }
-    //       store.commit("editTaskData", data);
-    //     });
-    //   });
-    // },
     sortTasksByImportance() {
       this.storedTasksData.forEach(rankedTasksData => {
         const firstAreaTasks = rankedTasksData.filter(
@@ -133,6 +89,11 @@ export default {
         const forthAreaTasks = rankedTasksData.filter(
           taskData => taskData.importanceArea === "forthArea"
         );
+        const subtitle = { name: "タスク名",deadline:"期日", status:"subtitle" };
+        firstAreaTasks.unshift(subtitle)
+        secondAreaTasks.unshift(subtitle)
+        thirdAreaTasks.unshift(subtitle)
+        forthAreaTasks.unshift(subtitle)
 
         // sortedTasks[0]は第一領域にはいるタスク全て
         this.sortedTasks[0].push(firstAreaTasks);
@@ -146,6 +107,7 @@ export default {
         sortedByImportanceTasks.forEach(tasks => {
           this.tasksNumbers[index].number += tasks.length;
         });
+        this.tasksNumbers[index].number -= 4
       });
     }
   },
@@ -157,6 +119,7 @@ export default {
   created() {
     this.sortTasksByImportance();
     this.culcTasksNumber();
+    console.log(this.sortedTasks)
   },
   computed: {
     storedTargetsData() {

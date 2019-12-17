@@ -204,7 +204,7 @@ $accent: #ff7e2f;
 
 .missionstate-editButton {
   color: $secondary;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
   margin-right: 7px;
 }
 
@@ -222,14 +222,13 @@ $accent: #ff7e2f;
 
 .missionState-cancelButton {
   color: $secondary;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
   margin-right: 7px;
 }
 
 .missionState-helpButton {
   color: $secondary;
   margin-right: 13px;
-  margin-bottom: 3px;
 }
 
 .missionState-btn {

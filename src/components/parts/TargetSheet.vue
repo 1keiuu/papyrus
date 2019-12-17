@@ -217,6 +217,7 @@ export default {
         description: inputDescrition,
         targetRank: targetRank
       };
+
       this.$store.commit("editTargetData", data);
     },
     deleteTaskData(targetRank, taskId) {
@@ -227,7 +228,8 @@ export default {
       this.$store.commit("deleteTaskData", taskData);
     }
   },
-  mounted() {},
+  mounted() {
+  },
   computed: {
     Deadline() {
       return moment(this.targetData.deadline);

@@ -163,6 +163,33 @@ export default new Vuex.Store({
     editTargetData(state, payload) {
       const targetIndex = getTargetIndex(payload.targetRank);
       state.targetsData.splice(targetIndex, 1, payload);
+    },
+    initializeTargetData(state) {
+      const payload1 = {
+        name: "primary",
+        description: "",
+        deadline: "",
+        targetRank: "rank1"
+      }
+      const payload2 = {
+        name: "secondary",
+        description: "",
+        deadline: "",
+        targetRank: "rank2"
+      }
+      const payload3 = {
+        name: "tertiary",
+        description: "",
+        deadline: "",
+        targetRank: "rank3"
+      }
+      const payload4 = {
+        name: "keep",
+        description: "",
+        deadline: "",
+        targetRank: "rank4"
+      }
+      state.targetsData.splice(0, 4,payload1,payload2,payload3,payload4);
     }
   },
   getters: {
