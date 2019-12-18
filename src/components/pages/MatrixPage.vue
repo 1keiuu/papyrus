@@ -17,10 +17,7 @@
         @mouseenter="isCardHover = true"
         @mouseleave="isCardHover = false"
       >
-        <div class="matrix-graph__wrapper">
-          <MatrixGraph @graphAreaClicked="changeListTabIndex"></MatrixGraph>
-        </div>
-        <div class="matrix-graph__tasks-number-wrapper">
+      <div class="matrix-graph__tasks-number-wrapper">
           <div
             class="matrix-graph__tasks-number-item"
             v-for="(item, index) in tasksNumbers"
@@ -31,6 +28,9 @@
             <p class="matrix-graph__tasks-number-title">{{ item.title }}</p>
             <p class="matrix-graph__tasks-number">{{ item.number }}</p>
           </div>
+        </div>
+        <div class="matrix-graph__wrapper">
+          <MatrixGraph @graphAreaClicked="changeListTabIndex"></MatrixGraph>
         </div>
       </v-card>
     </div>
@@ -192,7 +192,7 @@ $accent: #ff7e2f;
     }
   }
   .matrix-graph__card {
-    height: 550px;
+    height: 520px;
     border-top-left-radius: 0px;
     .matrix-graph__wrapper {
       display: flex;
@@ -203,24 +203,27 @@ $accent: #ff7e2f;
     }
     .matrix-graph__tasks-number-wrapper {
       width: 100%;
-      height: 25px;
-      margin-top: 20px;
-      margin-bottom: 44px;
+      height: 75px;
+      padding-top:55px;
       display: flex;
       justify-content: center;
       .matrix-graph__tasks-number-item {
         display: flex;
         align-items: center;
-        border-bottom: 1px solid $primary;
-        padding: 0px 2px;
-        margin-right: 10px;
+        margin-right: 13px;
         cursor:pointer;
+        padding:0 3px 10px 3px;
         &:last-child {
           margin-right: 0px;
         }
         &.--active{
+            border-bottom: 1.5px solid $primary;
           .matrix-graph__tasks-number-title{
             color: $primary;
+            font-weight: bold;
+          }
+          .matrix-graph__tasks-number{
+            color: $accent;
             font-weight: bold;
           }
         }
@@ -230,8 +233,8 @@ $accent: #ff7e2f;
           margin-right: 10px;
         }
         .matrix-graph__tasks-number {
-          color: $primary;
-          font-size: 20px;
+            color: $primary;
+          font-size: 25px;
         }
       }
     }

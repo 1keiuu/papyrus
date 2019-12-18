@@ -204,7 +204,7 @@ $accent: #ff7e2f;
   margin-right: 100px;
   margin-left: 10px;
   height: 110px;
-  width: 540px;
+  width: 570px;
   font-size: 14px;
   line-height: 24px;
   letter-spacing: 0.06px;
@@ -221,7 +221,9 @@ $accent: #ff7e2f;
   padding-bottom: 0px;
   line-height: 24px !important;
 }
-
+::v-deep .v-counter {
+  margin-right:30px
+}
 .v-tooltip__content {
   font-size: 12px;
 }
