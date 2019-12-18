@@ -12,7 +12,7 @@
         </div>
         <div class="inner-right__wrapper">
           <div class="calender__wrapper">
-            <Calender></Calender>
+            <Calender :tasksData="tasksData"></Calender>
           </div>
         </div>
       </v-layout>
@@ -64,6 +64,9 @@ export default {
   computed: {
     userId() {
       return this.$store.getters.userId;
+    },
+    tasksData() {
+      return this.$store.getters.tasksData;
     }
   }
 };
@@ -72,6 +75,7 @@ export default {
 <style scoped>
 .v-content {
   padding: 0px !important;
+    overflow: hidden;
 }
 .home__container {
   margin-left: 70px;

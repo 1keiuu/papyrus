@@ -217,10 +217,9 @@ $accent: #ff7e2f;
           margin-right: 0px;
         }
         &.--active{
-            border-bottom: 1.5px solid $primary;
+            border-bottom: 1.5px solid $accent;
           .matrix-graph__tasks-number-title{
-            color: $primary;
-            font-weight: bold;
+            color: $accent;
           }
           .matrix-graph__tasks-number{
             color: $accent;

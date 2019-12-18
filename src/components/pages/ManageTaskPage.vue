@@ -74,17 +74,19 @@ export default {
   }
 }
 
-.container {
-  margin-top: 10px;
-}
-
 .targetSheet__layout {
   margin-left: 70px;
+    padding-top: 30px;
+    padding-left: 30px;
+
 }
 
 .targetSheet__wrapper {
   margin-left: 20px;
         display: inline;
+}
+.targetSheet__wrapper:first-child {
+  margin-left: 0px;
 }
 .targetSheet__wrapper:last-child {
   padding-right: 10px;

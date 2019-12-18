@@ -164,7 +164,6 @@ export default {
         );
       store.commit("setTaskId", 1);
       store.commit("setTasksData", data);
-      console.log(data);
     }
   },
   computed: {
