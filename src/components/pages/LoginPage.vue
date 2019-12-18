@@ -63,12 +63,12 @@ export default {
     email: "",
     emailRules: [
       v => !!v || "メールアドレスを入力してください",
-      v => /.+@.+/.test(v) || "メールアドレス形式で入力してください"
+      v => /.+@.+/.test(v) || "正しい形式で入力してください"
     ],
     password: "",
     passwordRules: [
       value => !!value || "パスワードを入力してください",
-      v => v.length >= 8 || "パスワードは８文字以上入力してください"
+      v => v.length >= 8 || "パスワードは最低８文字です"
     ],
     select: null,
     // checkbox: false,

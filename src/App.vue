@@ -17,7 +17,7 @@
         @submit="submitProfileData"
         v-bind:userName="this.userName"
       ></ProfileEditModal>
-      <AddTaskModal ref="addTaskModal" @submit="submitTaskData"></AddTaskModal>
+      <AddTaskModal ref="addTaskModal" @submit="submitTaskData" :targetRankProp="targetRankProp"></AddTaskModal>
       <ArchivedTasksModal
         :tasksData="tasksData"
         :targetsData="targetsData"
@@ -57,7 +57,8 @@ export default {
     return {
       name: "",
       profileImage: "",
-      importanceScore: ""
+      importanceScore: "",
+      targetRankProp:""
     };
   },
   methods: {

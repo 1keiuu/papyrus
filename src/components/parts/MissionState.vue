@@ -49,7 +49,7 @@
             fab
             depressed
             @click="handleEditButtonClick"
-            color="#ff7e2f"
+            color="#8471E2"
             width="32px"
             height="32px"
           >
@@ -104,7 +104,7 @@ export default {
     inputText: "",
     user: "",
     isCardHover: false,
-    rules: [v => v.length <= 149 || "150文字以内で入力してください"]
+    rules: [v => v.length <= 150 || "150文字以内で入力してください"]
   }),
   methods: {
     handleEditButtonClick(inputText) {

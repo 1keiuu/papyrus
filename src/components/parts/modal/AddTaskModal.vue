@@ -15,11 +15,11 @@
         </v-card-title>
         <v-stepper v-model="currentStep">
           <v-stepper-header>
-            <v-stepper-step :complete="currentStep > 1" step="1"></v-stepper-step>
+            <v-stepper-step color="#56a5bf" :complete="currentStep > 1" step="1"></v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="currentStep > 2" step="2"></v-stepper-step>
+            <v-stepper-step color="#56a5bf" :complete="currentStep > 2" step="2"></v-stepper-step>
           </v-stepper-header>
 
           <v-stepper-items>
@@ -30,19 +30,58 @@
                     v-model="input.name"
                     label="タスク名"
                     class="name__input"
+                    maxlength="15"
+                    counter="15"
+                    :rules="nameRules"
                   ></v-text-field>
                   <v-select
                     :items="targetRankOptions"
                     v-model="input.targetRank"
                     label="目標名"
+                    :rules="targetRankRules"
                     class="targetRankOptions__input"
-                  ></v-select>
-                  <v-text-field
-                    v-model="input.deadline"
-                    label="期日"
-                    type="date"
-                    class="expirationDate__input"
-                  ></v-text-field>
+                    ><v-icon slot="prepend" :class="{ '--filled': input.targetRank !== '' }"
+                      >mdi-bullseye-arrow</v-icon
+                    ></v-select
+                  >
+                  <v-menu
+                    ref="startMenu"
+                    v-model="startMenu"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    :return-value.sync="input.deadline"
+                    transition="scale-transition"
+                    min-width="290px"
+                    offset-y
+                  >
+                    <template v-slot:activator="{ on }">
+                      <v-text-field
+                        v-model="input.deadline"
+                        label="期日"
+                        readonly
+                        v-on="on"
+                        :rules="deadlineRules"
+                        class="expirationDate__input"
+                        ><v-icon slot="prepend" :class="{ '--filled': input.deadline !== '' }"
+                          >mdi-calendar-clock</v-icon
+                        ></v-text-field
+                      >
+                    </template>
+                    <v-date-picker
+                      v-model="input.deadline"
+                      scrollable
+                      class="expirationDate__input"
+                      locale="ja"
+                    >
+                      <v-spacer></v-spacer>
+                      <v-btn text color="primary" @click="startMenu = false">
+                        キャンセル
+                      </v-btn>
+                      <v-btn text color="primary" @click="$refs.startMenu.save(input.deadline)">
+                        保存
+                      </v-btn>
+                    </v-date-picker>
+                  </v-menu>
                   <v-textarea
                     v-model="input.memo"
                     label="メモ"
@@ -51,12 +90,15 @@
                     :rules="memoRules"
                     no-resize
                     class="memo__input"
-                  ></v-textarea>
+                    ><v-icon slot="prepend" :class="{ '--filled': input.memo !== '' }"
+                      >mdi-file-document-outline</v-icon
+                    ></v-textarea
+                  >
                 </v-container>
               </v-card-text>
 
               <v-row class="nextButton__wrapper">
-                <v-btn color="#6245ea" class="nextButton" outlined @click="handleNextButtonClick">
+                <v-btn color="#56a5bf" class="nextButton" outlined @click="handleNextButtonClick">
                   次へ
                   <v-icon class="nextButton__icon">mdi-arrow-right</v-icon>
                 </v-btn>
@@ -75,7 +117,7 @@
                       v-model="input.answer1"
                       tile
                       class="question__buttonGroup"
-                      color="deep-purple accent-4"
+                      color="cyan darken-3"
                       group
                     >
                       <v-btn value="1">
@@ -107,7 +149,7 @@
                       v-model="input.answer2"
                       tile
                       class="question__buttonGroup"
-                      color="deep-purple accent-4"
+                      color="cyan darken-3"
                       group
                     >
                       <v-btn value="1">
@@ -137,7 +179,7 @@
                       v-model="input.answer3"
                       tile
                       class="question__buttonGroup"
-                      color="deep-purple accent-4"
+                      color="cyan darken-3"
                       group
                     >
                       <v-btn value="1">
@@ -162,11 +204,11 @@
               </v-card-text>
               <v-card-actions>
                 <v-row class="buttonGroup__wrapper">
-                  <v-btn color="#6245ea" outlined class="backButton" @click="currentStep = 1">
+                  <v-btn color="#56a5bf" outlined class="backButton" @click="currentStep = 1">
                     <v-icon class="backButton__icon">mdi-arrow-left</v-icon>
                     戻る</v-btn
                   >
-                  <v-btn color="#6245ea" dark class="submitButton" @click="handleSubmitButtonClick"
+                  <v-btn color="#ff7e2f" dark class="submitButton" @click="handleSubmitButtonClick"
                     >追加</v-btn
                   >
                 </v-row>
@@ -185,7 +227,6 @@ export default {
   name: "AddTaskModal",
   data: () => ({
     dialog: false,
-    // tabs: ["プロフィール", "個人情報"],
     input: {
       name: "",
       deadline: "",
@@ -199,73 +240,76 @@ export default {
     },
     targetRankOptions: ["rank1", "rank2", "rank3", "rank4"],
     currentStep: 0,
-    memoRules: [v => v.length <= 150 || ""]
+    nameRules: [
+      v => v.length <= 15 || "15文字以内で入力してください",
+      v => v.length >= 1 || "タスク名を入力してください"
+    ],
+    targetRankRules: [v => v.length >= 1 || "目標を設定してください"],
+    deadlineRules: [v => v.length >= 1 || "期日を設定してください"],
+    memoRules: [v => v.length <= 150 || ""],
+    startMenu: ""
   }),
   props: ["targetData", "targetRankProp"],
   methods: {
     openDialog() {
       this.dialog = true;
     },
-    // cancelDialog() {
-    //   const obj = this.input;
-    //   this.currentStep = 1;
-    //   Object.keys(obj).forEach(function(key) {
-    //     obj[key] = "";
-    //   });
-    // },
     handleNextButtonClick() {
-      if (this.input.name === "" || this.input.targetRank === "") {
-        alert("insufficient form ");
+      if (this.input.name === "" || this.input.targetRank === "" || this.input.deadline === "") {
+        console.log();
       } else {
         this.currentStep = 2;
       }
     },
     handleSubmitButtonClick() {
-      const calculateRation = payload => {
-        switch (payload) {
-          case "rank1":
-            return 1.5;
-          case "rank2":
-            return 1.3;
-          case "rank3":
-            return 1.2;
-          case "rank4":
-            return 1.1;
-          default:
-            return null;
-        }
-      };
+      if (this.input.answer1 !== "" && this.input.answer2 !== "" && this.input.answer3 !== "") {
+        const calculateRation = payload => {
+          switch (payload) {
+            case "rank1":
+              return 1.5;
+            case "rank2":
+              return 1.3;
+            case "rank3":
+              return 1.2;
+            case "rank4":
+              return 1.1;
+            default:
+              return null;
+          }
+        };
 
-      this.input.answer1 = Number(this.input.answer1);
-      this.input.answer2 = Number(this.input.answer2);
-      this.input.answer3 = Number(this.input.answer3);
-      const targetRankRatio = calculateRation(this.input.targetRank);
-      this.input.importanceScore = targetRankRatio * (this.input.answer1 + this.input.answer2 + this.input.answer3);
+        this.input.answer1 = Number(this.input.answer1);
+        this.input.answer2 = Number(this.input.answer2);
+        this.input.answer3 = Number(this.input.answer3);
+        const targetRankRatio = calculateRation(this.input.targetRank);
+        this.input.importanceScore = targetRankRatio * (this.input.answer1 + this.input.answer2 + this.input.answer3);
 
-      const deadlineDiff = moment(this.input.deadline).diff(moment(new Date()), "day");
-      if (deadlineDiff >= 7) {
-        if (this.input.importanceScore > 11) {
-          this.input.importanceArea = "secondArea";
-        } else {
-          this.input.importanceArea = "forthArea";
+        const deadlineDiff = moment(this.input.deadline).diff(moment(new Date()), "day");
+        if (deadlineDiff >= 7) {
+          if (this.input.importanceScore > 11) {
+            this.input.importanceArea = "secondArea";
+          } else {
+            this.input.importanceArea = "forthArea";
+          }
+        } else if (deadlineDiff <= 7) {
+          if (this.input.importanceScore > 11) {
+            this.input.importanceArea = "firstArea";
+          } else {
+            this.input.importanceArea = "thirdArea";
+          }
         }
-      } else if (deadlineDiff <= 7) {
-        if (this.input.importanceScore > 11) {
-          this.input.importanceArea = "firstArea";
-        } else {
-          this.input.importanceArea = "thirdArea";
-        }
+
+        this.$emit("submit", this.input);
+
+        const obj = this.input;
+        this.currentStep = 1;
+        Object.keys(obj).forEach(function(key) {
+          obj[key] = "";
+        });
+        this.dialog = false;
+      } else {
+        alert("質問に回答してください");
       }
-
-
-      this.$emit("submit", this.input);
-
-      const obj = this.input;
-      this.currentStep = 1;
-      Object.keys(obj).forEach(function(key) {
-        obj[key] = "";
-      });
-      this.dialog = false;
     }
   },
   watch: {},
@@ -276,7 +320,7 @@ export default {
     taskId() {
       return this.$store.getters.taskId;
     }
-  }
+  },
 };
 </script>
 
@@ -340,8 +384,14 @@ $accent: #ff7e2f;
 }
 
 .expirationDate__input {
-  width: 200px;
+  width: 300px;
 }
+::v-deep .v-icon {
+  &.--filled {
+    color: $primary !important;
+  }
+}
+
 .memo__input {
   ::v-deep .v-text-field__slot {
     height: 50px;
@@ -361,9 +411,12 @@ $accent: #ff7e2f;
 }
 .backButton {
   width: 110px;
+  margin-right: 30px;
 }
 .buttonGroup__wrapper {
-  margin-top: 50px;
+  margin-top: 30px;
+  margin-right: 20px;
+  margin-bottom: 20px;
   justify-content: flex-end;
 }
 .submitButton {
