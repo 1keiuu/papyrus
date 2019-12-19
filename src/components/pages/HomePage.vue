@@ -7,7 +7,7 @@
           <MissionState></MissionState>
           </div>
           <div class="targets__wrapper">
-          <Goals></Goals>
+          <TargetList :targetsData="targetsData"></TargetList>
           </div>
         </div>
         <div class="inner-right__wrapper">
@@ -27,7 +27,7 @@ import store from "../../store";
 import ProfileEditModal from "../parts/modal/ProfileEditModal";
 import router from "@/router";
 import MissionState from "../parts/MissionState";
-import Goals from "../parts/Goals";
+import TargetList from "../parts/TargetList";
 import Calender from "../parts/Calender"
 
 export default {
@@ -36,7 +36,7 @@ export default {
   components: {
     ProfileEditModal,
     MissionState,
-    Goals,
+    TargetList,
     Calender
   },
   methods: {
@@ -67,6 +67,9 @@ export default {
     },
     tasksData() {
       return this.$store.getters.tasksData;
+    },
+    targetsData() {
+      return this.$store.getters.targetsData
     }
   }
 };

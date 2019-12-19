@@ -12,7 +12,7 @@
             <v-btn
               class="mr-7 button-group__archive"
               fab
-              color="indigo lighten-2"
+              color="#56a5bf"
               width="36"
               height="36"
               rounded
@@ -29,7 +29,7 @@
         </v-tooltip>
         <v-btn
           class="ma-2 mr-6 pl-2 button-group__completed"
-          color="indigo lighten-2"
+          color="#56a5bf"
           small
           outlined
           @click="handleCompletedTasksButtonClick"
@@ -160,7 +160,7 @@ $secondary:#7DC0D6;
 $accent: #ff7e2f;
 
 .v-application p {
-  margin-bottom: 0px;
+  margin-bottom: 5px;
   margin-top: 10px;
 }
 

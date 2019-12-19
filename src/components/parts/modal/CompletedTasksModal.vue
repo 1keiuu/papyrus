@@ -2,10 +2,10 @@
   <v-dialog class="dialog" v-model="dialog" max-width="880px" overlay-color="black" overlay-opacity="0.65">
     <template v-slot:activator="{ on }"> </template>
     <v-card>
-      <v-layout align-center justify-space-between>
-        <v-card-title class="title__wrapper">完了済みのタスク</v-card-title>
+      <v-layout class="title__wrapper" align-center justify-space-between>
+        <v-card-title >完了済みのタスク</v-card-title>
       </v-layout>
-      <v-tabs v-model="tab">
+      <v-tabs v-model="tab" background-color="#56a5bf" dark>
         <v-tab v-for="(targetTitle, index) in rankedTargetsData" :key="index">{{
           targetTitle
         }}</v-tab>
@@ -58,7 +58,7 @@
 <script>
 import store from "../../../store";
 export default {
-  name: "ArchivedTasksModal",
+  name: "CompletedTasksModal",
   data: () => ({
     dialog: false,
     tab: null,
@@ -126,8 +126,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-$primary: #6245ea;
-$secondary: #8471e2;
+$primary: #56a5bf;
+$secondary:#7DC0D6;
+$accent: #ff7e2f;
 
 .v-card {
   min-height: 500px;
@@ -151,5 +152,9 @@ $secondary: #8471e2;
   background-color: $secondary;
   position: absolute;
   bottom: 0;
+}
+.title__wrapper{
+background:$primary;
+color:white
 }
 </style>

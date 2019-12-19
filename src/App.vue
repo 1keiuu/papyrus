@@ -204,7 +204,7 @@ export default {
 .v-application {
   height: 100vh !important;
   overflow-y: hidden !important;
-  background: #f3f5f9;
+  background: #7DC0D6;
 }
 
 .p-navigation {

@@ -10,20 +10,58 @@
         <v-card-text>
           <v-container fluid>
             <v-text-field v-model="input.name" label="目標名" class="name__input"> </v-text-field>
-            <v-text-field
-              v-model="input.deadline"
-              label="期日"
-              type="date"
-              class="deadline__input"
-            ></v-text-field>
+            <v-menu
+              ref="startMenu"
+              v-model="startMenu"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              :return-value.sync="input.deadline"
+              transition="scale-transition"
+              min-width="290px"
+              offset-y
+              absolute
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="input.deadline"
+                  label="期日"
+                  readonly
+                  v-on="on"
+                  :rules="deadlineRules"
+                  class="deadline__input"
+                  ><v-icon slot="prepend" :class="{ '--filled': input.deadline !== '' }"
+                    >mdi-calendar-clock</v-icon
+                  ></v-text-field
+                >
+              </template>
+              <v-date-picker
+                v-model="input.deadline"
+                scrollable
+                class="deadline__calender-input"
+                locale="ja"
+              >
+                <v-spacer></v-spacer>
+                <v-btn text color="primary" @click="startMenu = false">
+                  キャンセル
+                </v-btn>
+                <v-btn text color="primary" @click="$refs.startMenu.save(input.deadline)">
+                  保存
+                </v-btn>
+              </v-date-picker>
+            </v-menu>
+
             <v-textarea
               v-model="input.description"
               label="説明"
               counter
               auto-grow=""
               no-resize
+              maxlength='150'
               class="description__input"
-            ></v-textarea>
+              ><v-icon slot="prepend" :class="{ '--filled': input.memo !== '' }"
+                >mdi-file-document-outline</v-icon
+              ></v-textarea
+            >
           </v-container>
         </v-card-text>
 
@@ -46,9 +84,11 @@ export default {
       name: "",
       deadline: "",
       description: "",
-      targetRank:""
-    }
-    // descriptionRules: [v => v.length <= 150 || ""]
+      targetRank: ""
+    },
+    startMenu: "",
+    deadlineRules: [v => v.length >= 1 || "期日を設定してください"],
+    memoRules: [v => v.length <= 150 || ""]
   }),
   props: ["targetData"],
   methods: {
@@ -57,17 +97,22 @@ export default {
     },
     handleSubmitButtonClick() {
       this.dialog = false;
-      this.$emit("submit", this.input.name, this.input.deadline, this.input.description,this.input.targetRank);
+      this.$emit(
+        "submit",
+        this.input.name,
+        this.input.deadline,
+        this.input.description,
+        this.input.targetRank
+      );
     }
   },
-  created() {
-  },
+  created() {},
   watch: {
     targetData: function() {
       this.input.name = this.targetData.name;
       this.input.description = this.targetData.description;
       this.input.deadline = this.targetData.deadline;
-      this.input.targetRank = this.targetData.targetRank
+      this.input.targetRank = this.targetData.targetRank;
     }
   }
 };
@@ -75,11 +120,16 @@ export default {
 
 <style lang="scss" scoped>
 $primary: #56a5bf;
-$secondary:#7DC0D6;
+$secondary: #7dc0d6;
 $accent: #ff7e2f;
 
-.container {
-  width: 620px;
+::v-deep .v-dialog {
+  width: 750px;
+  height: 670px;
+}
+.v-card {
+  height: 670px;
+  width: 750px;
 }
 ::v-deep .v-label {
   font-size: 14px !important;
@@ -112,10 +162,17 @@ $accent: #ff7e2f;
 
 .deadline__input {
   width: 200px;
+        padding-top: 50px;
+}
+.deadline__calender-input {
+  width: 300px;
+  height: 430px;
 }
 .description__input {
+      padding-top: 50px;
+            padding-bottom: 50px;
   ::v-deep .v-text-field__slot {
-    height: 50px;
+    height: 100px;
   }
 }
 

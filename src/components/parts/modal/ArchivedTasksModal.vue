@@ -2,10 +2,10 @@
   <v-dialog class="dialog" v-model="dialog" max-width="880px" overlay-color="black" overlay-opacity="0.65">
     <template v-slot:activator="{ on }"> </template>
     <v-card>
-      <v-layout align-center justify-space-between>
-        <v-card-title class="title__wrapper">アーカイブされたタスク</v-card-title>
+      <v-layout align-center justify-space-between  class="title__wrapper">
+        <v-card-title>アーカイブされたタスク</v-card-title>
       </v-layout>
-      <v-tabs v-model="tab">
+      <v-tabs v-model="tab"  background-color="#56a5bf" dark>
         <v-tab v-for="(targetTitle, index) in rankedTargetsData" :key="index">{{
           targetTitle
         }}</v-tab>
@@ -152,5 +152,9 @@ $accent: #ff7e2f;
   background-color: $secondary;
   position: absolute;
   bottom: 0;
+}
+.title__wrapper{
+background:$primary;
+color:white
 }
 </style>
