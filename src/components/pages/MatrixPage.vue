@@ -270,7 +270,7 @@ $accent: #ff7e2f;
   }
   .matrix-tasks-list__card {
     border-top-left-radius: 0px;
-    height: 550px;
+    height: 520px;
     padding: 0px !important;
   }
 }

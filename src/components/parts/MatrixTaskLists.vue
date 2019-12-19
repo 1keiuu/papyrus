@@ -71,7 +71,7 @@ $accent: #ff7e2f;
 .tasks__list {
   display: block;
   width: 410px;
-  height: 580px;
+  height: 520px;
 }
 .v-list-item{
     cursor:pointer;
