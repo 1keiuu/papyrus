@@ -40,10 +40,6 @@ export default {
     Calender
   },
   methods: {
-    logout() {
-      firebase.auth().signOut();
-      console.log("loggedout");
-    },
     openProfileEditModal() {
       this.$refs.profileEdit.openDialog();
     },

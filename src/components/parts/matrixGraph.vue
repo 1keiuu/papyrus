@@ -59,7 +59,7 @@
         :class="{ '--hover': isThirdAreaHover }"
       >
         <p class="graph-area__active-title">『錯覚』</p>
-        <p>期限のあるタスク<br />やらないと大きな損失を被る<br />コントロールが重要</p>
+        <p>緊急だが重要ではない<br/>すぐに成果がでる為錯覚しやすい<br/>自分にとって価値は少ないが他人に評価される</p>
       </div>
     </div>
     <div class="graph-area graph-area--forth">
@@ -76,7 +76,7 @@
         :class="{ '--hover': isForthAreaHover }"
       >
         <p class="graph-area__active-title">『無駄』</p>
-        <p>期限のあるタスク<br />やらないと大きな損失を被る<br />コントロールが重要</p>
+        <p>非効率なタスク<br/>自分にとっての価値はない</p>
       </div>
     </div>
   </div>

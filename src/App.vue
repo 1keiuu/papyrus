@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     handleHeaderMenuLogoutClick() {
-      this.$refs.rv.logout();
+      firebase.auth().signOut();
       store.commit("setSignIn", false);
       store.commit("setUserId", "");
     },

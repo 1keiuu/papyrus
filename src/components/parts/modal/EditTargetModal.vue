@@ -130,6 +130,7 @@ $accent: #ff7e2f;
 .v-card {
   height: 670px;
   width: 750px;
+  display:grid
 }
 ::v-deep .v-label {
   font-size: 14px !important;

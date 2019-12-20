@@ -5,7 +5,9 @@
       @mouseenter="isCardHover = true"
       @mouseleave="isCardHover = false"
     >
-      <v-icon class="missionState__title-icon" color="white" size="23px">mdi-compass-outline</v-icon>
+      <v-icon class="missionState__title-icon" color="white" size="23px"
+        >mdi-compass-outline</v-icon
+      >
       <p class="missionState__title">ミッションステート / なりたい理想像</p>
       <div :class="{ '--hover': isCardHover }" class="missionState__btn">
         <v-layout align-center>
@@ -149,6 +151,8 @@ $accent: #ff7e2f;
 .missionState {
   width: 600px;
   height: 140px;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
 }
 .missionState__title-wrapper {
   width: 500px;
@@ -161,8 +165,8 @@ $accent: #ff7e2f;
   align-items: center;
   background-color: $primary;
   .missionState__title-icon {
-      margin-right: 15px;
-    }
+    margin-right: 15px;
+  }
   .missionState__title {
     color: white;
     font-size: 20px;
@@ -222,7 +226,7 @@ $accent: #ff7e2f;
   line-height: 24px !important;
 }
 ::v-deep .v-counter {
-  margin-right:30px
+  margin-right: 30px;
 }
 .v-tooltip__content {
   font-size: 12px;

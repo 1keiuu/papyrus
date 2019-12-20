@@ -20,7 +20,7 @@
           </div>
         </div>
         <v-card-actions>
-          <v-card-subtitle v-if="DiffDate">期日:{{ this.DiffDate }} </v-card-subtitle>
+          <v-card-subtitle v-if="DiffDate">期日:{{ targetData.deadline }} </v-card-subtitle>
           <v-card-subtitle v-else>期日未設定</v-card-subtitle>
 
           <v-spacer></v-spacer>
@@ -96,6 +96,7 @@
       ></EditTargetModal>
       <AddTaskModal
         ref="addTaskModal"
+        @submit="submitTaskData"
         :targetData="targetData"
         :targetRankProp="targetData.targetRank"
       ></AddTaskModal>
@@ -126,7 +127,6 @@ export default {
       isHover: false,
       selectedTaskData: [],
       selectedTargetData: [],
-      userId: firebase.auth().currentUser.uid
     };
   },
   props: ["targetData", "taskData"],
@@ -198,6 +198,45 @@ export default {
       };
       store.commit("editTaskData", data);
     },
+    submitTaskData(input) {
+      const data = {
+        taskId: this.taskId,
+        name: input.name,
+        deadline: input.deadline,
+        targetRank: input.targetRank,
+        memo: input.memo,
+        answer1: input.answer1,
+        answer2: input.answer2,
+        answer3: input.answer3,
+        importanceScore: input.importanceScore,
+        importanceArea: input.importanceArea,
+        status: "doing"
+      };
+      firebase
+        .firestore()
+        .collection("tasks")
+        .doc(this.userId)
+        .set(
+          {
+            [this.taskId]: {
+              taskId: this.taskId,
+              name: input.name,
+              deadline: input.deadline,
+              targetRank: input.targetRank,
+              memo: input.memo,
+              answer1: input.answer1,
+              answer2: input.answer2,
+              answer3: input.answer3,
+              importanceScore: input.importanceScore,
+              importanceArea: input.importanceArea,
+              status: "doing"
+            }
+          },
+          { merge: true }
+        );
+      store.commit("setTaskId", 1);
+      store.commit("setTasksData", data);
+    },
     submitEditTargetData(inputName, inputDeadline, inputDescrition, targetRank) {
       firebase
         .firestore()
@@ -228,15 +267,20 @@ export default {
       this.$store.commit("deleteTaskData", taskData);
     }
   },
-  mounted() {
-  },
+  mounted() {},
   computed: {
     Deadline() {
       return moment(this.targetData.deadline);
     },
     DiffDate() {
       return this.Deadline.diff(moment(new Date()), "day");
-    }
+    },
+    userId() {
+      return this.$store.getters.userId;
+    },
+    taskId() {
+      return this.$store.getters.taskId;
+    },
   }
 };
 </script>

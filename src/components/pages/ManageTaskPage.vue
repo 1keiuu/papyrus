@@ -8,7 +8,7 @@
             :taskData="storedTasksData[index]"
           ></TargetSheet>
         </div>
-                  <v-btn @click="onB">リセットボタン</v-btn>
+                  <!-- <v-btn @click="resetTask">リセットボタン</v-btn> -->
       </v-layout>
     </v-container>
   </v-app>
@@ -21,7 +21,7 @@ import router from "@/router";
 import store from "../../store";
 import TargetSheet from "../parts/TargetSheet";
 export default {
-  name: "Task",
+  name: "ManageTask",
   components: {
     TargetSheet
   },
@@ -49,9 +49,9 @@ export default {
           { merge: true }
         );
     },
-    onB() {
-      store.commit("deleteTaskData", "all");
-    }
+    // resetTask() {
+    //   store.commit("deleteTaskData", "all");
+    // }
   },
   computed: {
     storedTargetsData() {
@@ -77,7 +77,7 @@ export default {
 .targetSheet__layout {
   margin-left: 70px;
     padding-top: 30px;
-    padding-left: 30px;
+    padding-left: 20px;
 
 }
 
@@ -89,7 +89,7 @@ export default {
   margin-left: 0px;
 }
 .targetSheet__wrapper:last-child {
-  padding-right: 10px;
+  padding-right: 20px;
 }
 
 .sortable-chosen {

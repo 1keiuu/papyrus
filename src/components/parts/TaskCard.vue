@@ -26,7 +26,8 @@
 
 <script>
 import store from "../../store";
-import ImportanceIcon from "./ImportanceIconComponent";
+import ImportanceIcon from "./ImportanceIconComponent"
+
 export default {
   name: "TaskCard",
   data() {
