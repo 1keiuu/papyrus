@@ -34,7 +34,7 @@ export default new Vuex.Store({
     userId: "",
     profileImageUrl: "",
     isSignIn: false,
-    missionState:"",
+    missionState: "",
     taskId: 1,
     targetsData: [
       {
@@ -77,8 +77,8 @@ export default new Vuex.Store({
     setProfileImageUrl(state, payload) {
       state.profileImageUrl = payload;
     },
-    setMissionState(state,payload) {
-      state.missionState = payload
+    setMissionState(state, payload) {
+      state.missionState = payload;
     },
     setTaskId(state, payload) {
       state.taskId += payload;
@@ -114,7 +114,12 @@ export default new Vuex.Store({
         taskId: payload.inputData.taskId,
         memo: payload.inputData.memo,
         name: payload.inputData.name,
-        status: "doing"
+        answer1: payload.inputData.answer1,
+        answer2: payload.inputData.answer2,
+        answer3: payload.inputData.answer3,
+        importanceScore: payload.inputData.importanceScore,
+        importanceArea: payload.inputData.importanceArea,
+        status: "doing",
       };
       const ArchivedTask = {
         targetRank: payload.inputData.targetRank,
@@ -122,6 +127,11 @@ export default new Vuex.Store({
         taskId: payload.inputData.taskId,
         memo: payload.inputData.memo,
         name: payload.inputData.name,
+        answer1: payload.inputData.answer1,
+        answer2: payload.inputData.answer2,
+        answer3: payload.inputData.answer3,
+        importanceScore: payload.inputData.importanceScore,
+        importanceArea: payload.inputData.importanceArea,
         status: "archived"
       };
       const completedTask = {
@@ -130,6 +140,11 @@ export default new Vuex.Store({
         taskId: payload.inputData.taskId,
         memo: payload.inputData.memo,
         name: payload.inputData.name,
+        answer1: payload.inputData.answer1,
+        answer2: payload.inputData.answer2,
+        answer3: payload.inputData.answer3,
+        importanceScore: payload.inputData.importanceScore,
+        importanceArea: payload.inputData.importanceArea,
         status: "completed"
       };
       switch (payload.status) {
@@ -170,26 +185,26 @@ export default new Vuex.Store({
         description: "",
         deadline: "",
         targetRank: "rank1"
-      }
+      };
       const payload2 = {
         name: "secondary",
         description: "",
         deadline: "",
         targetRank: "rank2"
-      }
+      };
       const payload3 = {
         name: "tertiary",
         description: "",
         deadline: "",
         targetRank: "rank3"
-      }
+      };
       const payload4 = {
         name: "keep",
         description: "",
         deadline: "",
         targetRank: "rank4"
-      }
-      state.targetsData.splice(0, 4,payload1,payload2,payload3,payload4);
+      };
+      state.targetsData.splice(0, 4, payload1, payload2, payload3, payload4);
     }
   },
   getters: {
@@ -206,7 +221,7 @@ export default new Vuex.Store({
       return state.profileImageUrl;
     },
     missionState(state) {
-      return state.missionState
+      return state.missionState;
     },
     taskId(state) {
       return state.taskId;

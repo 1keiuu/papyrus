@@ -31,11 +31,11 @@
           class="ma-2 mr-6 pl-2 button-group__completed"
           color="#56a5bf"
           small
-          outlined
+          dark
           @click="handleCompletedTasksButtonClick"
         >
           <v-icon small>mdi-check</v-icon>
-          完了済を見る
+          完了済みを見る
         </v-btn>
         <v-btn class="ma-2 pl-3 mr-8 button-group__add-task" color="#ff7e2f" dark @click="handleAddTaskButtonClick">
           <v-icon class="pr-1">mdi-plus</v-icon>

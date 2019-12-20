@@ -24,15 +24,16 @@
 
           <v-stepper-items>
             <v-stepper-content step="1">
-              <v-card-text>
-                <v-container fluid>
+              <v-container fluid>
+                <v-form ref="first_form">
                   <v-text-field
                     v-model="input.name"
                     label="タスク名"
                     class="name__input"
-                    maxlength="15"
-                    counter="15"
+                    maxlength="30"
+                    counter="30"
                     :rules="nameRules"
+                    color="#56a5bf"
                   ></v-text-field>
                   <v-select
                     :items="targetRankOptions"
@@ -40,6 +41,7 @@
                     label="目標名"
                     :rules="targetRankRules"
                     class="targetRankOptions__input"
+                    color="#56a5bf"
                     ><v-icon slot="prepend" :class="{ '--filled': input.targetRank !== '' }"
                       >mdi-bullseye-arrow</v-icon
                     ></v-select
@@ -62,6 +64,7 @@
                         v-on="on"
                         :rules="deadlineRules"
                         class="expirationDate__input"
+                        color="#56a5bf"
                         ><v-icon slot="prepend" :class="{ '--filled': input.deadline !== '' }"
                           >mdi-calendar-clock</v-icon
                         ></v-text-field
@@ -72,12 +75,13 @@
                       scrollable
                       class="expirationDate__input"
                       locale="ja"
+                      color="#56a5bf"
                     >
                       <v-spacer></v-spacer>
-                      <v-btn text color="primary" @click="startMenu = false">
+                      <v-btn text color="#56a5bf" @click="startMenu = false">
                         キャンセル
                       </v-btn>
-                      <v-btn text color="primary" @click="$refs.startMenu.save(input.deadline)">
+                      <v-btn dark color="#ff7e2f" @click="$refs.startMenu.save(input.deadline)">
                         保存
                       </v-btn>
                     </v-date-picker>
@@ -90,12 +94,14 @@
                     :rules="memoRules"
                     no-resize
                     class="memo__input"
+                    outlined
+                    color="#56a5bf"
                     ><v-icon slot="prepend" :class="{ '--filled': input.memo !== '' }"
                       >mdi-file-document-outline</v-icon
                     ></v-textarea
                   >
-                </v-container>
-              </v-card-text>
+                </v-form>
+              </v-container>
 
               <v-row class="nextButton__wrapper">
                 <v-btn color="#56a5bf" class="nextButton" outlined @click="handleNextButtonClick">
@@ -119,6 +125,7 @@
                       class="question__buttonGroup"
                       color="cyan darken-3"
                       group
+                      mandatory
                     >
                       <v-btn value="1">
                         1
@@ -151,6 +158,7 @@
                       class="question__buttonGroup"
                       color="cyan darken-3"
                       group
+                      mandatory
                     >
                       <v-btn value="1">
                         1
@@ -181,6 +189,7 @@
                       class="question__buttonGroup"
                       color="cyan darken-3"
                       group
+                      mandatory
                     >
                       <v-btn value="1">
                         1
@@ -232,21 +241,21 @@ export default {
       deadline: "",
       targetRank: "",
       memo: "",
-      answer1: "",
-      answer2: "",
-      answer3: "",
+      answer1: "3",
+      answer2: "3",
+      answer3: "3",
       importanceScore: "",
       importanceArea: ""
     },
     targetRankOptions: ["rank1", "rank2", "rank3", "rank4"],
     currentStep: 0,
     nameRules: [
-      v => v.length <= 15 || "15文字以内で入力してください",
+      v => v.length <= 30 || "30文字以内で入力してください",
       v => v.length >= 1 || "タスク名を入力してください"
     ],
-    targetRankRules: [v => v.length >= 1 || "目標を設定してください"],
-    deadlineRules: [v => v.length >= 1 || "期日を設定してください"],
-    memoRules: [v => v.length <= 150 || ""],
+    targetRankRules: [v => (v && v.length >= 1) || "目標を設定してください"],
+    deadlineRules: [v => (v && v.length >= 1) || "期日を設定してください"],
+    memoRules: [v => !v || v.length <= 150 || ""],
     startMenu: ""
   }),
   props: ["targetData", "targetRankProp"],
@@ -255,9 +264,7 @@ export default {
       this.dialog = true;
     },
     handleNextButtonClick() {
-      if (this.input.name === "" || this.input.targetRank === "" || this.input.deadline === "") {
-        console.log();
-      } else {
+      if (this.$refs.first_form.validate()) {
         this.currentStep = 2;
       }
     },
@@ -282,7 +289,7 @@ export default {
         this.input.answer2 = Number(this.input.answer2);
         this.input.answer3 = Number(this.input.answer3);
         const targetRankRatio = calculateRation(this.input.targetRank);
-        this.input.importanceScore = targetRankRatio * (this.input.answer1 + this.input.answer2 + this.input.answer3);
+        this.input.importanceScore = (targetRankRatio * (this.input.answer1 + this.input.answer2 + this.input.answer3));
 
         const deadlineDiff = moment(this.input.deadline).diff(moment(new Date()), "day");
         if (deadlineDiff >= 7) {
@@ -301,14 +308,22 @@ export default {
 
         this.$emit("submit", this.input);
 
-        const obj = this.input;
         this.currentStep = 1;
-        Object.keys(obj).forEach(function(key) {
-          obj[key] = "";
-        });
+        this.$refs.first_form.reset();
+        this.input = {
+          name: "",
+          deadline: "",
+          targetRank: "",
+          memo: "",
+          answer1: "3",
+          answer2: "3",
+          answer3: "3",
+          importanceScore: "",
+          importanceArea: ""
+        };
         this.dialog = false;
       } else {
-        alert("質問に回答してください");
+        alert("全ての質問に回答してください");
       }
     }
   },
@@ -320,7 +335,7 @@ export default {
     taskId() {
       return this.$store.getters.taskId;
     }
-  },
+  }
 };
 </script>
 

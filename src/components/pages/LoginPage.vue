@@ -9,8 +9,8 @@
     <div v-show="!loading">
       <v-content>
         <v-container fluid fill-height class="container">
-          <v-layout justify-end align-center>
-            <v-sheet color="rgba(256, 256, 256, 0.42)" class="form__sheet">
+          <v-layout align-center justify-center>
+            <v-sheet color="rgba(256, 256, 256, 0.9)" class="form__sheet">
               <v-layout justify-center fill-height>
                 <v-form ref="form" v-model="valid" lazy-validation class="form">
                   <v-flex px-2>
@@ -19,6 +19,8 @@
                       label="メールアドレス"
                       :rules="emailRules"
                       required
+                      color="#56a5bf"
+                      outlined
                     ></v-text-field>
                   </v-flex>
                   <v-flex px-2>
@@ -27,16 +29,14 @@
                       :rules="passwordRules"
                       :type="'password'"
                       label="パスワード"
+                      color="#56a5bf"
+                      outlined
                     ></v-text-field>
-                    <!-- <v-checkbox
-                      v-model="checkbox"
-                      label="ログイン状態を保持する"
-                      required
-                    ></v-checkbox> -->
                   </v-flex>
                   <v-card-actions class="justify-center">
                     <v-btn
-                      class="form__button primary"
+                      class="form__button"
+                      color="#56a5bf"
                       min-width="324"
                       @click="handleLoginButtonClick"
                       >ログイン</v-btn
@@ -164,11 +164,12 @@ export default {
 
 <style scoped lang="scss">
 .container {
-  background-image: url("../../assets/login_back.jpg");
+  background:white;
   width: 100%;
   height: 100vh;
 }
 .loading__container {
+    background:white;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -184,10 +185,12 @@ export default {
 
 .v-application p {
   margin-bottom: 0;
+  padding-top:20px
 }
 
 .v-progress-circular__p {
   font-size: 40px;
+  color:white
 }
 
 .form {
@@ -197,11 +200,15 @@ export default {
 
 .form__sheet {
   height: 560px;
-  width: 550px;
+  width: 750px;
   margin-right: 65px;
 }
 
 .form__button {
   margin-top: 50px;
+  height:50px !important;
+  font-size:15px;
+      font-weight: bold;
+      color:white
 }
 </style>

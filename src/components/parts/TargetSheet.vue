@@ -20,7 +20,7 @@
           </div>
         </div>
         <v-card-actions>
-          <v-card-subtitle v-if="DiffDate">期日:{{ targetData.deadline }} </v-card-subtitle>
+          <v-card-subtitle v-if="targetData.deadline">期日:{{ targetData.deadline }} </v-card-subtitle>
           <v-card-subtitle v-else>期日未設定</v-card-subtitle>
 
           <v-spacer></v-spacer>
@@ -31,11 +31,11 @@
                 :class="{ '--hover': isHover }"
                 fab
                 depressed
-                outlined
+                dark
                 width="29px"
                 height="29px"
                 v-on="on"
-                color="#707070"
+                color="#ff7e2f"
                 @click="handleEditTargetButtonClick(targetData)"
               >
                 <v-icon size="18"> mdi-file-document-edit-outline</v-icon>
@@ -125,14 +125,14 @@ export default {
     return {
       show: false,
       isHover: false,
-      selectedTaskData: [],
+      selectedTaskData: {},
       selectedTargetData: [],
     };
   },
   props: ["targetData", "taskData"],
   methods: {
     handleTaskCardClick(taskData) {
-      this.selectedTaskData = taskData;
+      this.selectedTaskData = Object.create(taskData);
       this.openModal("editTask");
     },
     handleAddTaskButtonClick(targetData) {
@@ -299,8 +299,8 @@ $accent: #ff7e2f;
   width: 235px;
   height: 40px;
   top: 160px;
-  left: 90px;
-  border-radius: 2px;
+  right: 0px;
+  border-top-left-radius: 4px;
   background-color: $primary;
 }
 .targetSheet__thumbnail-wrapper {

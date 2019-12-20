@@ -32,8 +32,8 @@
         </div>
         <div v-else>
           <v-list-item>
-            <v-layout class="list-item__wrapper">
-              <v-list-item-title>該当するタスクはありません</v-list-item-title>
+            <v-layout>
+              <v-list-item-title class="--not-found">該当するタスクはありません</v-list-item-title>
             </v-layout>
           </v-list-item>
         </div>
@@ -137,16 +137,18 @@ $accent: #ff7e2f;
   width: 410px;
   height: 520px;
 }
-.v-list-item {
-  cursor: pointer;
-}
+
 .v-list-item__title {
   padding: 0;
   font-weight: 500;
   font-size: 17px;
+  &.--not-found{
+  font-size: 14px;
+  }
 }
 .list-item__wrapper {
   padding-left: 20px;
+  cursor: pointer;
   .v-list-item__title {
     font-weight: normal;
     font-size: 15px;

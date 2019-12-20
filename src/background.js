@@ -1,5 +1,5 @@
 import {
- app, protocol, BrowserWindow, Menu 
+ app, protocol, BrowserWindow, Menu
 } from "electron";
 import { createProtocol, installVueDevtools } from "vue-cli-plugin-electron-builder/lib";
 
@@ -15,42 +15,42 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 function createWindow() {
-  const template = [
-    {
-      label: "編集",
-      submenu: [
-        {
-          label: "切り取り",
-          accelerator: "CmdOrCtrl+X",
-          role: "cut"
-        },
-        {
-          label: "コピー",
-          accelerator: "CmdOrCtrl+C",
-          role: "copy"
-        },
-        {
-          label: "貼り付け",
-          accelerator: "CmdOrCtrl+V",
-          role: "paste"
-        },
-        {
-          label: "全てを選択",
-          accelerator: "CmdOrCtrl+A",
-          role: "selectall"
-        },
-        {
-          label: "Toggle Developer Tools",
-          accelerator: "Alt+Command+I",
-          click: function(item, focusedWindow) {
-            if (focusedWindow) focusedWindow.webContents.toggleDevTools();
-          }
-        }
-      ]
-    }
-  ];
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
+  // const template = [
+  //   {
+  //     label: "編集",
+  //     submenu: [
+  //       {
+  //         label: "切り取り",
+  //         accelerator: "CmdOrCtrl+X",
+  //         role: "cut"
+  //       },
+  //       {
+  //         label: "コピー",
+  //         accelerator: "CmdOrCtrl+C",
+  //         role: "copy"
+  //       },
+  //       {
+  //         label: "貼り付け",
+  //         accelerator: "CmdOrCtrl+V",
+  //         role: "paste"
+  //       },
+  //       {
+  //         label: "全てを選択",
+  //         accelerator: "CmdOrCtrl+A",
+  //         role: "selectall"
+  //       },
+  //       {
+  //         label: "Toggle Developer Tools",
+  //         accelerator: "Alt+Command+I",
+  //         click: function(item, focusedWindow) {
+  //           if (focusedWindow) focusedWindow.webContents.toggleDevTools();
+  //         }
+  //       }
+  //     ]
+  //   }
+  // ];
+  // const menu = Menu.buildFromTemplate(template);
+  // Menu.setApplicationMenu(menu);
 
   win = new BrowserWindow({
     width: 1366,

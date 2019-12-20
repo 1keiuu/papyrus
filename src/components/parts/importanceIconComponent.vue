@@ -2,7 +2,7 @@
   <div>
     <div v-if="this.iconName === 'firstArea'">
       <svg viewBox="0 0 100 100" class="svg">
-        <circle cx="50.1" cy="49.9" r="49" fill="#EB8BB8" />
+        <circle cx="50.1" cy="49.9" r="49" fill="#6ea6de" />
         <path
           fill="#fff"
           d="M39.5 74.4v-1.7c3.6-.1 6.2-.5 6.2-5.2V32.4c0-4.8-2.3-5.2-6.2-5.2v-1.7h21.2v1.7c-3.8.1-6.1.3-6.1 5.2v35.1c0 4.9 2.4 5.2 6.1 5.2v1.7H39.5z"
@@ -12,7 +12,7 @@
 
     <div v-if="this.iconName === 'secondArea'">
       <svg viewBox="0 0 100 100" class="svg">
-        <circle cx="49.9" cy="49.8" r="49" fill="#8471E2" />
+        <circle cx="49.9" cy="49.8" r="49" fill="#eb8bb8" />
         <path
           class="st0"
           d="M30.4 74.1v-1.7c3.9-.1 6.1-.5 6.1-5.2V32.4c0-4.7-2.3-5.1-6.1-5.2v-1.7h38.9v1.7c-3.8.1-6.1.3-6.1 5.2v34.7c0 4.9 2.3 5.2 6.1 5.2V74H30.4zm24-41.7c0-1.2 0-5.2-4.6-5.2-4.5 0-4.5 3.9-4.5 5.2v34.7c0 1.3 0 5.2 4.5 5.2 4.6 0 4.6-3.9 4.6-5.2V32.4z"
@@ -23,7 +23,7 @@
 
     <div v-if="this.iconName === 'thirdArea'">
       <svg class="svg" viewBox="0 0 100 100" xml:space="preserve">
-        <circle cx="50.1" cy="49.8" r="49" fill="#71A9E2" />
+        <circle cx="50.1" cy="49.8" r="49" fill="#8bdd7b" />
         <path
           fill="#fff"
           d="M23.8 75v-1.7c3.4-.1 6.2-.5 6.2-5.2V33.5c0-4.7-2.3-5.1-6.2-5.2v-1.7h54.7v1.7c-3.8.1-6 .4-6 5.2v34.6c0 4.8 2.3 5.2 6 5.2V75H23.8zm22.9-41.5c0-1.1 0-5.2-4-5.2s-4 3.8-4 5.2v34.6c0 1.1 0 5.2 4 5.2s4-3.8 4-5.2V33.5zm16.9 0c0-1.1 0-5.2-4-5.2s-4 3.8-4 5.2v34.6c0 1.1 0 5.2 4 5.2s4-3.8 4-5.2V33.5z"
@@ -32,7 +32,7 @@
     </div>
     <div v-if="this.iconName === 'forthArea'">
       <svg class="svg" viewBox="0 0 100 100" xml:space="preserve">
-        <circle cx="49.9" cy="49.8" r="49" fill="#FFC400" />
+        <circle cx="49.9" cy="49.8" r="49" fill="#f79a61" />
         <path
           class="st0"
           fill="#fff"

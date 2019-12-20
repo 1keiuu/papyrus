@@ -9,7 +9,15 @@
         </v-card-title>
         <v-card-text>
           <v-container fluid>
-            <v-text-field v-model="input.name" label="目標名" class="name__input"> </v-text-field>
+            <v-text-field
+              v-model="input.name"
+              label="目標名"
+              class="name__input"
+              maxlength="15"
+              counter="15"
+              color="#56a5bf"
+            >
+            </v-text-field>
             <v-menu
               ref="startMenu"
               v-model="startMenu"
@@ -28,6 +36,7 @@
                   readonly
                   v-on="on"
                   :rules="deadlineRules"
+                  color="#56a5bf"
                   class="deadline__input"
                   ><v-icon slot="prepend" :class="{ '--filled': input.deadline !== '' }"
                     >mdi-calendar-clock</v-icon
@@ -39,12 +48,13 @@
                 scrollable
                 class="deadline__calender-input"
                 locale="ja"
+                color="#56a5bf"
               >
                 <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="startMenu = false">
+                <v-btn text color="#56a5bf" @click="startMenu = false">
                   キャンセル
                 </v-btn>
-                <v-btn text color="primary" @click="$refs.startMenu.save(input.deadline)">
+                <v-btn color="#ff7e2f" dark @click="$refs.startMenu.save(input.deadline)">
                   保存
                 </v-btn>
               </v-date-picker>
@@ -56,7 +66,8 @@
               counter
               auto-grow=""
               no-resize
-              maxlength='150'
+              maxlength="150"
+              color="#56a5bf"
               class="description__input"
               ><v-icon slot="prepend" :class="{ '--filled': input.memo !== '' }"
                 >mdi-file-document-outline</v-icon
@@ -66,7 +77,7 @@
         </v-card-text>
 
         <v-row class="submitButton__wrapper">
-          <v-btn color="#6245ea" class="submitButton" outlined @click="handleSubmitButtonClick">
+          <v-btn color="#ff7e2f" class="submitButton" dark @click="handleSubmitButtonClick">
             保存
           </v-btn>
         </v-row>
@@ -130,7 +141,7 @@ $accent: #ff7e2f;
 .v-card {
   height: 670px;
   width: 750px;
-  display:grid
+  display: grid;
 }
 ::v-deep .v-label {
   font-size: 14px !important;
@@ -163,15 +174,15 @@ $accent: #ff7e2f;
 
 .deadline__input {
   width: 200px;
-        padding-top: 50px;
+  padding-top: 50px;
 }
 .deadline__calender-input {
   width: 300px;
   height: 430px;
 }
 .description__input {
-      padding-top: 50px;
-            padding-bottom: 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   ::v-deep .v-text-field__slot {
     height: 100px;
   }

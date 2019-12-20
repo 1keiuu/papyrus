@@ -45,11 +45,11 @@
       >
         <p>{{ selectedTasks.length }}件選択中</p>
         <div>
-          <v-btn rounded @click="handleReturnButtonClick">タスクに戻す</v-btn>
-          <v-btn @click="handleDeleteButtonClick"
+          <v-btn color="#56a5bf" dark @click="handleDeleteButtonClick"
             ><v-icon>mdi-trash-can-outline</v-icon>
             削除する
           </v-btn>
+          <v-btn color="#ff7e2f" class="return__button" dark @click="handleReturnButtonClick">タスクに戻す</v-btn>
         </div>
       </v-layout>
     </v-card>
@@ -58,7 +58,7 @@
 <script>
 import store from "../../../store";
 export default {
-  name: "CompletedTasksModal",
+  name: "ArchivedTasksModal",
   data: () => ({
     dialog: false,
     tab: null,
@@ -156,5 +156,8 @@ $accent: #ff7e2f;
 .title__wrapper{
 background:$primary;
 color:white
+}
+.return__button{
+  margin-left:20px
 }
 </style>

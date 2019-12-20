@@ -16,10 +16,11 @@
         <v-container fluid>
           <v-text-field
             v-model="input.name"
-            counter="15"
-            maxlength="15"
+            counter="30"
+            maxlength="30"
             label="タスク名"
             class="name__input"
+                                                    color="#56a5bf"
           >
           </v-text-field>
           <v-select
@@ -28,6 +29,7 @@
             label="目標名"
             :rules="targetRankRules"
             class="targetRankOptions__input"
+                                                    color="#56a5bf"
             ><v-icon slot="prepend" :class="{ '--filled': input.targetRank !== '' }"
               >mdi-bullseye-arrow</v-icon
             ></v-select
@@ -50,7 +52,8 @@
                 readonly
                 v-on="on"
                 :rules="deadlineRules"
-                class="expirationDate__input"
+                class="deadline__input"
+                                                        color="#56a5bf"
                 ><v-icon slot="prepend" :class="{ '--filled': input.deadline !== '' }"
                   >mdi-calendar-clock</v-icon
                 ></v-text-field
@@ -59,14 +62,15 @@
             <v-date-picker
               v-model="input.deadline"
               scrollable
-              class="expirationDate__calender-input"
+              class="deadline__calender-input"
               locale="ja"
+                                                      color="#56a5bf"
             >
               <v-spacer></v-spacer>
-              <v-btn text color="primary" @click="startMenu = false">
+              <v-btn text color="#56a5bf" @click="startMenu = false">
                 キャンセル
               </v-btn>
-              <v-btn text color="primary" @click="$refs.startMenu.save(input.deadline)">
+              <v-btn color="#ff7e2f" dark @click="$refs.startMenu.save(input.deadline)">
                 保存
               </v-btn>
             </v-date-picker>
@@ -79,6 +83,7 @@
             :rules="memoRules"
             no-resize
             class="memo__input"
+                                                    color="#56a5bf"
             ><v-icon slot="prepend" :class="{ '--filled': input.memo !== '' }"
               >mdi-file-document-outline</v-icon
             ></v-textarea
@@ -128,7 +133,7 @@
                 <span>削除する</span>
               </v-tooltip>
             </div>
-            <v-btn color="#6245ea" class="button__submit" outlined @click="handleStoreButtonClick">
+            <v-btn color="#ff7e2f" class="button__submit" dark @click="handleStoreButtonClick">
               保存
             </v-btn>
           </v-layout>
@@ -159,7 +164,7 @@ export default {
     targetRankOptions: ["rank1", "rank2", "rank3", "rank4"],
     currentStep: 0,
     nameRules: [
-      v => v.length <= 15 || "15文字以内で入力してください",
+      v => v.length <= 30 || "30文字以内で入力してください",
       v => v.length >= 1 || "タスク名を入力してください"
     ],
     targetRankRules: [v => v.length >= 1 || "目標を設定してください"],
@@ -214,12 +219,17 @@ $accent: #ff7e2f;
   width: 620px;
 }
 .dialog__card {
-  height: 670px;
   width: 750px;
 }
 ::v-deep .v-label {
   font-size: 14px !important;
 }
+::v-deep .v-icon {
+  &.--filled {
+    color: $primary !important;
+  }
+}
+
 .v-tooltip__content {
   font-size: 12px;
 }
@@ -260,23 +270,25 @@ $accent: #ff7e2f;
   width: 300px;
 }
 
-.expirationDate__input {
+.deadline__input {
   width: 300px;
   height: 60px;
 }
-.expirationDate__calender-input {
+.deadline__calender-input {
   height: 430px;
 }
 .memo__input {
+  padding-bottom: 50px;
   ::v-deep .v-text-field__slot {
-    height: 50px;
+    height: 100px;
   }
 }
+
 
 .button__wrapper {
   justify-content: flex-end;
   width: 100%;
-  margin-top: 170px;
+  padding-bottom: 25px;
   .button__complete {
     margin-right: 20px;
     margin-left: 80px;
@@ -292,6 +304,7 @@ $accent: #ff7e2f;
     margin-right: 30px;
   }
 }
+
 
 ::v-deep .v-select-list {
   display:inline !important
