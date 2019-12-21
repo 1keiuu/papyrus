@@ -113,6 +113,11 @@
             </v-stepper-content>
 
             <v-stepper-content step="2">
+              <v-layout class="question__answer-guide">
+              <p>当てはまらない</p>
+              <div class="answer-guide__line"></div>
+              <p>当てはまる</p>
+              </v-layout>
               <v-card-text>
                 <v-container>
                   <v-row class="question__wrapper">
@@ -290,23 +295,21 @@ export default {
         this.input.answer2 = Number(this.input.answer2);
         this.input.answer3 = Number(this.input.answer3);
         const targetRankRatio = calculateRation(this.input.targetRank);
-        this.input.importanceScore = (targetRankRatio * (this.input.answer1 + this.input.answer2 + this.input.answer3));
-
+        this.input.importanceScore = (targetRankRatio * (this.input.answer1 + this.input.answer2 - this.input.answer3))
         const deadlineDiff = moment(this.input.deadline).diff(moment(new Date()), "day");
         if (deadlineDiff >= 7) {
-          if (this.input.importanceScore > 11) {
+          if (this.input.importanceScore > 3) {
             this.input.importanceArea = "secondArea";
           } else {
             this.input.importanceArea = "forthArea";
           }
         } else if (deadlineDiff <= 7) {
-          if (this.input.importanceScore > 11) {
+          if (this.input.importanceScore > 3) {
             this.input.importanceArea = "firstArea";
           } else {
             this.input.importanceArea = "thirdArea";
           }
         }
-
         this.$emit("submit", this.input);
 
         this.currentStep = 1;
@@ -477,5 +480,20 @@ export default {
     width: 50px !important;
     border-left: 0.3px solid #707070 !important;
   }
+}
+.question__answer-guide{
+      margin-top: 15px;
+  p{
+    position:absolute;
+    font-size: 10px;
+    right: 50px;
+    color:gray;
+    &:first-child{
+      right: 290px;
+    }
+  }
+}
+.answer-guide__line{
+  border-bottom: 1px solid gray;
 }
 </style>

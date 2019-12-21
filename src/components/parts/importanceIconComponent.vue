@@ -65,7 +65,7 @@ export default {
       const deadlineDiff = moment(taskDeadline).diff(moment(new Date()), "day");
       const ic = () => {
         if (deadlineDiff >= 7) {
-          switch (taskData.importanceScore > 11) {
+          switch (taskData.importanceScore > 3) {
             case true:
               this.iconName = "secondArea";
               break;
@@ -75,7 +75,7 @@ export default {
             default:
           }
         } else if (this.deadlineDiff <= 7) {
-          switch (taskData.importanceScore > 11) {
+          switch (taskData.importanceScore > 3) {
             case true:
               this.iconName = "firstArea";
               break;

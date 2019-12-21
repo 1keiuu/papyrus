@@ -21,7 +21,7 @@
         :class="{
           'taskCard__deadline--today': dateDiff === 0,
           'taskCard__deadline--tomorrow': dateDiff === 1,
-          'taskCard__deadline--past': dateDiff < 0,
+          'taskCard__deadline--past': dateDiff < 0
         }"
       >
         {{ deadline }}
@@ -63,10 +63,17 @@ export default {
       return this.taskData.deadline;
     }
   },
+  watch: {
+    deadline() {
+      const today = moment(new Date()).format("YYYY-MM-DD");
+      const diff = moment(this.taskData.deadline).diff(today, "day");
+      this.dateDiff = diff;
+    }
+  },
   created() {
     const today = moment(new Date()).format("YYYY-MM-DD");
     const diff = moment(this.taskData.deadline).diff(today, "day");
-    this.dateDiff = diff
+    this.dateDiff = diff;
   }
 };
 </script>
@@ -100,6 +107,6 @@ export default {
   color: $secondary;
 }
 .taskCard__deadline--past {
-  color: #FF6767;
+  color: #ff6767;
 }
 </style>
