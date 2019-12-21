@@ -156,20 +156,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 
-
-.v-application p {
-  margin-bottom: 5px;
-  margin-top: 10px;
-}
-
-.v-tooltip__content {
-  font-size: 12px;
-}
-
-.v-btn--outlined {
-  border: 1.5px solid;
-}
-
 .v-btn__content {
   margin-bottom: 2px;
 }

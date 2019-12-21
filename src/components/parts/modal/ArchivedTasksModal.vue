@@ -13,12 +13,16 @@
       <v-tabs-items v-model="tab" class="items__wrapper">
         <v-tab-item v-for="(tasks, index) in filteredTasksData" :key="index">
           <v-list v-if="tasks.length >= 1" two-line="">
-            <v-list-item v-for="(task, index) in tasks" :key="index">
+            <div v-for="(task, index) in tasks" :key="index">
+            <v-list-item>
               <v-checkbox v-model="selectedTasks" :value="task"></v-checkbox>
-              <v-list-item-content>
                 <v-list-item-title>{{ task.name }}</v-list-item-title>
                 <v-list-item-subtitle>期日:{{ task.deadline }}</v-list-item-subtitle>
-                <v-expand-transition>
+              <v-btn icon @click="isOpened(index)">
+                <v-icon>{{ show ? "mdi-chevron-up" : "mdi-chevron-down" }}</v-icon>
+              </v-btn>
+            </v-list-item>
+            <v-expand-transition>
                   <div v-show="isOpenedIndex === index">
                     <v-card-text v-if="task.memo">
                       {{ task.memo }}
@@ -28,11 +32,7 @@
                     </v-card-text>
                   </div>
                 </v-expand-transition>
-              </v-list-item-content>
-              <v-btn icon @click="isOpened(index)">
-                <v-icon>{{ show ? "mdi-chevron-up" : "mdi-chevron-down" }}</v-icon>
-              </v-btn>
-            </v-list-item>
+            </div>
           </v-list>
           <span v-else>アーカイブされているタスクはありません</span>
         </v-tab-item>
@@ -45,7 +45,7 @@
       >
         <p>{{ selectedTasks.length }}件選択中</p>
         <div>
-          <v-btn color="#56a5bf" dark @click="handleDeleteButtonClick"
+          <v-btn color="#8471e2" dark @click="handleDeleteButtonClick"
             ><v-icon>mdi-trash-can-outline</v-icon>
             削除する
           </v-btn>
@@ -140,12 +140,19 @@ export default {
   font-size: 18px;
   color: #f3f5f9;
 }
-
+.v-list-item{
+}
+.v-list-item .v-list-item__title{
+  line-height: 19px !important;
+}
+::v-deep .v-input__slot{
+  margin-bottom: 0px !important;
+}
 .selected-tasks__wrapper {
   width: 100%;
   height: 55px;
   padding: 0px 10px;
-  background-color: $secondary;
+  background-color: $primary;
   position: absolute;
   bottom: 0;
 }

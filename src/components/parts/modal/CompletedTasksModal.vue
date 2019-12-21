@@ -46,7 +46,7 @@
         <p>{{ selectedTasks.length }}件選択中</p>
         <div>
           <v-btn @click="handleDeleteButtonClick"
-        dark color="#56a5bf"
+        dark color="#8471e2"
             ><v-icon>mdi-trash-can-outline</v-icon>
             削除する
           </v-btn>
@@ -136,7 +136,12 @@ export default {
   overflow-y: scroll;
   height: 450px !important;
 }
-
+.v-list-item .v-list-item__title{
+  line-height: auto;
+}
+.v-input__slot{
+  margin-bottom: 0px;
+}
 .v-application p {
   font-size: 18px;
   color: #f3f5f9;
@@ -146,7 +151,7 @@ export default {
   width: 100%;
   height: 55px;
   padding: 0px 10px;
-  background-color: $secondary;
+  background-color: $primary;
   position: absolute;
   bottom: 0;
 }

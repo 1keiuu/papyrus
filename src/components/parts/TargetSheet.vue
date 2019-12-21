@@ -272,9 +272,6 @@ export default {
     Deadline() {
       return moment(this.targetData.deadline);
     },
-    DiffDate() {
-      return this.Deadline.diff(moment(new Date()), "day");
-    },
     userId() {
       return this.$store.getters.userId;
     },

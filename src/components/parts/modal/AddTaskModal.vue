@@ -95,6 +95,7 @@
                     no-resize
                     class="memo__input"
                     outlined
+                    maxlength='150'
                     color="#56a5bf"
                     ><v-icon slot="prepend" :class="{ '--filled': input.memo !== '' }"
                       >mdi-file-document-outline</v-icon
@@ -404,8 +405,10 @@ export default {
 }
 
 .memo__input {
+  padding-top: 50px;
+  padding-bottom: 50px;
   ::v-deep .v-text-field__slot {
-    height: 50px;
+    height: 100px;
   }
 }
 

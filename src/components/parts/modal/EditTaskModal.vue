@@ -20,7 +20,7 @@
             maxlength="30"
             label="タスク名"
             class="name__input"
-                                                    color="#56a5bf"
+            color="#56a5bf"
           >
           </v-text-field>
           <v-select
@@ -29,7 +29,7 @@
             label="目標名"
             :rules="targetRankRules"
             class="targetRankOptions__input"
-                                                    color="#56a5bf"
+            color="#56a5bf"
             ><v-icon slot="prepend" :class="{ '--filled': input.targetRank !== '' }"
               >mdi-bullseye-arrow</v-icon
             ></v-select
@@ -53,7 +53,7 @@
                 v-on="on"
                 :rules="deadlineRules"
                 class="deadline__input"
-                                                        color="#56a5bf"
+                color="#56a5bf"
                 ><v-icon slot="prepend" :class="{ '--filled': input.deadline !== '' }"
                   >mdi-calendar-clock</v-icon
                 ></v-text-field
@@ -64,7 +64,7 @@
               scrollable
               class="deadline__calender-input"
               locale="ja"
-                                                      color="#56a5bf"
+              color="#56a5bf"
             >
               <v-spacer></v-spacer>
               <v-btn text color="#56a5bf" @click="startMenu = false">
@@ -82,8 +82,10 @@
             auto-grow=""
             :rules="memoRules"
             no-resize
+            outlined
+            maxlength="150"
             class="memo__input"
-                                                    color="#56a5bf"
+            color="#56a5bf"
             ><v-icon slot="prepend" :class="{ '--filled': input.memo !== '' }"
               >mdi-file-document-outline</v-icon
             ></v-textarea
@@ -94,8 +96,8 @@
           <v-layout justify-space-between>
             <div>
               <v-btn
-                outlined
-                color="#F25151"
+                dark
+                color="#56A5BF"
                 @click="handleCompleteButtonClick"
                 class="button__complete"
                 ><v-icon>mdi-check</v-icon>タスクを完了する</v-btn
@@ -105,7 +107,7 @@
                   <v-btn
                     fab
                     outlined
-                    color="indigo lighten-2"
+                    color="#56a5bf"
                     v-on="on"
                     height="36"
                     width="36"
@@ -120,7 +122,7 @@
                 <template v-slot:activator="{ on }">
                   <v-btn
                     fab
-                    outlined
+                    dark
                     color="#8471e2"
                     height="36"
                     width="36"
@@ -281,7 +283,6 @@ export default {
   }
 }
 
-
 .button__wrapper {
   justify-content: flex-end;
   width: 100%;
@@ -302,8 +303,7 @@ export default {
   }
 }
 
-
 ::v-deep .v-select-list {
-  display:inline !important
+  display: inline !important;
 }
 </style>

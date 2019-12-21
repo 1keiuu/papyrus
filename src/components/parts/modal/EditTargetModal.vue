@@ -59,13 +59,24 @@
                 </v-btn>
               </v-date-picker>
             </v-menu>
-
+            <v-select
+                    :items="targetRankOptions"
+                    v-model="input.targetRank"
+                    label="目標名"
+                    :rules="targetRankRules"
+                    class="targetRankOptions__input"
+                    color="#56a5bf"
+                    ><v-icon slot="prepend" :class="{ '--filled': input.targetRank !== '' }"
+                      >mdi-bullseye-arrow</v-icon
+                    ></v-select
+                  >
             <v-textarea
               v-model="input.description"
               label="説明"
               counter
               auto-grow=""
               no-resize
+              outlined
               maxlength="150"
               color="#56a5bf"
               class="description__input"
@@ -97,8 +108,10 @@ export default {
       description: "",
       targetRank: ""
     },
+    targetRankOptions:['rank1','rank2','rank3','rank4'],
     startMenu: "",
     deadlineRules: [v => v.length >= 1 || "期日を設定してください"],
+    targetRankRules: [v => (v && v.length >= 1) || "目標を設定してください"],
     memoRules: [v => v.length <= 150 || ""]
   }),
   props: ["targetData"],
