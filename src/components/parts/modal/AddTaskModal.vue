@@ -340,16 +340,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$primary: #56a5bf;
-$secondary: #7dc0d6;
-$accent: #ff7e2f;
+
 
 .modal {
   height: 680px;
 }
-.v-application p {
-  margin-bottom: 0;
-}
+
 ::v-deep .v-label {
   font-size: 14px !important;
 }

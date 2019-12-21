@@ -184,7 +184,6 @@ export default {
 }
 
 .v-application p {
-  margin-bottom: 0;
   padding-top:20px
 }
 

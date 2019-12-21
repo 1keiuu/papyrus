@@ -100,9 +100,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.v-application p {
-  margin-bottom: 0;
-}
+
 .targetListItem {
   border-bottom: 0.3px solid #e8e8e8;
 }

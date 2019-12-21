@@ -155,9 +155,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-$primary: #56a5bf;
-$secondary:#7DC0D6;
-$accent: #ff7e2f;
+
 
 .v-application p {
   margin-bottom: 5px;
@@ -218,12 +216,11 @@ $accent: #ff7e2f;
 
 .button-group__completed{
   height:32px !important;
-  font-size:14px !important
+  font-size:14px !important;
 }
 .button-group__add-task{
   height:32px !important;
   font-size:14px !important;
-  box-shadow: 0 0 0 !important;
 }
 
 .archive__icon {

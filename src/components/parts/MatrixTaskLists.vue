@@ -128,9 +128,6 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-$primary: #56a5bf;
-$secondary: #7dc0d6;
-$accent: #ff7e2f;
 
 .tasks__list {
   display: block;

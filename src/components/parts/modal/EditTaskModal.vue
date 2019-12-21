@@ -212,9 +212,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$primary: #56a5bf;
-$secondary: #7dc0d6;
-$accent: #ff7e2f;
 .container {
   width: 620px;
 }

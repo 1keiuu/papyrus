@@ -9,6 +9,9 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 
+
+require('@/assets/globals.scss');
+
 Vue.config.productionTip = false;
 Vue.use(vuetify);
 

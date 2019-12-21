@@ -127,9 +127,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-$primary: #56a5bf;
-$secondary:#7DC0D6;
-$accent: #ff7e2f;
 
 .v-card {
   min-height: 500px;
@@ -141,7 +138,6 @@ $accent: #ff7e2f;
 }
 
 .v-application p {
-  margin-bottom: 0px;
   font-size: 18px;
   color: #f3f5f9;
 }
