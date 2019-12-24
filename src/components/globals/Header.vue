@@ -43,7 +43,7 @@
         </v-btn>
       </div>
     </div>
-    <v-menu open-on-hover close-on-click offset-y bottom>
+    <v-menu open-on-click close-on-click offset-y bottom>
       <template v-slot:activator="{ on }">
         <div class="avator__wrapper" v-show="profileImageUrl">
           <v-avatar color="primary" size="50" v-on="on" style="cursor:pointer">
