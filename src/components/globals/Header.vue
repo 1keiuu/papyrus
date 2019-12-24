@@ -75,15 +75,143 @@
 </template>
 
 <script>
+import firebase from "firebase";
+import axios from "axios";
+
 export default {
-  name: 'Header',
+  name: "Header",
   components: {},
 
-  data: () => ({
-    //
-  }),
+  data() {
+    const user = firebase.auth().currentUser;
+    return {
+      menus: [
+        {
+          name: "edit",
+          text: "プロフィールを編集",
+          icon: "mdi-account"
+        },
+        {
+          name: "logout",
+          text: "ログアウト",
+          icon: "mdi-logout"
+        }
+      ],
+      loading: true,
+      files: [],
+      // profileImageUrl: this.profileImageUrlState
+    };
+  },
+  props: ["userName"],
+  methods: {
+    handleMenuItemClick: function(target) {
+      switch (target) {
+        case "edit":
+          this.$emit("edit");
+          break;
+        case "logout":
+          if (window.confirm("ログアウトしてもよろしいでしょうか？")) {
+            this.$emit("logout");
+          } else {
+            console.log("canceled");
+          }
+          break;
+        default:
+      }
+    },
+    handleArchivedTasksButtonClick() {
+      this.$emit("archivedTasks");
+    },
+    handleAddTaskButtonClick() {
+      this.$emit("addTask");
+    },
+    handleCompletedTasksButtonClick() {
+      this.$emit("completedTasks");
+    }
+  },
+  created: function() {
+    // const ref = firebase
+    //   .storage()
+    //   .ref()
+    //   .child("profile")
+    //   .child(this.userId);
+    // ref
+    //   .getDownloadURL()
+    //   .then(url => {
+    //     this.profileImageUrl = url;
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+  },
+  computed: {
+    profileImageUrl() {
+      return this.$store.getters.profileImageUrl;
+    },
+    userId() {
+      return this.$store.getters.userId;
+    },
+  },
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
+
+.v-btn__content {
+  margin-bottom: 2px;
+}
+
+.avator__wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.avator{
+  border:0.1px solid $primary
+}
+
+.Menu-items__container {
+  display: flex;
+  margin-top: 33px;
+  margin-bottom: 17px;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.v-menu__content {
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+  margin-left: 12px;
+  border-radius:1px
+}
+
+.v-list{
+  width:200px;
+  padding:0px;
+  border-radius:1px
+}
+
+
+.v-list-item__icon{
+  margin-right:15px
+}
+
+.button-group__wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.button-group__completed{
+  height:32px !important;
+  font-size:14px !important;
+}
+.button-group__add-task{
+  height:32px !important;
+  font-size:14px !important;
+}
+
+.archive__icon {
+  padding-right: 2px;
+}
+
 
 </style>

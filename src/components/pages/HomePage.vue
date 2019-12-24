@@ -1,78 +1,101 @@
 <template>
-  <v-container>
-    <v-layout
-      text-center
-      wrap
-    >
-      <v-flex xs12>
-
-      </v-flex>
-
-      <v-flex mb-4>
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome
-        </h1>
-      </v-flex>
-
-    </v-layout>
-  </v-container>
+  <v-content class="home__content">
+    <v-container fluid fill-height class="home__container">
+      <v-layout>
+        <div class="inner-left__wrapper">
+          <div class="missionState">
+          <MissionState></MissionState>
+          </div>
+          <div class="targets__wrapper">
+          <TargetList :targetsData="targetsData"></TargetList>
+          </div>
+        </div>
+        <div class="inner-right__wrapper">
+          <div class="calender__wrapper">
+            <Calender :tasksData="tasksData"></Calender>
+          </div>
+        </div>
+      </v-layout>
+      <ProfileEditModal ref="profileEdit" @submit="submitProfileData"></ProfileEditModal>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
+import firebase from "firebase/app";
+import store from "../../store";
+import ProfileEditModal from "../parts/modal/ProfileEditModal";
+import router from "@/router";
+import MissionState from "../parts/MissionState";
+import TargetList from "../parts/TargetList";
+import Calender from "../parts/Calender"
 
-  data: () => ({
-    ecosystem: [
-      {
-        text: 'vuetify-loader',
-        href: 'https://github.com/vuetifyjs/vuetify-loader',
-      },
-      {
-        text: 'github',
-        href: 'https://github.com/vuetifyjs/vuetify',
-      },
-      {
-        text: 'awesome-vuetify',
-        href: 'https://github.com/vuetifyjs/awesome-vuetify',
-      },
-    ],
-    importantLinks: [
-      {
-        text: 'Documentation',
-        href: 'https://vuetifyjs.com',
-      },
-      {
-        text: 'Chat',
-        href: 'https://community.vuetifyjs.com',
-      },
-      {
-        text: 'Made with Vuetify',
-        href: 'https://madewithvuejs.com/vuetify',
-      },
-      {
-        text: 'Twitter',
-        href: 'https://twitter.com/vuetifyjs',
-      },
-      {
-        text: 'Articles',
-        href: 'https://medium.com/vuetify',
-      },
-    ],
-    whatsNext: [
-      {
-        text: 'Explore components',
-        href: 'https://vuetifyjs.com/components/api-explorer',
-      },
-      {
-        text: 'Select a layout',
-        href: 'https://vuetifyjs.com/layout/pre-defined',
-      },
-      {
-        text: 'Frequently Asked Questions',
-        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-      },
-    ],
-  }),
+export default {
+  name: "HomePage",
+  data: () => ({}),
+  components: {
+    ProfileEditModal,
+    MissionState,
+    TargetList,
+    Calender
+  },
+  methods: {
+    openProfileEditModal() {
+      this.$refs.profileEdit.openDialog();
+    },
+    submitProfileData(inputName, selectedItems, inputImage) {
+      firebase
+        .firestore()
+        .collection("user_info")
+        .doc(this.userId)
+        .update({ name: inputName });
+      firebase
+        .firestore()
+        .collection("user_info")
+        .doc(this.userId)
+        .update({ interests: selectedItems });
+    }
+  },
+  mounted() {},
+  computed: {
+    userId() {
+      return this.$store.getters.userId;
+    },
+    tasksData() {
+      return this.$store.getters.tasksData;
+    },
+    targetsData() {
+      return this.$store.getters.targetsData
+    }
+  }
 };
 </script>
+
+<style scoped>
+.v-content {
+  padding: 0px !important;
+    overflow: hidden;
+}
+.home__container {
+  margin-left: 70px;
+  padding: 0px;
+  padding-top: 30px;
+}
+.inner-right__wrapper {
+  width: 648px;
+  height: 100vh;
+}
+.targets__wrapper{
+  margin-top:30px;
+}
+.inner-left__wrapper {
+  width: 648px;
+  height: 100vh;
+  padding-left: 30px;
+  margin-right:30px;
+}
+.calender__wrapper{
+  width:560px;
+  height:585px;
+}
+</style>
