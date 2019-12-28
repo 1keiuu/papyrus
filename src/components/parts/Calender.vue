@@ -30,6 +30,7 @@
         :close-on-content-click="false"
         :activator="selectedElement"
         offset-x
+        max-height="600px"
       >
         <v-card color="grey lighten-4" min-width="350px" class="event__card">
           <v-toolbar :color="selectedEvent.color" dark>
@@ -120,46 +121,48 @@ export default {
       this.tasksData[3]
     );
     tasksData.forEach((task, taskIndex) => {
-      // 1つ目のtask  => eventの新規作成 (eventsの配列の一つ目に格納)
-      if (taskIndex === 0) {
-        this.events.push({
-          name: "",
-          start: task.deadline,
-          children: [],
-          length: 0
-        });
-        this.events[0].children.push(task);
-        this.events[0].length += 1;
-        this.events[0].name = `${this.events[0].length}件のタスク`;
-      } else {
-        // 二つ目以降のtask
-        // dateBoolは現時点で生成されているeventsの中にtaskと期日が被るtaskがあるかどうか
-        const dateBool = this.events.every(function(event) {
-          return event.start !== task.deadline;
-        });
-        if (dateBool) {
-          // 被るものがない => eventの新規作成
+      if (task.status === "doing") {
+        // 1つ目のtask  => eventの新規作成 (eventsの配列の一つ目に格納)
+        if (taskIndex === 0) {
           this.events.push({
             name: "",
             start: task.deadline,
             children: [],
             length: 0
           });
-          this.events[this.events.length - 1].children.push(task);
-          this.events[this.events.length - 1].length += 1;
-          this.events[this.events.length - 1].name = `${
-            this.events[this.events.length - 1].length
-          }件のタスク`;
-        } else if (!dateBool) {
-          // 被るものがある => 既存のeventへ追加
-          this.events.forEach((event, eventIndex) => {
-          // forEachでeventのIndexを取得
-            if (event.start === task.deadline) {
-              this.events[eventIndex].children.push(task);
-              this.events[eventIndex].length += 1;
-              this.events[eventIndex].name = `${this.events[eventIndex].length}件のタスク`;
-            }
+          this.events[0].children.push(task);
+          this.events[0].length += 1;
+          this.events[0].name = `${this.events[0].length}件のタスク`;
+        } else {
+          // 二つ目以降のtask
+          // dateBoolは現時点で生成されているeventsの中にtaskと期日が被るtaskがあるかどうか
+          const dateBool = this.events.every(function(event) {
+            return event.start !== task.deadline;
           });
+          if (dateBool) {
+            // 被るものがない => eventの新規作成
+            this.events.push({
+              name: "",
+              start: task.deadline,
+              children: [],
+              length: 0
+            });
+            this.events[this.events.length - 1].children.push(task);
+            this.events[this.events.length - 1].length += 1;
+            this.events[this.events.length - 1].name = `${
+              this.events[this.events.length - 1].length
+            }件のタスク`;
+          } else if (!dateBool) {
+            // 被るものがある => 既存のeventへ追加
+            this.events.forEach((event, eventIndex) => {
+              // forEachでeventのIndexを取得
+              if (event.start === task.deadline) {
+                this.events[eventIndex].children.push(task);
+                this.events[eventIndex].length += 1;
+                this.events[eventIndex].name = `${this.events[eventIndex].length}件のタスク`;
+              }
+            });
+          }
         }
       }
     });
@@ -168,7 +171,6 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-
 ::v-deep .v-btn--fab {
   color: white;
 }
@@ -200,10 +202,10 @@ export default {
     background: #fff;
   }
 }
-::v-deep .v-event{
-  height:40px !important;
-  width:100% !important;
-  top:13px !important;
-  border-radius:0px !important;
+::v-deep .v-event {
+  height: 40px !important;
+  width: 100% !important;
+  top: 13px !important;
+  border-radius: 0px !important;
 }
 </style>

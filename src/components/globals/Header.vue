@@ -43,7 +43,7 @@
         </v-btn>
       </div>
     </div>
-    <v-menu open-on-click close-on-click offset-y bottom>
+    <v-menu open-on-click close-on-click offset-y bottom class="menu">
       <template v-slot:activator="{ on }">
         <div class="avator__wrapper" v-show="profileImageUrl">
           <v-avatar color="primary" size="50" v-on="on" style="cursor:pointer">
@@ -57,11 +57,11 @@
         </div>
       </template>
 
-      <v-list dense flat width="210">
+      <v-list dense width="210" height="110">
         <v-list-item-group>
           <v-list-item v-for="(menu, index) in menus" :key="index">
             <v-list-item-icon>
-              <v-icon v-text="menu.icon"></v-icon>
+              <v-icon v-text="menu.icon" size=30></v-icon>
             </v-list-item-icon>
             <v-list-item-content @click="handleMenuItemClick(menu.name)">
               <v-list-item-title>{{ menu.text }}</v-list-item-title>
@@ -71,7 +71,6 @@
       </v-list>
     </v-menu>
   </v-app-bar>
-  <!-- </v-app> -->
 </template>
 
 <script>
@@ -130,19 +129,6 @@ export default {
     }
   },
   created: function() {
-    // const ref = firebase
-    //   .storage()
-    //   .ref()
-    //   .child("profile")
-    //   .child(this.userId);
-    // ref
-    //   .getDownloadURL()
-    //   .then(url => {
-    //     this.profileImageUrl = url;
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
   },
   computed: {
     profileImageUrl() {
@@ -156,9 +142,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 
-.v-btn__content {
-  margin-bottom: 2px;
-}
 
 .avator__wrapper {
   height: 100%;
@@ -187,12 +170,16 @@ export default {
 .v-list{
   width:200px;
   padding:0px;
-  border-radius:1px
+  border-radius:1px;
+  .v-list-item{
+      height:55px;
+  }
 }
 
 
-.v-list-item__icon{
-  margin-right:15px
+::v-deep .v-list-item__icon{
+  margin-top: 17px !important;
+  margin-right: 20px !important;
 }
 
 .button-group__wrapper {
