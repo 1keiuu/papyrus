@@ -1,10 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
+import moment from "moment"
 
 Vue.use(Vuex);
 
-// 削除対象のタスクが所属するtargetのtargetsData内でのindex
+// 削除対象のタスクが所属するtargetのindexを取得
 const getTargetIndex = payload => {
   switch (payload) {
     case "rank1":
@@ -13,7 +14,7 @@ const getTargetIndex = payload => {
       return 1;
     case "rank3":
       return 2;
-    case "rank4":
+    case "keep":
       return 3;
     default:
   }
@@ -59,7 +60,7 @@ export default new Vuex.Store({
         name: "keep",
         description: "",
         deadline: "",
-        targetRank: "rank4"
+        targetRank: "keep"
       }
     ],
     tasksData: [[], [], [], []]
@@ -145,7 +146,8 @@ export default new Vuex.Store({
         answer3: payload.inputData.answer3,
         importanceScore: payload.inputData.importanceScore,
         importanceArea: payload.inputData.importanceArea,
-        status: "completed"
+        status: "completed",
+        completedAt:moment(new Date()).format("YYYY年MM月DD日")
       };
       switch (payload.status) {
         case "archived":
@@ -202,7 +204,7 @@ export default new Vuex.Store({
         name: "keep",
         description: "",
         deadline: "",
-        targetRank: "rank4"
+        targetRank: "keep"
       };
       state.targetsData.splice(0, 4, payload1, payload2, payload3, payload4);
     }

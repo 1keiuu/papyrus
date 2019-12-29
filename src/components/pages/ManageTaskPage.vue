@@ -8,17 +8,14 @@
             :taskData="storedTasksData[index]"
           ></TargetSheet>
         </div>
-                  <!-- <v-btn @click="resetTask">リセットボタン</v-btn> -->
+        <!-- <v-btn @click="resetTask">リセットボタン</v-btn> -->
       </v-layout>
     </v-container>
   </v-app>
 </template>
 
 <script>
-import draggable from "vuedraggable";
 import firebase from "firebase";
-import router from "@/router";
-import store from "../../store";
 import TargetSheet from "../parts/TargetSheet";
 export default {
   name: "ManageTask",
@@ -27,11 +24,10 @@ export default {
   },
   data() {
     return {
-      userId: firebase.auth().currentUser.uid,
+      userId: firebase.auth().currentUser.uid
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     submitEditTargetData(inputName, inputDescription, inputDeadline, targetId) {
       firebase
@@ -48,7 +44,7 @@ export default {
           },
           { merge: true }
         );
-    },
+    }
     // resetTask() {
     //   store.commit("deleteTaskData", "all");
     // }
@@ -59,7 +55,7 @@ export default {
     },
     storedTasksData() {
       return JSON.parse(JSON.stringify(this.$store.getters.tasksData));
-    },
+    }
   }
 };
 </script>
@@ -76,14 +72,13 @@ export default {
 
 .targetSheet__layout {
   margin-left: 70px;
-    padding-top: 30px;
-    padding-left: 20px;
-
+  padding-top: 30px;
+  padding-left: 20px;
 }
 
 .targetSheet__wrapper {
   margin-left: 20px;
-        display: inline;
+  display: inline;
 }
 .targetSheet__wrapper:first-child {
   margin-left: 0px;

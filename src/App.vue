@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import moment from "moment";
 import firebase from "firebase/app";
 import store from "./store";
 import Header from "@/components/globals/Header";

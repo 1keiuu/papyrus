@@ -19,7 +19,7 @@
             <p class="targetSheet__title">{{ targetData.name }}</p>
           </div>
         </div>
-        <v-card-actions>
+        <v-card-actions v-if="targetData.targetRank !=='keep'">
           <v-card-subtitle v-if="targetData.deadline">期日:{{ targetData.deadline }} </v-card-subtitle>
           <v-card-subtitle v-else>期日未設定</v-card-subtitle>
 
@@ -48,6 +48,7 @@
             <v-icon>{{ show ? "mdi-chevron-up" : "mdi-chevron-down" }}</v-icon>
           </v-btn>
         </v-card-actions>
+        <div v-else style="height:20px" class="keep-spacer" ></div>
         <v-expand-transition>
           <div v-show="show">
             <v-card-text v-if="targetData.description">
@@ -287,6 +288,9 @@ export default {
 }
 .v-tooltip__content {
   font-size: 12px;
+}
+.v-card__actions{
+  height:70px
 }
 .targetSheet__title-wrapper {
   position: absolute;

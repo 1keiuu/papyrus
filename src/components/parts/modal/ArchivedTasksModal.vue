@@ -22,7 +22,7 @@
       </v-tabs>
       <v-tabs-items v-model="tab" class="items__wrapper">
         <v-tab-item v-for="(tasks, index) in filteredTasksData" :key="index">
-          <v-expansion-panels v-if="tasks.length >= 1" accordion class="task-panel__wrapper">
+          <v-expansion-panels v-if="tasks.length >= 1" class="task-panel__wrapper">
             <v-expansion-panel v-for="(task, index) in tasks" :key="index">
               <v-expansion-panel-header>
                 <v-row class="task-panel__header-inner">

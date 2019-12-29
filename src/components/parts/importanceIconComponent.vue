@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="taskData.targetRank !== 'keep'">
     <div v-if="this.iconName === 'firstArea'">
       <svg viewBox="0 0 100 100" class="svg">
         <circle cx="50.1" cy="49.9" r="49" fill="#6ea6de" />

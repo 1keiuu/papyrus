@@ -17,13 +17,13 @@
         @mouseenter="isCardHover = true"
         @mouseleave="isCardHover = false"
       >
-      <div class="matrix-graph__tasks-number-wrapper">
+        <div class="matrix-graph__tasks-number-wrapper">
           <div
             class="matrix-graph__tasks-number-item"
             v-for="(item, index) in tasksNumbers"
             :key="index"
             @click="changeListTabIndex(index)"
-            :class="{'--active':tab===index}"
+            :class="{ '--active': tab === index }"
           >
             <p class="matrix-graph__tasks-number-title">{{ item.title }}</p>
             <p class="matrix-graph__tasks-number">{{ item.number }}</p>
@@ -52,7 +52,6 @@
 </template>
 
 <script>
-import moment from "moment";
 import MatrixGraph from "../parts/MatrixGraph";
 import MatrixTaskLists from "../parts/MatrixTaskLists";
 import store from "../../store";
@@ -79,6 +78,7 @@ export default {
   methods: {
     sortTasksByImportance() {
       this.storedTasksData.forEach(rankedTasksData => {
+        // if (rankedTasksData.status === "doing") {
         const firstAreaTasks = rankedTasksData.filter(
           taskData => taskData.importanceArea === "firstArea"
         );
@@ -91,17 +91,17 @@ export default {
         const forthAreaTasks = rankedTasksData.filter(
           taskData => taskData.importanceArea === "forthArea"
         );
-        const subtitle = { name: "タスク名",deadline:"期日", status:"subtitle" };
-        firstAreaTasks.unshift(subtitle)
-        secondAreaTasks.unshift(subtitle)
-        thirdAreaTasks.unshift(subtitle)
-        forthAreaTasks.unshift(subtitle)
-
+        const subtitle = { name: "タスク名", deadline: "期日", status: "subtitle" };
+        firstAreaTasks.unshift(subtitle);
+        secondAreaTasks.unshift(subtitle);
+        thirdAreaTasks.unshift(subtitle);
+        forthAreaTasks.unshift(subtitle);
         // sortedTasks[0]は第一領域にはいるタスク全て
         this.sortedTasks[0].push(firstAreaTasks);
         this.sortedTasks[1].push(secondAreaTasks);
         this.sortedTasks[2].push(thirdAreaTasks);
         this.sortedTasks[3].push(forthAreaTasks);
+        // }
       });
     },
     culcTasksNumber() {
@@ -109,11 +109,11 @@ export default {
         sortedByImportanceTasks.forEach(tasks => {
           this.tasksNumbers[index].number += tasks.length;
         });
-        this.tasksNumbers[index].number -= 4
+        this.tasksNumbers[index].number -= 4;
       });
     },
     changeListTabIndex(tabIndex) {
-      this.tab = tabIndex
+      this.tab = tabIndex;
     }
   },
   watch: {
@@ -137,7 +137,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .container {
   padding: 0;
 }
@@ -198,24 +197,24 @@ export default {
     .matrix-graph__tasks-number-wrapper {
       width: 100%;
       height: 75px;
-      padding-top:55px;
+      padding-top: 55px;
       display: flex;
       justify-content: center;
       .matrix-graph__tasks-number-item {
         display: flex;
         align-items: center;
         margin-right: 13px;
-        cursor:pointer;
-        padding:0 3px 10px 3px;
+        cursor: pointer;
+        padding: 0 3px 10px 3px;
         &:last-child {
           margin-right: 0px;
         }
-        &.--active{
-            border-bottom: 1.5px solid $accent;
-          .matrix-graph__tasks-number-title{
+        &.--active {
+          border-bottom: 1.5px solid $accent;
+          .matrix-graph__tasks-number-title {
             color: $accent;
           }
-          .matrix-graph__tasks-number{
+          .matrix-graph__tasks-number {
             color: $accent;
             font-weight: bold;
           }
@@ -226,7 +225,7 @@ export default {
           margin-right: 10px;
         }
         .matrix-graph__tasks-number {
-            color: $primary;
+          color: $primary;
           font-size: 25px;
         }
       }

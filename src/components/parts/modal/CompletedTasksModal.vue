@@ -34,8 +34,9 @@
                 </v-row>
               </v-expansion-panel-header>
               <v-expansion-panel-content>
-                <p v-if="task.memo">{{ task.memo }}</p>
-                <p class="task-panel__memo">説明がありません</p>
+                <p v-if="task.memo" class="mb-3">{{ task.memo }}</p>
+                <p class="task-panel__memo mb-3">説明がありません</p>
+                <p v-if="task.completedAt" style="color:gray">{{task.completedAt}}に完了済み</p>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>

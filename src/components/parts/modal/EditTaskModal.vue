@@ -24,6 +24,7 @@
           >
           </v-text-field>
           <v-select
+            v-if="taskData.targetRank !== 'keep'"
             :items="targetRankOptions"
             v-model="input.targetRank"
             label="目標名"
@@ -163,7 +164,7 @@ export default {
       importanceScore: ""
     },
     formerTargetRank: "",
-    targetRankOptions: ["rank1", "rank2", "rank3", "rank4"],
+    targetRankOptions: ["rank1", "rank2", "rank3"],
     currentStep: 0,
     nameRules: [
       v => v.length <= 30 || "30文字以内で入力してください",

@@ -108,7 +108,7 @@ export default {
       description: "",
       targetRank: ""
     },
-    targetRankOptions:['rank1','rank2','rank3','rank4'],
+    targetRankOptions:['rank1','rank2','rank3'],
     startMenu: "",
     deadlineRules: [v => v.length >= 1 || "期日を設定してください"],
     targetRankRules: [v => (v && v.length >= 1) || "目標を設定してください"],
