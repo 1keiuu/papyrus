@@ -95,6 +95,66 @@ export default {
       }
 
       nativeEvent.stopPropagation();
+    },
+    addEvents() {
+      function toString(date) {
+        return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-");
+      }
+      this.today = toString(new Date());
+      const thisYear = this.today.substring(0, 4);
+      const thisMonth = this.today.substring(5, 7);
+      this.calenderTitle = `${thisYear} 年 ${thisMonth}月`;
+      const tasksData = this.tasksData[0].concat(
+        this.tasksData[1],
+        this.tasksData[2],
+        this.tasksData[3]
+      );
+      tasksData.forEach((task, taskIndex) => {
+        if (task.status === "doing") {
+          // 1つ目のtask  => eventの新規作成 (eventsの配列の一つ目に格納)
+          if (taskIndex === 0) {
+            this.events.push({
+              name: "",
+              start: task.deadline,
+              children: [],
+              length: 0
+            });
+            this.events[0].children.push(task);
+            this.events[0].length += 1;
+            this.events[0].name = `${this.events[0].length}件のタスク`;
+          } else {
+            // 二つ目以降のtask
+            // dateBoolは現時点で生成されているeventsの中にtaskと期日が被るtaskがあるかどうか
+            const dateBool = this.events.every(function(event) {
+              return event.start !== task.deadline;
+            });
+            if (dateBool) {
+              // 被るものがない => eventの新規作成
+              this.events.push({
+                name: "",
+                start: task.deadline,
+                children: [],
+                length: 0
+              });
+              this.events[this.events.length - 1].children.push(task);
+              this.events[this.events.length - 1].length += 1;
+              this.events[this.events.length - 1].name = `${
+                this.events[this.events.length - 1].length
+              }件のタスク`;
+            } else if (!dateBool) {
+              // 被るものがある => 既存のeventへ追加
+              this.events.forEach((event, eventIndex) => {
+                // forEachでeventのIndexを取得
+                if (event.start === task.deadline) {
+                  this.events[eventIndex].children.push(task);
+                  this.events[eventIndex].length += 1;
+                  this.events[eventIndex].name = `${this.events[eventIndex].length}件のタスク`;
+                }
+              });
+            }
+          }
+        }
+      });
     }
   },
   // mounted() {
@@ -105,68 +165,13 @@ export default {
       const thisYear = focusedDate.substring(0, 4);
       const thisMonth = focusedDate.substring(5, 7);
       this.calenderTitle = `${thisYear} 年 ${thisMonth}月`;
+    },
+    tasksData() {
+      this.addEvents();
     }
   },
   created() {
-    function toString(date) {
-      return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-");
-    }
-    this.today = toString(new Date());
-    const thisYear = this.today.substring(0, 4);
-    const thisMonth = this.today.substring(5, 7);
-    this.calenderTitle = `${thisYear} 年 ${thisMonth}月`;
-    const tasksData = this.tasksData[0].concat(
-      this.tasksData[1],
-      this.tasksData[2],
-      this.tasksData[3]
-    );
-    tasksData.forEach((task, taskIndex) => {
-      if (task.status === "doing") {
-        // 1つ目のtask  => eventの新規作成 (eventsの配列の一つ目に格納)
-        if (taskIndex === 0) {
-          this.events.push({
-            name: "",
-            start: task.deadline,
-            children: [],
-            length: 0
-          });
-          this.events[0].children.push(task);
-          this.events[0].length += 1;
-          this.events[0].name = `${this.events[0].length}件のタスク`;
-        } else {
-          // 二つ目以降のtask
-          // dateBoolは現時点で生成されているeventsの中にtaskと期日が被るtaskがあるかどうか
-          const dateBool = this.events.every(function(event) {
-            return event.start !== task.deadline;
-          });
-          if (dateBool) {
-            // 被るものがない => eventの新規作成
-            this.events.push({
-              name: "",
-              start: task.deadline,
-              children: [],
-              length: 0
-            });
-            this.events[this.events.length - 1].children.push(task);
-            this.events[this.events.length - 1].length += 1;
-            this.events[this.events.length - 1].name = `${
-              this.events[this.events.length - 1].length
-            }件のタスク`;
-          } else if (!dateBool) {
-            // 被るものがある => 既存のeventへ追加
-            this.events.forEach((event, eventIndex) => {
-              // forEachでeventのIndexを取得
-              if (event.start === task.deadline) {
-                this.events[eventIndex].children.push(task);
-                this.events[eventIndex].length += 1;
-                this.events[eventIndex].name = `${this.events[eventIndex].length}件のタスク`;
-              }
-            });
-          }
-        }
-      }
-    });
-    console.log(this.events);
+    this.addEvents();
   }
 };
 </script>
