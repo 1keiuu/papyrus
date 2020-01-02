@@ -349,6 +349,9 @@ export default {
   max-height: 310px;
   display: inline;
   overflow-y: scroll;
+  &.--empty{
+  display: none;
+  }
 }
 .taskCard__wrapper {
   margin: 10px 0px 10px 10px;

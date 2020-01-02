@@ -148,6 +148,11 @@ export default {
   width: 750px;
   height: 670px;
 }
+::v-deep .v-icon {
+  &.--filled {
+    color: $primary !important;
+  }
+}
 .v-card {
   height: 670px;
   width: 750px;

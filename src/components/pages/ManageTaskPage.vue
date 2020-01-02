@@ -51,10 +51,10 @@ export default {
   },
   computed: {
     storedTargetsData() {
-      return JSON.parse(JSON.stringify(this.$store.getters.targetsData));
+      return this.$store.getters.targetsData
     },
     storedTasksData() {
-      return JSON.parse(JSON.stringify(this.$store.getters.tasksData));
+      return this.$store.getters.tasksData
     }
   }
 };

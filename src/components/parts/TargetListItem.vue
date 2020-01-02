@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="targetData.targetRank !== 'keep'">
     <v-list-item class="targetListItem" @mouseenter="isHover = true" @mouseleave="isHover = false">
       <v-col>
         <v-row>

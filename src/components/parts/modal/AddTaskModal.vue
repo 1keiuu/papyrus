@@ -36,6 +36,7 @@
                     color="#56a5bf"
                   ></v-text-field>
                   <v-select
+                    :disabled="input.targetRank==='keep'"
                     :items="targetRankOptions"
                     v-model="input.targetRank"
                     label="目標名"
@@ -206,7 +207,7 @@ export default {
       }
     },
     handleSubmitButtonClick() {
-      if (this.input.answer1 !== "" && this.input.answer2 !== "" && this.input.answer3 !== "") {
+      if ((this.input.answer1 !== "" && this.input.answer2 !== "" && this.input.answer3 !== "") || this.input.targetRank === 'keep') {
         const calculateRation = payload => {
           switch (payload) {
             case "rank1":
