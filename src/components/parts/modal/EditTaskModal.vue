@@ -38,7 +38,6 @@
                 <v-select
                   :disabled="isKeep"
                   :items="targetRankOptions"
-                  :hint="targetRankOptions.rank"
                   item-text="name"
                   item-value="rank"
                   v-model="input.targetRank"
@@ -321,6 +320,7 @@ export default {
   created() {
     this.input = this.taskData;
     this.checkKeep();
+    // targetRankOptionsにstore内のtargetDataを入れる
     this.targetsData.forEach(targetData => {
       if (targetData.targetRank !== "keep") {
         this.targetRankOptions.push({
@@ -334,6 +334,17 @@ export default {
     taskData: function() {
       this.input = this.taskData;
       this.formerTargetRank = this.taskData.targetRank;
+    },
+    targetsData() {
+      this.targetRankOptions.splice(0,3)
+      this.targetsData.forEach(targetData => {
+        if (targetData.targetRank !== "keep") {
+          this.targetRankOptions.push({
+            name: targetData.name,
+            rank: targetData.targetRank
+          });
+        }
+      });
     }
   }
 };

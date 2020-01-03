@@ -39,6 +39,8 @@
                   <v-select
                     :disabled="input.targetRank === 'keep'"
                     :items="targetRankOptions"
+                    item-text="name"
+                    item-value="rank"
                     v-model="input.targetRank"
                     label="目標名"
                     :rules="targetRankRules"
@@ -182,7 +184,7 @@ export default {
       answer2: "3",
       answer3: "3"
     },
-    targetRankOptions: ["rank1", "rank2", "rank3"],
+    targetRankOptions: [],
     currentStep: 0,
     nameRules: [
       v => v.length <= 30 || "30文字以内で入力してください",
@@ -270,13 +272,37 @@ export default {
       this.$refs.first_form.resetValidation();
     }
   },
-  watch: {},
+  watch: {
+    targetsData() {
+      this.targetRankOptions.splice(0,3)
+      this.targetsData.forEach(targetData => {
+        if (targetData.targetRank !== "keep") {
+          this.targetRankOptions.push({
+            name: targetData.name,
+            rank: targetData.targetRank
+          });
+        }
+      });
+    }
+  },
   created() {
     this.input.targetRank = this.targetRankProp;
+    // targetRankOptionsにstore内のtargetDataを入れる
+    this.targetsData.forEach(targetData => {
+      if (targetData.targetRank !== "keep") {
+        this.targetRankOptions.push({
+          name: targetData.name,
+          rank: targetData.targetRank
+        });
+      }
+    });
   },
   computed: {
     taskId() {
       return this.$store.getters.taskId;
+    },
+    targetsData() {
+      return this.$store.getters.targetsData;
     }
   }
 };
