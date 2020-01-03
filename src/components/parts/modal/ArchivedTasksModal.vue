@@ -181,7 +181,7 @@ export default {
     align-items: center;
     padding-top: 80px;
     p {
-      font-size: 20px;
+      font-size: 18px !important;
       font-weight: bold;
       padding-top: 50px;
     }
