@@ -11,12 +11,14 @@
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "package": "electron-packager --package-manager yarn src"
   },
   "dependencies": {
     "axios": "^0.19.0",
     "core-js": "^3.3.2",
     "electron-devtools-installer": "^2.2.4",
+    "electron-packager": "^14.1.1",
     "firebase": "^7.3.0",
     "moment": "^2.24.0",
     "register-service-worker": "^1.6.2",

@@ -155,21 +155,23 @@
                   </v-tooltip>
                   <v-btn
                     color="#ff7e2f"
-                    class="button__submit"
+                    class="button__next"
                     dark
+                    fab
                     v-if="isKeep === false && currentStep === 1"
                     @click="currentStep = 2"
                   >
-                    次
+                    <v-icon>mdi-chevron-right</v-icon>
                   </v-btn>
                   <v-btn
                     color="#ff7e2f"
-                    class="button__submit"
+                    class="button__back"
                     dark
+                    fab
                     v-if="isKeep === false && currentStep === 2"
                     @click="currentStep = 1"
                   >
-                    戻る
+                    <v-icon>mdi-chevron-left</v-icon>
                   </v-btn>
                   <v-btn
                     color="#ff7e2f"
@@ -365,14 +367,16 @@ export default {
   }
 }
 .v-stepper__content {
+  height: 365px;
   padding: 0px;
+  margin-top:20px;
 }
 .v-stepper__step {
   padding: 0px 24px;
 }
 
-.container {
-  width: 620px;
+::v-deep .container {
+  max-width: 730px !important;
 }
 .dialog__card {
   width: 880px;
@@ -454,6 +458,20 @@ export default {
   }
   .button__delete {
     margin-right: 20px;
+  }
+  .button__next{
+    width:50px;
+    height:50px;
+    position: absolute;
+    right:30px;
+    top: 140px;
+  }
+  .button__back{
+    width:50px;
+    height:50px;
+    position: absolute;
+    left:15px;
+    top: 140px;
   }
   .button__submit {
     width: 110px;

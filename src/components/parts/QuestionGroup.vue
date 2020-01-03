@@ -145,6 +145,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .question__wrapper {
+    width: 730px;
   flex-wrap: unset;
   margin-top: 70px;
   margin-bottom: 5px;

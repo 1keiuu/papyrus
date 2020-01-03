@@ -122,13 +122,13 @@
               <v-row class="nextButton__wrapper">
                 <v-btn
                   v-if="this.input.targetRank !== 'keep'"
-                  color="#56a5bf"
+                  color="#ff7e2f"
+                  dark
                   class="nextButton"
-                  outlined
+                  fab
                   @click="handleNextButtonClick"
                 >
-                  次へ
-                  <v-icon class="nextButton__icon">mdi-arrow-right</v-icon>
+                  <v-icon class="nextButton__icon">mdi-chevron-right</v-icon>
                 </v-btn>
                 <v-btn
                   v-if="this.input.targetRank === 'keep'"
@@ -145,9 +145,10 @@
               <QuestionGroup :answersProp="answers" @changedAnswers="changeAnswers"></QuestionGroup>
               <v-card-actions>
                 <v-row class="buttonGroup__wrapper">
-                  <v-btn color="#56a5bf" outlined class="backButton" @click="currentStep = 1">
-                    <v-icon class="backButton__icon">mdi-arrow-left</v-icon>
-                    戻る</v-btn
+                  <v-btn fab class="backButton"  color="#ff7e2f"
+                  dark @click="currentStep = 1">
+                    <v-icon class="backButton__icon">mdi-chevron-left</v-icon>
+                    </v-btn
                   >
                   <v-btn color="#ff7e2f" dark class="submitButton" @click="handleSubmitButtonClick"
                     >追加</v-btn
@@ -309,10 +310,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.modal {
+::v-deep .v-card {
   height: 680px;
 }
-
+::v-deep .container{
+  width:730px;
+}
 ::v-deep .v-label {
   font-size: 14px !important;
 }
@@ -395,31 +398,30 @@ export default {
 }
 
 .nextButton__wrapper {
-  justify-content: flex-end;
-  margin-bottom: 20px;
-  margin-right: 20px;
+  position: absolute;
+  right:30px;
+  top:140px
 }
 .nextButton {
-  width: 110px;
+  width: 50px;
+  height:50px;
 }
-.nextButton__icon {
-  padding-left: 5px;
-}
+
 .backButton {
-  width: 110px;
-  margin-right: 30px;
+      width:50px;
+    height:50px;
+    position: absolute;
+    left:15px;
+    top: 140px;
 }
 .buttonGroup__wrapper {
-  margin-top: 30px;
+  margin-top: 100px;
   margin-right: 20px;
   margin-bottom: 20px;
   justify-content: flex-end;
 }
 .submitButton {
   width: 110px;
-}
-.backButton__icon {
-  padding-right: 5px;
 }
 .answer-guide__line {
   border-bottom: 1px solid gray;
