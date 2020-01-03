@@ -6,6 +6,7 @@
       max-width="880px"
       overlay-color="black"
       overlay-opacity="0.65"
+      @click:outside="handleClickModalOutside"
     >
       <template v-slot:activator="{ on }"> </template>
       <v-card>
@@ -36,7 +37,7 @@
                     color="#56a5bf"
                   ></v-text-field>
                   <v-select
-                    :disabled="input.targetRank==='keep'"
+                    :disabled="input.targetRank === 'keep'"
                     :items="targetRankOptions"
                     v-model="input.targetRank"
                     label="目標名"
@@ -139,8 +140,7 @@
             </v-stepper-content>
 
             <v-stepper-content step="2">
-              <QuestionGroup @answers="getAnswers"></QuestionGroup>
-
+              <QuestionGroup :answersProp="answers" @changedAnswers="changeAnswers"></QuestionGroup>
               <v-card-actions>
                 <v-row class="buttonGroup__wrapper">
                   <v-btn color="#56a5bf" outlined class="backButton" @click="currentStep = 1">
@@ -174,11 +174,13 @@ export default {
       deadline: "",
       targetRank: "",
       memo: "",
-      answer1: "",
-      answer2: "",
-      answer3: "",
       importanceScore: "",
       importanceArea: ""
+    },
+    answers: {
+      answer1: "3",
+      answer2: "3",
+      answer3: "3"
     },
     targetRankOptions: ["rank1", "rank2", "rank3"],
     currentStep: 0,
@@ -193,11 +195,6 @@ export default {
   }),
   props: ["targetData", "targetRankProp"],
   methods: {
-    getAnswers(answers) {
-      this.input.answer1 = answers.answer1
-      this.input.answer2 = answers.answer2
-      this.input.answer3 = answers.answer3
-    },
     openDialog() {
       this.dialog = true;
     },
@@ -206,8 +203,15 @@ export default {
         this.currentStep = 2;
       }
     },
+    changeAnswers(answers) {
+      this.input.answer1 = answers.answer1;
+      this.input.answer2 = answers.answer2;
+      this.input.answer3 = answers.answer3;
+    },
     handleSubmitButtonClick() {
-      if ((this.input.answer1 !== "" && this.input.answer2 !== "" && this.input.answer3 !== "") || this.input.targetRank === 'keep') {
+      if (
+        (this.input.answer1 !== "" && this.input.answer2 !== "" && this.input.answer3 !== "") || this.input.targetRank === "keep"
+      ) {
         const calculateRation = payload => {
           switch (payload) {
             case "rank1":
@@ -227,7 +231,7 @@ export default {
         this.input.answer2 = Number(this.input.answer2);
         this.input.answer3 = Number(this.input.answer3);
         const targetRankRatio = calculateRation(this.input.targetRank);
-        this.input.importanceScore = (targetRankRatio * (this.input.answer1 + this.input.answer2 - this.input.answer3));
+        this.input.importanceScore = targetRankRatio * (this.input.answer1 + this.input.answer2 - this.input.answer3);
         const deadlineDiff = moment(this.input.deadline).diff(moment(new Date()), "day");
         if (deadlineDiff >= 7) {
           if (this.input.importanceScore > 3) {
@@ -261,6 +265,9 @@ export default {
       } else {
         alert("全ての質問に回答してください");
       }
+    },
+    handleClickModalOutside() {
+      this.$refs.first_form.resetValidation();
     }
   },
   watch: {},

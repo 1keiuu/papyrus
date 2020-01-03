@@ -98,17 +98,17 @@ export default new Vuex.Store({
       const formerTargetIndex = getTargetIndex(payload.formerTargetRank);
       // 編集後のTargetIndex
       const targetIndex = getTargetIndex(payload.targetRank);
-      const selectedTasks = state.tasksData[formerTargetIndex];
-      const taskIndex = getSelectedTaskIndex(selectedTasks, payload);
+      const selectedTask = state.tasksData[formerTargetIndex];
+      const taskIndex = getSelectedTaskIndex(selectedTask, payload);
       // 編集前のTaskDataを消して、後のDataを追加
-      selectedTasks.splice(taskIndex, 1);
+      selectedTask.splice(taskIndex, 1);
       state.tasksData[targetIndex].push(payload);
     },
     changeTaskStatus(state, payload) {
       // payloadはtaskのデータとstatusの入ったObject
       const targetIndex = getTargetIndex(payload.inputData.targetRank);
-      const selectedTasks = state.tasksData[targetIndex];
-      const taskIndex = getSelectedTaskIndex(selectedTasks, payload.inputData);
+      const selectedTask = state.tasksData[targetIndex];
+      const taskIndex = getSelectedTaskIndex(selectedTask, payload.inputData);
       const DoingTask = {
         targetRank: payload.inputData.targetRank,
         deadline: payload.inputData.deadline,
@@ -167,12 +167,13 @@ export default new Vuex.Store({
       if (payload === "all") {
         // TasksDataの初期化
         state.tasksData.splice(0, 4, [], [], [], []);
+        state.taskId = 1
       } else if (typeof payload.taskId === "number") {
         // 削除対象のタスクが所属するtargetのtargetsData内でのindex
         const targetIndex = getTargetIndex(payload.targetRank);
-        const selectedTasks = state.tasksData[targetIndex];
-        const taskIndex = getSelectedTaskIndex(selectedTasks, payload);
-        selectedTasks.splice(taskIndex, 1);
+        const selectedTask = state.tasksData[targetIndex];
+        const taskIndex = getSelectedTaskIndex(selectedTask, payload);
+        selectedTask.splice(taskIndex, 1);
       } else {
         console.log("undefined deleteType");
       }

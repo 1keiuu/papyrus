@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog
       v-model="dialog"
-      max-width="750px"
+      max-width="880px"
       overlay-color="black"
       overlay-opacity="0.65"
       @click:outside="resetModal"
@@ -15,7 +15,7 @@
         </v-card-title>
 
         <v-stepper v-model="currentStep">
-          <v-stepper-header :class="{ '--disabled': keepBool }">
+          <v-stepper-header :class="{ '--disabled': isKeep }">
             <v-stepper-step color="#56a5bf" :complete="currentStep > 1" step="1"></v-stepper-step>
 
             <v-divider></v-divider>
@@ -36,8 +36,11 @@
                 >
                 </v-text-field>
                 <v-select
-                  :disabled="keepBool"
+                  :disabled="isKeep"
                   :items="targetRankOptions"
+                  :hint="targetRankOptions.rank"
+                  item-text="name"
+                  item-value="rank"
                   v-model="input.targetRank"
                   label="目標名"
                   :rules="targetRankRules"
@@ -106,7 +109,7 @@
               </v-container>
             </v-stepper-content>
             <v-stepper-content step="2">
-              <QuestionGroup :taskData="taskData" @answers="getAnswers"></QuestionGroup>
+              <QuestionGroup :taskData="taskData" @changedAnswers="changeAnswers"></QuestionGroup>
             </v-stepper-content>
 
             <v-row class="button__wrapper">
@@ -155,7 +158,7 @@
                     color="#ff7e2f"
                     class="button__submit"
                     dark
-                    v-if="keepBool === false && currentStep === 1"
+                    v-if="isKeep === false && currentStep === 1"
                     @click="currentStep = 2"
                   >
                     次
@@ -164,7 +167,7 @@
                     color="#ff7e2f"
                     class="button__submit"
                     dark
-                    v-if="keepBool === false && currentStep === 2"
+                    v-if="isKeep === false && currentStep === 2"
                     @click="currentStep = 1"
                   >
                     戻る
@@ -172,8 +175,8 @@
                   <v-btn
                     color="#ff7e2f"
                     dark
-                    v-if="keepBool && currentStep === 1"
-                    @click="keepBool = false"
+                    v-if="isKeep && currentStep === 1"
+                    @click="isKeep = false"
                   >
                     タスクを目標に割り振る
                   </v-btn>
@@ -191,7 +194,7 @@
 </template>
 
 <script>
-import moment from 'moment'
+import moment from "moment";
 import QuestionGroup from "../QuestionGroup";
 
 export default {
@@ -215,7 +218,7 @@ export default {
       importanceArea: ""
     },
     formerTargetRank: "",
-    targetRankOptions: ["rank1", "rank2", "rank3"],
+    targetRankOptions: [],
     currentStep: 1,
     nameRules: [
       v => v.length <= 30 || "30文字以内で入力してください",
@@ -225,8 +228,13 @@ export default {
     deadlineRules: [v => v.length >= 1 || "期日を設定してください"],
     memoRules: [v => v.length <= 150 || ""],
     startMenu: "",
-    keepBool: false
+    isKeep: false
   }),
+  computed: {
+    targetsData() {
+      return this.$store.getters.targetsData;
+    }
+  },
   props: ["taskData"],
   methods: {
     openDialog() {
@@ -235,7 +243,7 @@ export default {
     closeDialog() {
       this.dialog = false;
     },
-    getAnswers(answers) {
+    changeAnswers(answers) {
       this.input.answer1 = answers.answer1;
       this.input.answer2 = answers.answer2;
       this.input.answer3 = answers.answer3;
@@ -301,8 +309,8 @@ export default {
       }
     },
     checkKeep() {
-      if (this.taskData.targetRank === "keep" || this.input.targetRank !== this.formerTargetRank) {
-        this.keepBool = true;
+      if (this.taskData.targetRank === "keep") {
+        this.isKeep = true;
       }
     },
     resetModal() {
@@ -313,12 +321,20 @@ export default {
   created() {
     this.input = this.taskData;
     this.checkKeep();
+    this.targetsData.forEach(targetData => {
+      if (targetData.targetRank !== "keep") {
+        this.targetRankOptions.push({
+          name: targetData.name,
+          rank: targetData.targetRank
+        });
+      }
+    });
   },
   watch: {
-    // taskData: function() {
-    //   this.input = this.taskData;
-    //   this.formerTargetRank = this.taskData.targetRank;
-    // }
+    taskData: function() {
+      this.input = this.taskData;
+      this.formerTargetRank = this.taskData.targetRank;
+    }
   }
 };
 </script>
@@ -348,7 +364,7 @@ export default {
   width: 620px;
 }
 .dialog__card {
-  width: 750px;
+  width: 880px;
   height: 680px;
 }
 ::v-deep .v-label {

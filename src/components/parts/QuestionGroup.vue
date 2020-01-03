@@ -110,31 +110,36 @@ export default {
   data() {
     return {
       answers: {
-        answer1: "3",
-        answer2: "3",
-        answer3: "3"
+        answer1: "",
+        answer2: "",
+        answer3: ""
       }
     };
   },
-  props: ["taskData"],
+  props: ["taskData","answersProp"],
   created() {
+    if (!this.taskData) {
+      this.answers.answer1 = this.answersProp.answer1;
+      this.answers.answer2 = this.answersProp.answer2;
+      this.answers.answer3 = this.answersProp.answer3;
+    }
     if (this.taskData) {
       this.answers.answer1 = this.taskData.answer1;
       this.answers.answer2 = this.taskData.answer2;
       this.answers.answer3 = this.taskData.answer3;
+      // this.$emit("changedAnswers", this.answers);
     }
-    this.$emit("answers", this.answers);
   },
   watch: {
     "answers.answer1": function() {
-      this.$emit("answers", this.answers);
+      this.$emit("changedAnswers", this.answers);
     },
     "answers.answer2": function() {
-      this.$emit("answers", this.answers);
+      this.$emit("changedAnswers", this.answers);
     },
     "answers.answer3": function() {
-      this.$emit("answers", this.answers);
-    }
+      this.$emit("changedAnswers", this.answers);
+    },
   }
 };
 </script>
@@ -144,14 +149,16 @@ export default {
   margin-top: 70px;
   margin-bottom: 5px;
   align-items: center;
+  justify-content: center;
   &:first-child {
     margin-top: 10px;
   }
 }
 .question__textArea {
-  width: 430px;
+  width: 460px;
   font-size: 15px;
   padding-left: 10px;
+  padding-right: 40px;
 }
 .question__icon {
   width: 25px;
