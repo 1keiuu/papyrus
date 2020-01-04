@@ -124,10 +124,9 @@ export default {
       this.answers.answer3 = this.answersProp.answer3;
     }
     if (this.taskData) {
-      this.answers.answer1 = this.taskData.answer1;
-      this.answers.answer2 = this.taskData.answer2;
-      this.answers.answer3 = this.taskData.answer3;
-      // this.$emit("changedAnswers", this.answers);
+      this.answers.answer1 = String(this.taskData.answer1);
+      this.answers.answer2 = String(this.taskData.answer2)
+      this.answers.answer3 = String(this.taskData.answer3)
     }
   },
   watch: {

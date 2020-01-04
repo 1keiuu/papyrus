@@ -205,6 +205,7 @@ export default {
   position: absolute;
   bottom: 0;
   z-index: 3;
+  box-shadow: 0px 0px 8px gray;
   p{
     font-size:18px;
     color:white;

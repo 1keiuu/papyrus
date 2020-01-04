@@ -347,7 +347,7 @@ export default {
           });
         }
       });
-    }
+    },
   }
 };
 </script>
@@ -380,7 +380,7 @@ export default {
 }
 .dialog__card {
   width: 880px;
-  height: 680px;
+  height: 670px;
 }
 ::v-deep .v-label {
   font-size: 14px !important;

@@ -9,7 +9,7 @@
       @click:outside="handleClickModalOutside"
     >
       <template v-slot:activator="{ on }"> </template>
-      <v-card>
+      <v-card class="dialog__card">
         <v-card-title class="title__wrapper">
           <p class="title">タスクを追加</p>
           <span class="title__line"></span>
@@ -310,9 +310,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .v-card {
-  height: 680px;
+.dialog__card {
+  height: 670px;
 }
+
 ::v-deep .container{
   width:730px;
 }
@@ -391,7 +392,6 @@ export default {
 
 .memo__input {
   padding-top: 50px;
-  padding-bottom: 50px;
   ::v-deep .v-text-field__slot {
     height: 100px;
   }

@@ -163,7 +163,7 @@ export default {
   .task-panel__wrapper{
         width: 840px;
     margin:10px 0px 10px 10px;
-     .v-expansion-panel-header {
+    .v-expansion-panel-header {
     padding: 5px 25px;
     .task-panel__header-inner {
       align-items: center;
@@ -204,6 +204,7 @@ export default {
   position: absolute;
   bottom: 0;
   z-index: 3;
+  box-shadow: 0px 0px 8px gray;
   p{
     font-size:18px;
     color:white;
