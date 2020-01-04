@@ -1,5 +1,5 @@
 {
-  "name": "papyrus_dev",
+  "name": "Papyrus",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,8 +11,7 @@
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit",
-    "package": "electron-packager --package-manager yarn src"
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "axios": "^0.19.0",

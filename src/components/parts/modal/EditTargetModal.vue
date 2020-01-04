@@ -59,17 +59,19 @@
                 </v-btn>
               </v-date-picker>
             </v-menu>
-            <v-select
-                    :items="targetRankOptions"
-                    v-model="input.targetRank"
-                    label="目標名"
-                    :rules="targetRankRules"
-                    class="targetRankOptions__input"
-                    color="#56a5bf"
-                    ><v-icon slot="prepend" :class="{ '--filled': input.targetRank !== '' }"
-                      >mdi-bullseye-arrow</v-icon
-                    ></v-select
-                  >
+            <!-- <v-select
+              v-model="input.targetRank"
+              :items="targetRankOptions"
+              item-text="name"
+              item-value="rank"
+              label="目標名"
+              :rules="targetRankRules"
+              class="targetRankOptions__input"
+              color="#56a5bf"
+              ><v-icon slot="prepend" :class="{ '--filled': input.targetRank !== '' }"
+                >mdi-bullseye-arrow</v-icon
+              ></v-select
+            > -->
             <v-textarea
               v-model="input.description"
               label="説明"
@@ -108,12 +110,17 @@ export default {
       description: "",
       targetRank: ""
     },
-    targetRankOptions:['rank1','rank2','rank3'],
+    targetRankOptions: [],
     startMenu: "",
     deadlineRules: [v => v.length >= 1 || "期日を設定してください"],
     targetRankRules: [v => (v && v.length >= 1) || "目標を設定してください"],
     memoRules: [v => v.length <= 150 || ""]
   }),
+  computed: {
+    targetsData() {
+      return this.$store.getters.targetsData;
+    }
+  },
   props: ["targetData"],
   methods: {
     openDialog() {
@@ -130,20 +137,40 @@ export default {
       );
     }
   },
-  created() {},
+  // created() {
+  //   // targetRankOptionsにstore内のtargetDataを入れる
+  //   this.targetsData.forEach(targetData => {
+  //     if (targetData.targetRank !== "keep") {
+  //       this.targetRankOptions.push({
+  //         name: targetData.name,
+  //         rank: targetData.targetRank
+  //       });
+  //     }
+  //   });
+  // },
   watch: {
     targetData: function() {
       this.input.name = this.targetData.name;
       this.input.description = this.targetData.description;
       this.input.deadline = this.targetData.deadline;
       this.input.targetRank = this.targetData.targetRank;
-    }
+    },
+    // targetsData() {
+    //   this.targetRankOptions.splice(0, 3);
+    //   this.targetsData.forEach(targetData => {
+    //     if (targetData.targetRank !== "keep") {
+    //       this.targetRankOptions.push({
+    //         name: targetData.name,
+    //         rank: targetData.targetRank
+    //       });
+    //     }
+    //   });
+    // }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
 ::v-deep .v-dialog {
   width: 750px;
   height: 670px;

@@ -39,19 +39,19 @@ export default new Vuex.Store({
     taskId: 1,
     targetsData: [
       {
-        name: "primary",
+        name: "1番達成したい目標",
         description: "",
         deadline: "",
         targetRank: "rank1"
       },
       {
-        name: "secondary",
+        name: "次に達成したい目標",
         description: "",
         deadline: "",
         targetRank: "rank2"
       },
       {
-        name: "tertiary",
+        name: "3番目に達成したい目標",
         description: "",
         deadline: "",
         targetRank: "rank3"
@@ -184,19 +184,19 @@ export default new Vuex.Store({
     },
     initializeTargetData(state) {
       const payload1 = {
-        name: "primary",
+        name: "1番達成したい目標",
         description: "",
         deadline: "",
         targetRank: "rank1"
       };
       const payload2 = {
-        name: "secondary",
+        name: "次に達成したい目標",
         description: "",
         deadline: "",
         targetRank: "rank2"
       };
       const payload3 = {
-        name: "tertiary",
+        name: "3番目に達成したい目標",
         description: "",
         deadline: "",
         targetRank: "rank3"

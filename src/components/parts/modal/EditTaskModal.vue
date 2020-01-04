@@ -26,9 +26,11 @@
           <v-stepper-items>
             <v-stepper-content step="1">
               <v-container fluid>
+                                <v-form ref="first_form">
                 <v-text-field
                   v-model="input.name"
                   counter="30"
+                                      :rules="nameRules"
                   maxlength="30"
                   label="タスク名"
                   class="name__input"
@@ -105,6 +107,7 @@
                     >mdi-file-document-outline</v-icon
                   ></v-textarea
                 >
+                                                  </v-form>
               </v-container>
             </v-stepper-content>
             <v-stepper-content step="2">
@@ -177,7 +180,7 @@
                     color="#ff7e2f"
                     dark
                     v-if="isKeep && currentStep === 1"
-                    @click="isKeep = false"
+                    @click="setTargetOnKeepTask"
                   >
                     タスクを目標に割り振る
                   </v-btn>
@@ -249,8 +252,14 @@ export default {
       this.input.answer2 = answers.answer2;
       this.input.answer3 = answers.answer3;
     },
+    setTargetOnKeepTask() {
+      this.isKeep = false;
+      this.input.targetRank = "rank1";
+    },
     handleStoreButtonClick() {
-      if (this.input.answer1 !== null && this.input.answer2 !== null && this.input.answer3 !== null) {
+      if (
+        this.input.answer1 !== null && this.input.answer2 !== null && this.input.answer3 !== null
+      ) {
         const calculateRation = payload => {
           switch (payload) {
             case "rank1":
@@ -285,13 +294,12 @@ export default {
             this.input.importanceArea = "thirdArea";
           }
         }
+        this.dialog = false;
+        this.$emit("store", this.input, this.formerTargetRank);
+        this.resetModalStatus();
       } else {
         alert("全ての質問に回答してください");
       }
-
-      this.dialog = false;
-      this.$emit("store", this.input, this.formerTargetRank);
-      this.resetModalStatus();
     },
     handleArchiveButtonClick() {
       this.$emit("archive", this.input, "archived");
@@ -337,7 +345,7 @@ export default {
       this.formerTargetRank = this.taskData.targetRank;
     },
     targetsData() {
-      this.targetRankOptions.splice(0,3)
+      this.targetRankOptions.splice(0, 3);
       this.targetsData.forEach(targetData => {
         if (targetData.targetRank !== "keep") {
           this.targetRankOptions.push({
@@ -346,7 +354,7 @@ export default {
           });
         }
       });
-    },
+    }
   }
 };
 </script>
@@ -368,7 +376,7 @@ export default {
 .v-stepper__content {
   height: 365px;
   padding: 0px;
-  margin-top:20px;
+  margin-top: 20px;
 }
 .v-stepper__step {
   padding: 0px 24px;
@@ -458,18 +466,18 @@ export default {
   .button__delete {
     margin-right: 20px;
   }
-  .button__next{
-    width:50px;
-    height:50px;
+  .button__next {
+    width: 50px;
+    height: 50px;
     position: absolute;
-    right:30px;
+    right: 30px;
     top: 140px;
   }
-  .button__back{
-    width:50px;
-    height:50px;
+  .button__back {
+    width: 50px;
+    height: 50px;
     position: absolute;
-    left:15px;
+    left: 15px;
     top: 140px;
   }
   .button__submit {
