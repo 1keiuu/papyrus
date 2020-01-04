@@ -130,26 +130,24 @@
                 >
                   <v-icon class="nextButton__icon">mdi-chevron-right</v-icon>
                 </v-btn>
-                <v-btn
+              </v-row>
+              <v-btn
                   v-if="this.input.targetRank === 'keep'"
                   color="#ff7e2f"
                   dark
-                  class="submitButton"
+                  class="submitButton__first"
                   @click="handleSubmitButtonClick"
                   >追加</v-btn
                 >
-              </v-row>
             </v-stepper-content>
 
             <v-stepper-content step="2">
               <QuestionGroup :answersProp="answers" @changedAnswers="changeAnswers"></QuestionGroup>
               <v-card-actions>
                 <v-row class="buttonGroup__wrapper">
-                  <v-btn fab class="backButton"  color="#ff7e2f"
-                  dark @click="currentStep = 1">
+                  <v-btn fab class="backButton" color="#ff7e2f" dark @click="currentStep = 1">
                     <v-icon class="backButton__icon">mdi-chevron-left</v-icon>
-                    </v-btn
-                  >
+                  </v-btn>
                   <v-btn color="#ff7e2f" dark class="submitButton" @click="handleSubmitButtonClick"
                     >追加</v-btn
                   >
@@ -207,9 +205,9 @@ export default {
       }
     },
     changeAnswers(answers) {
-      this.input.answer1 = answers.answer1;
-      this.input.answer2 = answers.answer2;
-      this.input.answer3 = answers.answer3;
+      this.input.answer1 = Number(answers.answer1);
+      this.input.answer2 = Number(answers.answer2);
+      this.input.answer3 = Number(answers.answer3);
     },
     handleSubmitButtonClick() {
       if (
@@ -230,9 +228,6 @@ export default {
           }
         };
 
-        this.input.answer1 = Number(this.input.answer1);
-        this.input.answer2 = Number(this.input.answer2);
-        this.input.answer3 = Number(this.input.answer3);
         const targetRankRatio = calculateRation(this.input.targetRank);
         this.input.importanceScore = targetRankRatio * (this.input.answer1 + this.input.answer2 - this.input.answer3);
         const deadlineDiff = moment(this.input.deadline).diff(moment(new Date()), "day");
@@ -252,18 +247,21 @@ export default {
         this.$emit("submit", this.input);
 
         this.currentStep = 1;
-        this.$refs.first_form.reset();
         this.input = {
           name: "",
           deadline: "",
           targetRank: "",
           memo: "",
-          answer1: "",
-          answer2: "",
-          answer3: "",
           importanceScore: "",
           importanceArea: ""
         };
+        this.answers = {
+          answer1: "3",
+          answer2: "3",
+          answer3: "3"
+        }
+        this.initializeModalData();
+        this.$refs.first_form.resetValidation();
         this.dialog = false;
       } else {
         alert("全ての質問に回答してください");
@@ -271,11 +269,23 @@ export default {
     },
     handleClickModalOutside() {
       this.$refs.first_form.resetValidation();
+    },
+    initializeModalData() {
+      this.input.targetRank = this.targetRankProp;
+      // targetRankOptionsにstore内のtargetDataを入れる
+      this.targetsData.forEach(targetData => {
+        if (targetData.targetRank !== "keep") {
+          this.targetRankOptions.push({
+            name: targetData.name,
+            rank: targetData.targetRank
+          });
+        }
+      });
     }
   },
   watch: {
     targetsData() {
-      this.targetRankOptions.splice(0,3)
+      this.targetRankOptions.splice(0, 3);
       this.targetsData.forEach(targetData => {
         if (targetData.targetRank !== "keep") {
           this.targetRankOptions.push({
@@ -287,16 +297,7 @@ export default {
     }
   },
   created() {
-    this.input.targetRank = this.targetRankProp;
-    // targetRankOptionsにstore内のtargetDataを入れる
-    this.targetsData.forEach(targetData => {
-      if (targetData.targetRank !== "keep") {
-        this.targetRankOptions.push({
-          name: targetData.name,
-          rank: targetData.targetRank
-        });
-      }
-    });
+    this.initializeModalData();
   },
   computed: {
     taskId() {
@@ -314,11 +315,14 @@ export default {
   height: 670px;
 }
 
-::v-deep .container{
-  width:730px;
+::v-deep .container {
+  width: 730px;
 }
 ::v-deep .v-label {
   font-size: 14px !important;
+}
+::v-deep .v-text-field{
+  padding:0;
 }
 .v-stepper {
   box-shadow: 0 0 0 !important;
@@ -335,6 +339,9 @@ export default {
 }
 .v-stepper__content {
   padding: 0px;
+}
+::v-deep .v-stepper__wrapper {
+  height: 500px;
 }
 .v-stepper__step {
   padding: 0px 24px;
@@ -366,6 +373,7 @@ export default {
 }
 .targetRankOptions__input {
   width: 300px;
+  margin-top: 10px;
 }
 .keep-switch__wrapper {
   display: flex;
@@ -391,7 +399,7 @@ export default {
 }
 
 .memo__input {
-  padding-top: 50px;
+  padding-top: 10px;
   ::v-deep .v-text-field__slot {
     height: 100px;
   }
@@ -399,20 +407,20 @@ export default {
 
 .nextButton__wrapper {
   position: absolute;
-  right:30px;
-  top:140px
+  right: 30px;
+  top: 140px;
 }
 .nextButton {
   width: 50px;
-  height:50px;
+  height: 50px;
 }
 
 .backButton {
-      width:50px;
-    height:50px;
-    position: absolute;
-    left:15px;
-    top: 140px;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 15px;
+  top: 140px;
 }
 .buttonGroup__wrapper {
   margin-top: 100px;
@@ -421,6 +429,11 @@ export default {
   justify-content: flex-end;
 }
 .submitButton {
+  &__first{
+      width: 110px;
+    margin-left: 740px;
+    margin-top: 20px;
+  }
   width: 110px;
 }
 .answer-guide__line {

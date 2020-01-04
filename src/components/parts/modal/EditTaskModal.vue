@@ -5,7 +5,7 @@
       max-width="880px"
       overlay-color="black"
       overlay-opacity="0.65"
-      @click:outside="resetModal"
+      @click:outside="resetModalStatus"
     >
       <template v-slot:activator="{ on }"> </template>
       <v-card class="dialog__card">
@@ -108,7 +108,7 @@
               </v-container>
             </v-stepper-content>
             <v-stepper-content step="2">
-              <QuestionGroup :taskData="taskData" @changedAnswers="changeAnswers"></QuestionGroup>
+              <QuestionGroup :taskData="input" @changedAnswers="changeAnswers"></QuestionGroup>
             </v-stepper-content>
 
             <v-row class="button__wrapper">
@@ -212,9 +212,9 @@ export default {
       memo: "",
       taskId: "",
       status: "",
-      answer1: "",
-      answer2: "",
-      answer3: "",
+      answer1: null,
+      answer2: null,
+      answer3: null,
       importanceScore: "",
       importanceArea: ""
     },
@@ -250,7 +250,7 @@ export default {
       this.input.answer3 = answers.answer3;
     },
     handleStoreButtonClick() {
-      if (this.input.answer1 !== "" && this.input.answer2 !== "" && this.input.answer3 !== "") {
+      if (this.input.answer1 !== null && this.input.answer2 !== null && this.input.answer3 !== null) {
         const calculateRation = payload => {
           switch (payload) {
             case "rank1":
@@ -258,7 +258,7 @@ export default {
             case "rank2":
               return 1.3;
             case "rank3":
-              return 1.2;
+              return 1.1;
             case "keep":
               return null;
             default:
@@ -291,17 +291,17 @@ export default {
 
       this.dialog = false;
       this.$emit("store", this.input, this.formerTargetRank);
-      this.resetModal();
+      this.resetModalStatus();
     },
     handleArchiveButtonClick() {
       this.$emit("archive", this.input, "archived");
       this.closeDialog();
-      this.resetModal();
+      this.resetModalStatus();
     },
     handleCompleteButtonClick() {
       this.$emit("complete", this.input, "completed");
       this.closeDialog();
-      this.resetModal();
+      this.resetModalStatus();
     },
     handleDeleteButtonClick() {
       if (window.confirm("タスクを削除してよろしいですか?")) {
@@ -314,14 +314,12 @@ export default {
         this.isKeep = true;
       }
     },
-    resetModal() {
+    resetModalStatus() {
       this.checkKeep();
       this.currentStep = 1;
     }
   },
   created() {
-    this.input = this.taskData;
-    this.checkKeep();
     // targetRankOptionsにstore内のtargetDataを入れる
     this.targetsData.forEach(targetData => {
       if (targetData.targetRank !== "keep") {
@@ -334,6 +332,7 @@ export default {
   },
   watch: {
     taskData: function() {
+      this.checkKeep();
       this.input = this.taskData;
       this.formerTargetRank = this.taskData.targetRank;
     },

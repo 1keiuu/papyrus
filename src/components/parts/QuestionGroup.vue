@@ -110,9 +110,9 @@ export default {
   data() {
     return {
       answers: {
-        answer1: "",
-        answer2: "",
-        answer3: ""
+        answer1: null,
+        answer2: null,
+        answer3: null
       }
     };
   },
@@ -130,6 +130,20 @@ export default {
     }
   },
   watch: {
+    answersProp() {
+      // 一度タスク追加完了した後の初期化
+      this.answers.answer1 = this.answersProp.answer1;
+      this.answers.answer2 = this.answersProp.answer2;
+      this.answers.answer3 = this.answersProp.answer3;
+      this.$emit("changedAnswers", this.answers);
+    },
+    taskData() {
+      // taskDataが変わるという事は表示される編集モーダルの内容が変わる事
+      // その変化にあわせてanswers(表示側)の値も変更させなきゃデータは変更、表示は変更されていないという状態になってしまう
+      this.answers.answer1 = String(this.taskData.answer1);
+      this.answers.answer2 = String(this.taskData.answer2)
+      this.answers.answer3 = String(this.taskData.answer3)
+    },
     "answers.answer1": function() {
       this.$emit("changedAnswers", this.answers);
     },
