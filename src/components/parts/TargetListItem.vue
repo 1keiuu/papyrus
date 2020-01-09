@@ -69,24 +69,26 @@ export default {
       this.selectedTargetData = this.targetData;
       this.$refs.editTargetModal.openDialog();
     },
-    submitEditTargetData(inputName, inputDeadline, inputDescrition, targetRank) {
+    submitEditTargetData(inputName, inputDeadline, inputDescrition,inputColor,targetRank) {
       firebase
         .firestore()
         .collection("targets")
         .doc(this.userId)
-        .update({
+        .set({
           [targetRank]: {
             name: inputName,
             deadline: inputDeadline,
             description: inputDescrition,
-            targetRank: targetRank
+            targetRank: targetRank,
+            color: inputColor
           }
-        });
+        },{ merge: true });
       const data = {
         name: inputName,
         deadline: inputDeadline,
         description: inputDescrition,
-        targetRank: targetRank
+        targetRank: targetRank,
+        color:inputColor
       };
 
       this.$store.commit("editTargetData", data);

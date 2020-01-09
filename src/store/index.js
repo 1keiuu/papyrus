@@ -8,13 +8,13 @@ Vue.use(Vuex);
 // 削除対象のタスクが所属するtargetのindexを取得
 const getTargetIndex = payload => {
   switch (payload) {
-    case "rank1":
+    case 0:
       return 0;
-    case "rank2":
+    case 1:
       return 1;
-    case "rank3":
+    case 2:
       return 2;
-    case "keep":
+    case 'keep':
       return 3;
     default:
   }
@@ -42,28 +42,33 @@ export default new Vuex.Store({
         name: "1番達成したい目標",
         description: "",
         deadline: "",
-        targetRank: "rank1"
+        targetRank: 0,
+        color: "#56a5bf"
       },
       {
         name: "次に達成したい目標",
         description: "",
         deadline: "",
-        targetRank: "rank2"
+        targetRank: 1,
+        color: "#56a5bf"
       },
       {
         name: "3番目に達成したい目標",
         description: "",
         deadline: "",
-        targetRank: "rank3"
+        targetRank: 2,
+        color: "#56a5bf"
       },
       {
         name: "keep",
         description: "",
         deadline: "",
-        targetRank: "keep"
+        targetRank: 'keep',
+        color: "#56a5bf"
       }
     ],
-    tasksData: [[], [], [], []]
+    tasksData: [[], [], [], []],
+    events:[]
   },
   mutations: {
     setSignIn(state, payload) {
@@ -187,19 +192,19 @@ export default new Vuex.Store({
         name: "1番達成したい目標",
         description: "",
         deadline: "",
-        targetRank: "rank1"
+        targetRank: 0
       };
       const payload2 = {
         name: "次に達成したい目標",
         description: "",
         deadline: "",
-        targetRank: "rank2"
+        targetRank: 1
       };
       const payload3 = {
         name: "3番目に達成したい目標",
         description: "",
         deadline: "",
-        targetRank: "rank3"
+        targetRank: 2
       };
       const payload4 = {
         name: "keep",

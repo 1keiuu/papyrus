@@ -15,9 +15,9 @@
             height="200px"
             width="100%"
           />
-          <div class="targetSheet__title-wrapper">
+          <v-card :color="targetData.color" class="targetSheet__title-wrapper">
             <p class="targetSheet__title">{{ targetData.name }}</p>
-          </div>
+          </v-card>
         </div>
         <v-card-actions v-if="targetData.targetRank !=='keep'">
           <v-card-subtitle v-if="targetData.deadline">期日:{{ targetData.deadline }} </v-card-subtitle>
@@ -240,24 +240,26 @@ export default {
       store.commit("setTaskId", 1);
       store.commit("setTasksData", data);
     },
-    submitEditTargetData(inputName, inputDeadline, inputDescrition, targetRank) {
+    submitEditTargetData(inputName, inputDeadline, inputDescrition,inputColor,targetRank) {
       firebase
         .firestore()
         .collection("targets")
         .doc(this.userId)
-        .update({
+        .set({
           [targetRank]: {
             name: inputName,
             deadline: inputDeadline,
             description: inputDescrition,
-            targetRank: targetRank
+            targetRank: targetRank,
+            color:inputColor
           }
-        });
+        },{ merge: true });
       const data = {
         name: inputName,
         deadline: inputDeadline,
         description: inputDescrition,
-        targetRank: targetRank
+        targetRank: targetRank,
+        color:inputColor
       };
 
       this.$store.commit("editTargetData", data);
@@ -300,8 +302,9 @@ export default {
   height: 40px;
   top: 160px;
   right: 0px;
-  border-top-left-radius: 4px;
-  background-color: $primary;
+  border-radius: 0px !important;
+  box-shadow: 0px 0px 0px !important;
+  border-top-left-radius: 4px !important;
 }
 .targetSheet__thumbnail-wrapper {
   &:hover {

@@ -49,8 +49,8 @@ function createWindow() {
       ]
     }
   ];
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
+  // const menu = Menu.buildFromTemplate(template);
+  // Menu.setApplicationMenu(menu);
 
   win = new BrowserWindow({
     width: 1366,

@@ -29,17 +29,19 @@ export default {
   },
   created() {},
   methods: {
-    submitEditTargetData(inputName, inputDescription, inputDeadline, targetId) {
+    submitEditTargetData(inputName, inputDescription, inputDeadline,inputColor, targetRank) {
       firebase
         .firestore()
         .collection("targets")
         .doc(this.userId)
         .set(
           {
-            [targetId]: {
+            [targetRank]: {
               name: inputName,
               descrition: inputDescription,
-              deadline: inputDeadline
+              deadline: inputDeadline,
+              color: inputColor,
+              targetRank: targetRank,
             }
           },
           { merge: true }

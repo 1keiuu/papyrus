@@ -189,7 +189,7 @@ export default {
       v => v.length <= 30 || "30文字以内で入力してください",
       v => v.length >= 1 || "タスク名を入力してください"
     ],
-    targetRankRules: [v => (v && v.length >= 1) || "目標を設定してください"],
+    targetRankRules: [v => (v !== "") || "目標を設定してください"],
     deadlineRules: [v => (v && v.length >= 1) || "期日を設定してください"],
     memoRules: [v => !v || v.length <= 150 || ""],
     startMenu: ""
@@ -215,11 +215,11 @@ export default {
       ) {
         const calculateRation = payload => {
           switch (payload) {
-            case "rank1":
+            case 0:
               return 1.5;
-            case "rank2":
+            case 1:
               return 1.3;
-            case "rank3":
+            case 2:
               return 1.2;
             case "keep":
               return null;
@@ -294,7 +294,7 @@ export default {
           });
         }
       });
-    }
+    },
   },
   created() {
     this.initializeModalData();

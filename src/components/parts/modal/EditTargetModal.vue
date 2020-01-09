@@ -19,8 +19,8 @@
             >
             </v-text-field>
             <v-menu
-              ref="startMenu"
-              v-model="startMenu"
+              ref="dateMenu"
+              v-model="dateMenu"
               :close-on-content-click="false"
               :nudge-right="40"
               :return-value.sync="input.deadline"
@@ -51,27 +51,48 @@
                 color="#56a5bf"
               >
                 <v-spacer></v-spacer>
-                <v-btn text color="#56a5bf" @click="startMenu = false">
+                <v-btn text color="#56a5bf" @click="dateMenu = false">
                   キャンセル
                 </v-btn>
-                <v-btn color="#ff7e2f" dark @click="$refs.startMenu.save(input.deadline)">
+                <v-btn color="#ff7e2f" dark @click="$refs.dateMenu.save(input.deadline)">
                   保存
                 </v-btn>
               </v-date-picker>
             </v-menu>
-            <!-- <v-select
-              v-model="input.targetRank"
-              :items="targetRankOptions"
-              item-text="name"
-              item-value="rank"
-              label="目標名"
-              :rules="targetRankRules"
-              class="targetRankOptions__input"
-              color="#56a5bf"
-              ><v-icon slot="prepend" :class="{ '--filled': input.targetRank !== '' }"
-                >mdi-bullseye-arrow</v-icon
-              ></v-select
-            > -->
+            <v-menu
+              ref="colorMenu"
+              v-model="colorMenu"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              :return-value.sync="input.color"
+              transition="scale-transition"
+              min-width="290px"
+              offset-y
+              absolute
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="input.color"
+                  label="色を設定できます"
+                  readonly
+                  v-on="on"
+                  color="#56a5bf"
+                  class="color__input"
+                  ><v-icon slot="prepend" :class="{ '--filled': input.color !== '' }"
+                    >mdi-palette-outline</v-icon
+                  ></v-text-field
+                >
+              </template>
+              <v-color-picker show-swatches hide-inputs v-model="input.color"></v-color-picker>
+              <div class="color-menu__button-wrapper">
+              <v-btn text color="#56a5bf" @click="colorMenu = false">
+                キャンセル
+              </v-btn>
+              <v-btn color="#ff7e2f" class="color-menu__button-store" dark @click="$refs.colorMenu.save(input.color)">
+                保存
+              </v-btn>
+              </div>
+            </v-menu>
             <v-textarea
               v-model="input.description"
               label="説明"
@@ -108,12 +129,14 @@ export default {
       name: "",
       deadline: "",
       description: "",
-      targetRank: ""
+      targetRank: "",
+      color: ""
     },
     targetRankOptions: [],
-    startMenu: "",
+    dateMenu: "",
+    colorMenu: "",
     deadlineRules: [v => v.length >= 1 || "期日を設定してください"],
-    targetRankRules: [v => (v && v.length >= 1) || "目標を設定してください"],
+    targetRankRules: [v => v !== "" || "目標を設定してください"],
     memoRules: [v => v.length <= 150 || ""]
   }),
   computed: {
@@ -133,39 +156,19 @@ export default {
         this.input.name,
         this.input.deadline,
         this.input.description,
+        this.input.color,
         this.input.targetRank
       );
     }
   },
-  // created() {
-  //   // targetRankOptionsにstore内のtargetDataを入れる
-  //   this.targetsData.forEach(targetData => {
-  //     if (targetData.targetRank !== "keep") {
-  //       this.targetRankOptions.push({
-  //         name: targetData.name,
-  //         rank: targetData.targetRank
-  //       });
-  //     }
-  //   });
-  // },
   watch: {
     targetData: function() {
       this.input.name = this.targetData.name;
       this.input.description = this.targetData.description;
       this.input.deadline = this.targetData.deadline;
       this.input.targetRank = this.targetData.targetRank;
-    },
-    // targetsData() {
-    //   this.targetRankOptions.splice(0, 3);
-    //   this.targetsData.forEach(targetData => {
-    //     if (targetData.targetRank !== "keep") {
-    //       this.targetRankOptions.push({
-    //         name: targetData.name,
-    //         rank: targetData.targetRank
-    //       });
-    //     }
-    //   });
-    // }
+      this.input.color = this.targetData.color;
+    }
   }
 };
 </script>
@@ -237,5 +240,19 @@ export default {
 
 .submitButton {
   width: 110px;
+}
+
+.color-menu__button-wrapper{
+    background: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.color-menu__button-store{
+  margin-right: 10px;
 }
 </style>

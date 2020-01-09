@@ -19,14 +19,16 @@
         type="month"
         :now="today"
         :start="today"
+        :event-color="getEventColor"
         v-model="focus"
         color="#FF7E2F"
         :events="events"
         @click:event="showEvent"
+        @click:more="showEventList"
       >
       </v-calendar>
       <v-menu
-        v-model="selectedOpen"
+        v-model="selectedEventOpen"
         :close-on-content-click="false"
         :activator="selectedElement"
         offset-x
@@ -36,11 +38,27 @@
           <v-toolbar :color="selectedEvent.color" dark>
             <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
           </v-toolbar>
-          <v-list>
-            <v-list-item v-for="(event, index) in selectedEvent.children" :key="index">
+          <v-card-text v-if="selectedEvent.memo">{{selectedEvent.memo}}
+          </v-card-text>
+          <v-card-text v-else>メモはありません</v-card-text>
+        </v-card>
+      </v-menu>
+            <v-menu
+        v-model="selectedEventListOpen"
+        :close-on-content-click="false"
+        offset-x
+        max-height="600px"
+      >
+        <v-card color="grey lighten-4" min-width="350px" class="event__card">
+          <v-toolbar dark>
+            <v-toolbar-title>{{selectedEventList.name}}件のタスク</v-toolbar-title>
+          </v-toolbar>
+                    <v-list>
+            <v-list-item v-for="(event, index) in selectedEventList" :key="index">
               <v-list-item-title> {{ event.name }} </v-list-item-title>
             </v-list-item>
           </v-list>
+
         </v-card>
       </v-menu>
     </div>
@@ -58,12 +76,18 @@ export default {
       thisMonth: "",
       thisYear: "",
       selectedEvent: {},
+      selectedEventList: {},
       selectedElement: null,
-      selectedOpen: false,
+      selectedEventOpen: false,
+      selectedEventListOpen: false,
       events: []
     };
   },
-  computed: {},
+  computed: {
+    targetsData() {
+      return this.$store.getters.targetsData
+    }
+  },
   props: ["tasksData"],
   methods: {
     prev() {
@@ -83,12 +107,12 @@ export default {
         this.selectedEvent = event;
         this.selectedElement = nativeEvent.target;
         setTimeout(() => {
-          this.selectedOpen = true;
+          this.selectedEventOpen = true;
         }, 10);
       };
 
-      if (this.selectedOpen) {
-        this.selectedOpen = false;
+      if (this.selectedEventOpen) {
+        this.selectedEventOpen = false;
         setTimeout(open, 10);
       } else {
         open();
@@ -96,7 +120,24 @@ export default {
 
       nativeEvent.stopPropagation();
     },
-    addEvents() {
+    showEventList(events) {
+      const open = () => {
+        const eventList = this.events.filter(function(event) { return event.start === events.date })
+        this.selectedEventList = eventList;
+        this.selectedEventList.name = eventList.length
+        setTimeout(() => {
+          this.selectedEventListOpen = true;
+        }, 10);
+      };
+
+      if (this.selectedEventListOpen) {
+        this.selectedEventListOpen = false;
+        setTimeout(open, 10);
+      } else {
+        open();
+      }
+    },
+    setEvents() {
       function toString(date) {
         return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-");
       }
@@ -104,57 +145,41 @@ export default {
       const thisYear = this.today.substring(0, 4);
       const thisMonth = this.today.substring(5, 7);
       this.calenderTitle = `${thisYear} 年 ${thisMonth}月`;
-      const tasksData = this.tasksData[0].concat(
-        this.tasksData[1],
-        this.tasksData[2],
-        this.tasksData[3]
-      );
-      tasksData.forEach((task, taskIndex) => {
-        if (task.status === "doing") {
-          // 1つ目のtask  => eventの新規作成 (eventsの配列の一つ目に格納)
-          if (taskIndex === 0) {
-            this.events.push({
-              name: "",
-              start: task.deadline,
-              children: [],
-              length: 0
-            });
-            this.events[0].children.push(task);
-            this.events[0].length += 1;
-            this.events[0].name = `${this.events[0].length}件のタスク`;
-          } else {
-            // 二つ目以降のtask
-            // dateBoolは現時点で生成されているeventsの中にtaskと期日が被るtaskがあるかどうか
-            const dateBool = this.events.every(function(event) {
-              return event.start !== task.deadline;
-            });
-            if (dateBool) {
-              // 被るものがない => eventの新規作成
+      // const tasksData = this.tasksData[0].concat(
+      //   this.tasksData[1],
+      //   this.tasksData[2],
+      //   this.tasksData[3]
+      // );
+      this.tasksData.forEach((tasks, tasksIndex) => {
+        if (tasks.length !== 0) {
+          tasks.forEach((task, taskIndex) => {
+            if (task.status === "doing" && task.targetRank !== "keep") {
               this.events.push({
-                name: "",
+                name: task.name,
                 start: task.deadline,
-                children: [],
-                length: 0
+                end: task.deadline,
+                memo:task.memo,
+                color: this.targetsData[task.targetRank].color,
               });
-              this.events[this.events.length - 1].children.push(task);
-              this.events[this.events.length - 1].length += 1;
-              this.events[this.events.length - 1].name = `${
-                this.events[this.events.length - 1].length
-              }件のタスク`;
-            } else if (!dateBool) {
-              // 被るものがある => 既存のeventへ追加
-              this.events.forEach((event, eventIndex) => {
-                // forEachでeventのIndexを取得
-                if (event.start === task.deadline) {
-                  this.events[eventIndex].children.push(task);
-                  this.events[eventIndex].length += 1;
-                  this.events[eventIndex].name = `${this.events[eventIndex].length}件のタスク`;
-                }
+              // this.events.push(task);
+              // this.events.length += 1;
+              // this.events[taskIndex].name = task.name;
+            } else if (task.targetRank === 'keep') {
+              this.events.push({
+                name: task.name,
+                start: task.deadline,
+                end: task.deadline,
+                memo:task.memo,
+                color: this.targetsData[3].color,
               });
             }
-          }
+          });
         }
       });
+    },
+    addEvents() {
+      this.events.length = 0;
+      this.setEvents()
     }
   },
   // mounted() {
@@ -171,7 +196,7 @@ export default {
     }
   },
   created() {
-    this.addEvents();
+    this.setEvents();
   }
 };
 </script>
@@ -207,10 +232,10 @@ export default {
     background: #fff;
   }
 }
-::v-deep .v-event {
-  height: 40px !important;
-  width: 100% !important;
-  top: 13px !important;
-  border-radius: 0px !important;
-}
+// ::v-deep .v-event {
+//   height: 40px !important;
+//   width: 100% !important;
+//   top: 13px !important;
+//   border-radius: 0px !important;
+// }
 </style>
