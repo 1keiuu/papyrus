@@ -80,6 +80,7 @@
             maxlength="150"
           >
           </v-textarea>
+          <p class="missionState__textarea-empty" v-if="!inputText && !isEditActive">✏️ミッションステートを設定しよう!</p>
         </v-layout>
       </div>
     </v-card>
@@ -112,6 +113,7 @@ export default {
     handleEditButtonClick(inputText) {
       if (this.isEditActive) {
         this.isEditActive = false;
+        this.inputText = this.missionState
       } else {
         this.isEditActive = true;
       }
@@ -233,6 +235,11 @@ export default {
   padding-top: 20px;
   margin-bottom: 0px;
   padding-bottom: 0px;
+}
+
+.missionState__textarea-empty{
+  color:gray;
+  font-size: 18px;
 }
 
 .missionState__btn {
