@@ -43,28 +43,28 @@ export default new Vuex.Store({
         description: "",
         deadline: "",
         targetRank: 0,
-        color: "#56a5bf"
+        color: "#56A5BF"
       },
       {
         name: "次に達成したい目標",
         description: "",
         deadline: "",
         targetRank: 1,
-        color: "#56a5bf"
+        color: "#56A5BF"
       },
       {
         name: "3番目に達成したい目標",
         description: "",
         deadline: "",
         targetRank: 2,
-        color: "#56a5bf"
+        color: "#56A5BF"
       },
       {
         name: "keep",
         description: "",
         deadline: "",
         targetRank: 'keep',
-        color: "#56a5bf"
+        color: "#56A5BF"
       }
     ],
     tasksData: [[], [], [], []],
@@ -192,25 +192,29 @@ export default new Vuex.Store({
         name: "1番達成したい目標",
         description: "",
         deadline: "",
-        targetRank: 0
+        targetRank: 0,
+        color: "#56A5BF"
       };
       const payload2 = {
         name: "次に達成したい目標",
         description: "",
         deadline: "",
-        targetRank: 1
+        targetRank: 1,
+        color: "#56A5BF"
       };
       const payload3 = {
         name: "3番目に達成したい目標",
         description: "",
         deadline: "",
-        targetRank: 2
+        targetRank: 2,
+        color: "#56A5BF"
       };
       const payload4 = {
         name: "keep",
         description: "",
         deadline: "",
-        targetRank: "keep"
+        targetRank: "keep",
+        color: "#56A5BF"
       };
       state.targetsData.splice(0, 4, payload1, payload2, payload3, payload4);
     }
